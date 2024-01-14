@@ -23,6 +23,7 @@ class Paddel(pygame.sprite.Sprite):
         self.speed = speed
         # Im Urzustand bewegt sich das Paddle nicht
         self.movement = 0
+        
         # Standart Info, wie der Bildschrim aussieht
         self.screen_height = screen_height
 

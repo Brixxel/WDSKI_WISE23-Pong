@@ -4,6 +4,8 @@ import Player
 import Paddel
 import AiPlayer 
 import Button
+import GameState
+import Ball
 
 # ######################################### #
 # Version 1.1 Beta                          #
@@ -28,8 +30,8 @@ pygame.display.set_caption('Pong')
 
 # Spiel-Variablen - Stati
 game_paused = False                                 # Gibt an, ob das Spiel pausiert ist
-game_in_menue = False                                # Gibt an, ob man sich im Menü befindet
-game_modus = "PvAi"                                 # Gibt den Spiel-Modus an
+game_in_menue = False                               # Gibt an, ob man sich im Menü befindet
+game_modus = "PvAi"                                 # Gibt den Spiel-Modus an !!!! Variable von GameState
 
 
 # Zu reduzierende globale Variablen
@@ -43,6 +45,7 @@ start_img = pygame.image.load("grafics/button_start.png").convert_alpha()
 
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
+
 # Buttons:
 resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, 300, resume_img, 1)
 options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, 450, options_img, 1)
@@ -62,10 +65,18 @@ start_button = Button.Button(screen_width / 2 - start_img.get_width(), 750, star
 
 paddle_player_1 = Paddel.Paddel('Paddle.png', screen_width - 20, screen_height/2, 5, screen_height)
 
+paddle_group = pygame.sprite.Group()
+paddle_group.add(paddle_player_1)
+# ... (Alle weiteren Paddels)
 
-paddle_set = pygame.sprite.Group()
-paddle_set.add(paddle_player_1)
+ball = Ball.Ball('Ball.png', screen_width/2, screen_height/2, 4, 4, paddle_group, screen_height, screen_width, screen)
+ball_sprite = pygame.sprite.GroupSingle()
+ball_sprite.add(ball)
+
 # --------------------------------------------------------------------------
+
+# Spiel - Startzustand initialisieren:
+Game = GameState.GameState_Manager(ball_sprite, paddle_group, screen)
 
 # ######################################### #
 # Spiel - Loop                              #
@@ -89,19 +100,19 @@ while run:
         # Inputs - Abhängig von der Situation in der Ausführung (im Menü, oder währed des Spiels)
 
         # Spiel-Situation: Spieler gegen Ai
-        # if game_modus == "PvAi":
-        # # Input der Pfeiltasten -- Bewegung des Spieler Paddles
-        #     if event.type == pygame.KEYDOWN:
-        #         if event.key == pygame.K_UP:
-        #             player.movement -= player.speed
-        #         if event.key == pygame.K_DOWN:
-        #             player.movement += player.speed
+        if game_modus == "PvAi":
+        # Input der Pfeiltasten -- Bewegung des Spieler Paddles
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    paddle_player_1.movement -= paddle_player_1.speed
+                if event.key == pygame.K_DOWN:
+                    paddle_player_1.movement += paddle_player_1.speed
                     
-        #     if event.type == pygame.KEYUP:
-        #         if event.key == pygame.K_UP:
-        #             player.movement += player.speed
-        #         if event.key == pygame.K_DOWN:
-        #             player.movement -= player.speed
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP:
+                    paddle_player_1.movement += paddle_player_1.speed
+                if event.key == pygame.K_DOWN:
+                    paddle_player_1.movement -= paddle_player_1.speed
         
         # # Spiel-Situation: Spieler gegen Spieler
         # if game_modus == "PVP":
@@ -135,7 +146,7 @@ while run:
                     
     # ##### Im Spiel Modus: PvAi ##### #
     if game_paused == False and game_in_menue == False:
-        paddle_set.draw(screen)
+        Game.run_game()
     
     # Rendering
     pygame.display.flip()

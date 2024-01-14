@@ -141,7 +141,7 @@ pygame.mixer.pre_init(44100,-16,2,512)
 pygame.init()
 clock = pygame.time.Clock()
 
-# Main Window
+# Main Wind
 screen_width = 1280
 screen_height = 960
 screen = pygame.display.set_mode((screen_width,screen_height))
