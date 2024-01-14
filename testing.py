@@ -151,6 +151,7 @@ pygame.display.set_caption('Pong')
 bg_color = pygame.Color('#2F373F')
 accent_color = (27,35,43)
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
+
 plob_sound = pygame.mixer.Sound("pong.ogg")
 score_sound = pygame.mixer.Sound("score.ogg")
 middle_strip = pygame.Rect(screen_width/2 - 2,0,4,screen_height)

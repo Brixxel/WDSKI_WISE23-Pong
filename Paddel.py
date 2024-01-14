@@ -1,5 +1,4 @@
-import pygame
-from pygame.sprite import _Group
+import pygame, random
 
 import Player
 
@@ -10,7 +9,7 @@ Spieler / Ai während des Spiels - für jedes Spiel ein neues Paddel
 
 class Paddel(pygame.sprite.Sprite):
     
-    def __init__(self,path,x_pos,y_pos,speed):
+    def __init__(self,path,x_pos,y_pos,speed, screen_height):
         # verpflichtender Aufruf des Übergeordneten Gruppen Konstruktors
         pygame.sprite.Sprite.__init__(path,x_pos,y_pos)
         
@@ -24,6 +23,8 @@ class Paddel(pygame.sprite.Sprite):
         self.speed = speed
         # Im Urzustand bewegt sich das Paddle nicht
         self.movement = 0
+        # Standart Info, wie der Bildschrim aussieht
+        self.screen_height = screen_height
 
     # Das Paddle kann sich nur innerhalb des Bildschirms bewegen, 
     # daher muss seine Bewegung eingeschränlt werden
@@ -35,6 +36,7 @@ class Paddel(pygame.sprite.Sprite):
 
 
     # Passt die Position des Paddles, abhängig von seiner Bewegung, an
-    def update(self, ball_group, screen_height):
+    def update(self, ball_group):
         self.rect.y += self.movement
-        self.screen_beschränkung(screen_height)
+        self.screen_beschränkung(self.screen_height)
+        
