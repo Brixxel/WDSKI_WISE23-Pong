@@ -11,7 +11,7 @@ class Paddel(pygame.sprite.Sprite):
     
     def __init__(self,path,x_pos,y_pos,speed, screen_height):
         # verpflichtender Aufruf des Übergeordneten Gruppen Konstruktors
-        pygame.sprite.Sprite.__init__(path,x_pos,y_pos)
+        pygame.sprite.Sprite.__init__(self)
         
         # Generiert das Paddle, mit dem Aussehen und der Pixel-Größe des gewählten PNGs
         self.image = pygame.image.load(path)

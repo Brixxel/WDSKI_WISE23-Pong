@@ -1,15 +1,17 @@
 import pygame, random
-from pygame.sprite import _Group
+from Paddel import Paddel 
 
-import Player, Paddel
+"""
+AiPlayer ist eine Spezielisierung des "normalen" Paddles - da dieses von einer Ai gespielt wird
+"""
 
-# AiPlayer ist eine Spezielisierung des "normalen" Paddles - da dieses von einer Ai gespielt wird
 
 class AIPlayer(Paddel):
+    
     def __init__(self,path,x_pos,y_pos,speed, screen_height):
         
         # verpflichtender Aufruf des Übergeordneten Gruppen Konstruktors
-        pygame.sprite.Sprite.__init__(path,x_pos,y_pos)
+        pygame.sprite.Sprite.__init__(self)
         
         # Generiert das Paddle wie ein "normales"
         # Hier SPÄTER zufällige "Farb"-Wahl ############# !!!!!!!

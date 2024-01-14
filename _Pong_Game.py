@@ -2,7 +2,7 @@ import pygame, sys, random
 # More imports...
 import Player
 import Paddel
-import AiPlayer
+import AiPlayer 
 import Button
 
 # ######################################### #
@@ -21,43 +21,59 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Bildschirm - Screen - (Größe evtl anpassen)
-screen_width = 1280
-screen_height = 960
+screen_width = 1920
+screen_height = 1080
 screen = pygame.display.set_mode((screen_width,screen_height))
 pygame.display.set_caption('Pong')
 
 # Spiel-Variablen - Stati
-game_paused = False
-game_modus = "PvAi"
+game_paused = False                                 # Gibt an, ob das Spiel pausiert ist
+game_in_menue = False                                # Gibt an, ob man sich im Menü befindet
+game_modus = "PvAi"                                 # Gibt den Spiel-Modus an
+
 
 # Zu reduzierende globale Variablen
 # Farben und Bilder
-
 resume_img = pygame.image.load("grafics/button_resume.png").convert_alpha()
+options_img = pygame.image.load("grafics/button_options.png").convert_alpha()
+quit_img = pygame.image.load("grafics/button_quit.png").convert_alpha()
+home_img = pygame.image.load("grafics/button_home.png").convert_alpha()
+start_img = pygame.image.load("grafics/button_start.png").convert_alpha()
 
+
+# -------------------------------------------------------------------------
+# Allgemeine Instanzen:
+# Buttons:
+resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, 300, resume_img, 1)
+options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, 450, options_img, 1)
+home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, 600, home_img, 1)
+quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, 750, quit_img, 1)
+
+start_button = Button.Button(screen_width / 2 - start_img.get_width(), 750, start_img, 2)
+# -------------------------------------------------------------------------
+
+
+
+# -------------------------------------------------------------------------
 # Spiel-Objekte (evtl auch wo anders initialisieren / in Abhängigkeit des Speilmodi initialisieren)
 # !!!!!! hier evtl alten Spielstand laden !!!!!! #
 # player_1 = Player.Player()
 # player_2 = Player.Player()
 
-# Allgemeine Instanzen:
-resume_button = Button.Button(304, 125, resume_img, 1)
-
-# paddle_player_1 = 
+paddle_player_1 = Paddel.Paddel('Paddle.png', screen_width - 20, screen_height/2, 5, screen_height)
 
 
+paddle_set = pygame.sprite.Group()
+paddle_set.add(paddle_player_1)
+# --------------------------------------------------------------------------
 
 # ######################################### #
 # Spiel - Loop                              #
 # ######################################### #
 
-while True:
-    
-    # Überprüfen ob Spiel im Menü ist
-    if game_paused == True:
-        # Spiel Menü
-        resume_button.draw(screen)
-    
+run = True
+while run:
+
     # Inputs
     for event in pygame.event.get():
         # genereller Abbruch:
@@ -67,13 +83,12 @@ while True:
         # Menü aufrufen und Spiel pausieren?:
         if event.type == pygame.KEYDOWN:
             if event.key ==pygame.K_ESCAPE:
-                print(f"pause {game_paused}")
                 game_paused = True
 
         # -------------------------------------------------------------------------------------- #
         # Inputs - Abhängig von der Situation in der Ausführung (im Menü, oder währed des Spiels)
 
-        # # Spiel-Situation: Spieler gegen Ai
+        # Spiel-Situation: Spieler gegen Ai
         # if game_modus == "PvAi":
         # # Input der Pfeiltasten -- Bewegung des Spieler Paddles
         #     if event.type == pygame.KEYDOWN:
@@ -87,9 +102,40 @@ while True:
         #             player.movement += player.speed
         #         if event.key == pygame.K_DOWN:
         #             player.movement -= player.speed
-                    
-    # Hintergrund
+        
+        # # Spiel-Situation: Spieler gegen Spieler
+        # if game_modus == "PVP":
+        #     pass # Tasten Belegung / Events für PvP
+           
+         
+    # Hintergrund des Bildschirms
     screen.fill('#2F373F')
+    
+    # ##### Main - Menü ##### #
+    # Überprüfen auf Spielzustand:
+    if game_paused == True and game_in_menue == True:
+        if start_button.draw(screen):
+            game_in_menue = False
+            game_paused = False
+    
+    
+    # ##### Pausen - Menü ##### #
+    # Überprüfen ob Spiel pausiert ist:
+    if game_paused == True and game_in_menue == False:
+        # Spiel Pausen-Menü
+        if resume_button.draw(screen):
+            game_paused = False
+        if options_button.draw(screen):
+            pass # !!!!!!! Lautstärke Einstellungen z.B. !!!!!!
+        if home_button.draw(screen):
+            game_in_menue = True
+        if quit_button.draw(screen):
+            run = False
+           
+                    
+    # ##### Im Spiel Modus: PvAi ##### #
+    if game_paused == False and game_in_menue == False:
+        paddle_set.draw(screen)
     
     # Rendering
     pygame.display.flip()
