@@ -157,7 +157,7 @@ middle_strip = pygame.Rect(screen_width/2 - 2,0,4,screen_height)
 
 # Game objects
 player = Player('Paddle.png',screen_width - 20,screen_height/2,5)
-opponent = Opponent('Paddle.png',20,screen_width/2,5)
+opponent = Opponent(r'skins\Unbenannt.png',20,screen_width/2,5)
 paddle_group = pygame.sprite.Group()
 paddle_group.add(player)
 paddle_group.add(opponent)

@@ -1,8 +1,10 @@
 import pygame
 
+ # Inhalte eines Spieler Objekts. D.h.: Score; Items; Frabe etc
 
-class Player:
-    def __init__(self, Name):
-        self.name = Name
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        pass 
      
-    # Inhalte eines Spieler Objekts. D.h.: Score; Items; Frabe etc
+   
