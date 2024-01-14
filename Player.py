@@ -6,6 +6,6 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         self.score = 0
-        pass 
+        self.skin = Paddle.png
      
    

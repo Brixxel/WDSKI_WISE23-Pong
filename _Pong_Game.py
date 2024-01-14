@@ -14,7 +14,7 @@ import Ball
 # ######################################### #
 
 # ######################################### #
-# Initialisieren des Spiels - Grundzustands #
+# Initialisieren des Spiels - Grundzustand  #
 # ######################################### #
 
 # Allgemeines Setup
@@ -62,21 +62,11 @@ start_button = Button.Button(screen_width / 2 - start_img.get_width(), 750, star
 # !!!!!! hier evtl alten Spielstand laden !!!!!! #
 # player_1 = Player.Player()
 # player_2 = Player.Player()
-
-paddle_player_1 = Paddel.Paddel('Paddle.png', screen_width - 20, screen_height/2, 5, screen_height)
-
-paddle_group = pygame.sprite.Group()
-paddle_group.add(paddle_player_1)
-# ... (Alle weiteren Paddels)
-
-ball = Ball.Ball('Ball.png', screen_width/2, screen_height/2, 4, 4, paddle_group, screen_height, screen_width, screen)
-ball_sprite = pygame.sprite.GroupSingle()
-ball_sprite.add(ball)
-
 # --------------------------------------------------------------------------
 
 # Spiel - Startzustand initialisieren:
-Game = GameState.GameState_Manager(ball_sprite, paddle_group, screen)
+Game = GameState.GameState_Manager(screen)
+Game.Start_PvAi_Game()
 
 # ######################################### #
 # Spiel - Loop                              #
@@ -104,15 +94,15 @@ while run:
         # Input der Pfeiltasten -- Bewegung des Spieler Paddles
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    paddle_player_1.movement -= paddle_player_1.speed
+                    Game.paddle_player_1.movement -= Game.paddle_player_1.speed
                 if event.key == pygame.K_DOWN:
-                    paddle_player_1.movement += paddle_player_1.speed
+                    Game.paddle_player_1.movement += Game.paddle_player_1.speed
                     
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
-                    paddle_player_1.movement += paddle_player_1.speed
+                    Game.paddle_player_1.movement += Game.paddle_player_1.speed
                 if event.key == pygame.K_DOWN:
-                    paddle_player_1.movement -= paddle_player_1.speed
+                    Game.paddle_player_1.movement -= Game.paddle_player_1.speed
         
         # # Spiel-Situation: Spieler gegen Spieler
         # if game_modus == "PVP":
