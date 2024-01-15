@@ -9,7 +9,7 @@ Spieler / Ai während des Spiels - für jedes Spiel ein neues Paddel
 
 class Paddel(pygame.sprite.Sprite):
     
-    def __init__(self, player,path,x_pos,y_pos,speed, screen_height):
+    def __init__(self, player,x_pos,y_pos,speed, screen_height):
         # verpflichtender Aufruf des Übergeordneten Gruppen Konstruktors
         pygame.sprite.Sprite.__init__(self)
         
@@ -17,7 +17,7 @@ class Paddel(pygame.sprite.Sprite):
         self.player = player
 
         # Generiert das Paddle, mit dem Aussehen und der Pixel-Größe des gewählten PNGs
-        self.image = pygame.image.load(path)
+        self.image = player.skin
         # Bildet das Rechteck (Pixel des Bildes gleich Maße des Rechtecks)
         self.rect = self.image.get_rect(center = (x_pos,y_pos))
         
@@ -42,13 +42,14 @@ class Paddel(pygame.sprite.Sprite):
     # Passt die Position des Paddles, abhängig von seiner Bewegung, an
     def update(self, ball_group):
         # Positions Update, wennn es sich um ein Spieler Paddel handelt:
-        if type(self.player) == Player:
-
+        if isinstance(self.player, Player.Player):
+            
             self.rect.y += self.movement
             self.screen_beschränkung(self.screen_height)
         # Updaten, wie wenn es sich um eine Ai handelt:
             # anpassen nach Ai Typus (Stärke)    
-        elif type(self.player) == AIPlayer:
+        elif isinstance(self.player, AiPlayer.AIPlayer):
+            
             if self.rect.top < ball_group.sprite.rect.y:
                 self.rect.y += self.speed
             if self.rect.bottom > ball_group.sprite.rect.y:

@@ -7,6 +7,8 @@ class GameState_Manager:
     def __init__(self, screen, player_1 : Player):
         
         self.player_1 = player_1 # Spieler  1 des aktuellen GameStates
+        
+        self.player_ai = AiPlayer.AIPlayer()
 
         # !!!! zweiter Spieler / Standartmäßig AiSpieler?
         # Soll der zweite Spieler immer nur ein temporärer Spieler sein? -> erfortert zusätzliche Skin auswahl?
@@ -61,8 +63,8 @@ class GameState_Manager:
  
 # New Game Methode, die den Speilstand des bisherigen Spiels löscht und mit den neuen Paddels beginnt
     def Start_PvAi_Game(self):
-        self.paddle_player_1 = Paddel.Paddel('skins/Paddle.png', self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
-        self.paddle_Ai = AiPlayer.AIPlayer(r'skins\Unbenannt.png',20,self.screen_width/2, 5, self.screen_height)
+        self.paddle_player_1 = Paddel.Paddel(self.player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
+        self.paddle_Ai = Paddel.Paddel(self.player_ai,20,self.screen_width/2, 5, self.screen_height)
 
         self.paddle_group.add(self.paddle_player_1)
         self.paddle_group.add(self.paddle_Ai)
@@ -71,3 +73,4 @@ class GameState_Manager:
 
         self.ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
         self.ball_group.add(self.ball)
+        return "PvAi"
