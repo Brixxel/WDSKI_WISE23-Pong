@@ -61,12 +61,14 @@ start_button = Button.Button(screen_width / 2 - start_img.get_width(), 750, star
 # Spiel-Objekte (evtl auch wo anders initialisieren / in Abhängigkeit des Speilmodi initialisieren)
 # !!!!!! hier evtl alten Spielstand laden !!!!!! #
 player_1 = Player.Player()
-# player_2 = Player.Player()
+player_2 = Player.Player()
 # --------------------------------------------------------------------------
 
-# Spiel - Startzustand initialisieren:
-Game = GameState.GameState_Manager(screen, player_1)
-game_modus = Game.Start_PvAi_Game()
+# Spiel - Startzustand initialisieren: 
+Game = GameState.GameState_Manager(screen)
+#(Wird später im Menü ausgeführt):
+#game_modus = Game.Start_PvAi_Game(player_1)
+game_modus = Game.Start_PvP_Game(player_1, player_2)
 
 # ######################################### #
 # Spiel - Loop                              #
@@ -91,7 +93,7 @@ while run:
 
         # Spiel-Situation: Spieler gegen Ai
         if game_modus == "PvAi":
-        # Input der Pfeiltasten -- Bewegung des Spieler Paddles
+            #Player 1: (wird mit Pfeiltasten gesteuert)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     Game.paddle_player_1.movement -= Game.paddle_player_1.speed
@@ -103,11 +105,36 @@ while run:
                     Game.paddle_player_1.movement += Game.paddle_player_1.speed
                 if event.key == pygame.K_DOWN:
                     Game.paddle_player_1.movement -= Game.paddle_player_1.speed
+            #AI Player wird von Ai gesteuert, daher keine weiteren Inputs benötig
         
         # # Spiel-Situation: Spieler gegen Spieler
-        # if game_modus == "PVP":
-        #     pass # Tasten Belegung / Events für PvP
-           
+        if game_modus == "PvP":                         # Tasten Belegung / Events für PvP
+            #Player 1: (wird mit Pfeiltasten gesteuert)
+            #Player 2: (wird mit W- und S-Taste gesteuert)
+            if event.type == pygame.KEYDOWN:
+                # Player 1:
+                if event.key == pygame.K_UP:
+                    Game.paddle_player_1.movement -= Game.paddle_player_1.speed
+                if event.key == pygame.K_DOWN:
+                    Game.paddle_player_1.movement += Game.paddle_player_1.speed
+                #Player 2:
+                if event.key == pygame.K_w:
+                    Game.paddle_player_2.movement -= Game.paddle_player_2.speed
+                if event.key == pygame.K_s:
+                    Game.paddle_player_2.movement += Game.paddle_player_2.speed               
+                    
+                    
+            if event.type == pygame.KEYUP:
+                # Player 1:
+                if event.key == pygame.K_UP:
+                    Game.paddle_player_1.movement += Game.paddle_player_1.speed
+                if event.key == pygame.K_DOWN:
+                    Game.paddle_player_1.movement -= Game.paddle_player_1.speed
+                # Player 2:
+                if event.key == pygame.K_w:
+                    Game.paddle_player_2.movement += Game.paddle_player_2.speed
+                if event.key == pygame.K_s:
+                    Game.paddle_player_2.movement -= Game.paddle_player_2.speed                                  
          
     # Hintergrund des Bildschirms
     screen.fill('#2F373F')
@@ -134,7 +161,7 @@ while run:
             run = False
            
                     
-    # ##### Im Spiel Modus: PvAi ##### #
+    # ##### Wenn gespielt wird, für alle Spiel Modi und Spiel Typen: ##### #
     if game_paused == False and game_in_menue == False:
         Game.run_game()
     

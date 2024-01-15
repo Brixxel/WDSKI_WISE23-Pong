@@ -5,6 +5,9 @@ import Player, AiPlayer
 """ 
 Spieler / Ai während des Spiels - für jedes Spiel ein neues Paddel
 
+Das Paddel wird einem Spieler / AiSpieler zugeordnet - übernimmt von diesem den Skin und weiter Eigenschaften
+
+
 """
 
 class Paddel(pygame.sprite.Sprite):
@@ -22,9 +25,11 @@ class Paddel(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = (x_pos,y_pos))
         
         # weitere Spiel-relevante Variablen wie die Geschwindigkeit, mit der sich das Paddle bewegt
+        
         # (Nur Vollgas oder kein Gas - keine Beschleunigung - Speed gibt die Max V vom Paddle an)
-        self.speed = speed
-        # Im Urzustand bewegt sich das Paddle nicht
+        self.speed = player.player_speed
+        
+        # Gibt die aktuelle Bewegung des Paddels an / (Wird dann per TastenEingabe temporär verändert)
         self.movement = 0
         
         # Standart Info, wie der Bildschrim aussieht
@@ -46,6 +51,8 @@ class Paddel(pygame.sprite.Sprite):
             
             self.rect.y += self.movement
             self.screen_beschränkung(self.screen_height)
+            
+    
         # Updaten, wie wenn es sich um eine Ai handelt:
             # anpassen nach Ai Typus (Stärke)    
         elif isinstance(self.player, AiPlayer.AIPlayer):

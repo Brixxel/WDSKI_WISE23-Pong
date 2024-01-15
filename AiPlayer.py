@@ -11,3 +11,5 @@ class AIPlayer():
     
     def __init__(self):
         self.skin = pygame.image.load('skins/Paddle.png')
+        self.score = 0
+        self.player_speed = 7
