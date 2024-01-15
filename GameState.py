@@ -30,8 +30,8 @@ class GameState_Manager:
         self.accent_color = (27,35,43)
         
         # Optionale Spiel-Modi-Ergänzungen:
-        self.game_modus_feature_incresingSpeed = False          # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
-        self.game_modus_feature_incresingReflektion = False
+        self.game_modus_feature_increasingSpeed = False          # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
+        self.game_modus_feature_increasingReflektion = True     # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
        
         
     def run_game(self):
@@ -40,9 +40,10 @@ class GameState_Manager:
         self.ball_group.draw(self.screen)
         
         #Auführen besonderer Spiel-Modi
-        if self.game_modus_feature_incresingSpeed:
-           self.feature_incresing_Speed()
-         
+        if self.game_modus_feature_increasingSpeed:
+            self.feature_increasing_Speed()
+        if self.game_modus_feature_increasingReflektion:
+            self.feature_increasing_Reflection()
 
 		# Updating the game objects
         self.paddle_group.update(self.ball_group)
@@ -78,14 +79,21 @@ class GameState_Manager:
 # Spiel-Modi Funktioen
 # --------------------------------------------------------------------------------------- #
     
+    # !!! Achtung: für Multi-Ball muss hier jeweils auf mehrere Bälle erweitert werden !!!
+    
     # Spiel-Modus: je länger gespielt wird, umso schneller wird der Ball
-    def feature_incresing_Speed(self):
-        if self.game_modus_feature_incresingSpeed:
+    def feature_increasing_Speed(self):
+        if self.game_modus_feature_increasingSpeed:
             if self.game_timer % 1000 == 0:
                 self.ball.speed_x = self.ball.speed_x * 1.1
                 self.ball.speed_y = self.ball.speed_y * 1.1
                 # !!!!! Print Statement entfehrnen
                 print(f"Erhöhe Geschwindigkeit auf: {self.ball.speed_x}")
+    
+    def feature_increasing_Reflection(self):
+        if self.game_modus_feature_increasingReflektion:
+            self.ball.increasing_reflection()
+       
 
 
  
