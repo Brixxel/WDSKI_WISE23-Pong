@@ -6,6 +6,7 @@ import AiPlayer
 import Button
 import GameState
 import Ball
+import os
 
 # ######################################### #
 # Version 1.1 Beta                          #
@@ -23,9 +24,12 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Bildschirm - Screen - (Größe evtl anpassen)
-screen_width = 1920
-screen_height = 1080
-screen = pygame.display.set_mode((screen_width,screen_height))
+os.environ["SDL_VIDEO_CENTERED"] = "1" 
+screen_width = pygame.display.Info().current_w
+screen_height = pygame.display.Info().current_h
+#monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
+#screen = pygame.display.set_mode((screen_width,screen_height))
+screen = pygame.display.set_mode((screen_width -70, screen_height -120), pygame.RESIZABLE) ########fullscreen#####
 pygame.display.set_caption('Pong')
 
 # Spiel-Variablen - Stati
@@ -47,12 +51,12 @@ start_img = pygame.image.load("grafics/button_start.png").convert_alpha()
 # Allgemeine Instanzen:
 
 # Buttons:  !!!!! Zentrierung relativ zur Höhe !!!!!
-resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, 300, resume_img, 1)
-options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, 450, options_img, 1)
-home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, 600, home_img, 1)
-quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, 750, quit_img, 1)
+resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 5, resume_img, 1)    #########optimierte Positionene############
+options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, screen_height / 3.2, options_img, 1)  ###ungefäre Höhe abgeschätzt####
+home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, screen_height / 2.3, home_img, 1)
+quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, screen_height / 1.9, quit_img, 1)
 
-start_button = Button.Button(screen_width / 2 - start_img.get_width(), 750, start_img, 2)
+start_button = Button.Button(screen_width / 2 - start_img.get_width(), screen_height / 3.2, start_img, 2)
 # -------------------------------------------------------------------------
 
 
