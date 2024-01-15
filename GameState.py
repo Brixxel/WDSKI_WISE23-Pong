@@ -1,13 +1,17 @@
 import pygame, random
 import Player, Paddel, AiPlayer, Ball
 
+
 class GameState_Manager:
     
-    def __init__(self, screen):
+    def __init__(self, screen, player_1 : Player):
         
-        self.player_score = 0
+        self.player_1 = player_1
+        # !!!! zweiter Spieler / Standartmäßig AiSpieler?
+        # Soll der zweite Spieler immer nur ein temporärer Spieler sein? -> erfortert zusätzliche Skin auswahl?
+        print(player_1.score)
+        # self.player_score = 0
         self.opponent_score = 0
-        
         
         self.paddle_player_1 = 0
         self.paddle_player_2 = 0
@@ -20,6 +24,9 @@ class GameState_Manager:
         self.screen = screen
         self.screen_width = screen.get_width()
         self.screen_height = screen.get_height()
+
+        self.standart_font = pygame.font.Font('freesansbold.ttf', 32)
+        self.accent_color = (27,35,43)
         
     def run_game(self):
 		# Drawing the game objects
@@ -30,25 +37,26 @@ class GameState_Manager:
         self.paddle_group.update(self.ball_group)
         self.ball_group.update()
         self.reset_ball()
-        #self.draw_score()
+        self.draw_score()
     
     def reset_ball(self):
         if self.ball_group.sprite.rect.right >= self.screen_width:
             self.opponent_score += 1
             self.ball_group.sprite.reset_ball()
         if self.ball_group.sprite.rect.left <= 0:
-            self.player_score += 1
+            self.player_1.score += 1
             self.ball_group.sprite.reset_ball()
+            
+    # Um den aktuellen Spiel-Score von Spieler und Gegner darzustellen:
+    def draw_score(self):
+        player_1_score = self.standart_font.render(str(self.player_1.score),True,self.accent_color)
+        opponent_score = self.standart_font.render(str(self.opponent_score),True,self.accent_color)
 
-	# def draw_score(self):
-	# 	player_score = basic_font.render(str(self.player_score),True,accent_color)
-	# 	opponent_score = basic_font.render(str(self.opponent_score),True,accent_color)
+        player_score_rect = player_1_score.get_rect(midleft = (self.screen_width / 2 + 40,self.screen_height/2))
+        opponent_score_rect = opponent_score.get_rect(midright = (self.screen_width / 2 - 40,self.screen_height/2))
 
-	# 	player_score_rect = player_score.get_rect(midleft = (screen_width / 2 + 40,screen_height/2))
-	# 	opponent_score_rect = opponent_score.get_rect(midright = (screen_width / 2 - 40,screen_height/2))
-
-	# 	screen.blit(player_score,player_score_rect)
-	# 	screen.blit(opponent_score,opponent_score_rect)
+        self.screen.blit(player_1_score,player_score_rect)
+        self.screen.blit(opponent_score,opponent_score_rect)
  
  
 # New Game Methode, die den Speilstand des bisherigen Spiels löscht und mit den neuen Paddels beginnt

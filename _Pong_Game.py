@@ -60,12 +60,12 @@ start_button = Button.Button(screen_width / 2 - start_img.get_width(), 750, star
 # -------------------------------------------------------------------------
 # Spiel-Objekte (evtl auch wo anders initialisieren / in Abhängigkeit des Speilmodi initialisieren)
 # !!!!!! hier evtl alten Spielstand laden !!!!!! #
-# player_1 = Player.Player()
+player_1 = Player.Player()
 # player_2 = Player.Player()
 # --------------------------------------------------------------------------
 
 # Spiel - Startzustand initialisieren:
-Game = GameState.GameState_Manager(screen)
+Game = GameState.GameState_Manager(screen, player_1)
 Game.Start_PvAi_Game()
 
 # ######################################### #
