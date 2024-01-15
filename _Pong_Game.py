@@ -46,7 +46,7 @@ start_img = pygame.image.load("grafics/button_start.png").convert_alpha()
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
 
-# Buttons:
+# Buttons:  !!!!! Zentrierung relativ zur Höhe !!!!!
 resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, 300, resume_img, 1)
 options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, 450, options_img, 1)
 home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, 600, home_img, 1)
@@ -140,5 +140,4 @@ while run:
     
     # Rendering
     pygame.display.flip()
-    clock.tick(120)
-    
+    clock.tick(60)
