@@ -1,5 +1,5 @@
 import pygame, random
-import Player, Paddel, AiPlayer, Ball
+import Player, Paddel, AiPlayer, Ball, Obstacel
 
 
 class GameState_Manager:
@@ -13,7 +13,6 @@ class GameState_Manager:
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
         self.paddle_player_1 = 0
         self.paddle_player_2 = 0
-        self.paddle_Ai = 0
         self.ball = 0
         
         self.ball_group = pygame.sprite.GroupSingle()
@@ -29,21 +28,33 @@ class GameState_Manager:
         self.standart_font = pygame.font.Font('freesansbold.ttf', 32)
         self.accent_color = (27,35,43)
         
+        
+        # !!!!! Abänderung auf Intensitäts Kriterium (0 - kein Modus Feature - 1,2,3,4 ... in jeweils erhöter Ausführung)
+        
         # Optionale Spiel-Modi-Ergänzungen:
-        self.game_modus_feature_increasingSpeed = False          # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
-        self.game_modus_feature_increasingReflektion = True     # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
-       
+        self.game_modus_feature_increasingSpeed = False             # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
+        self.game_modus_feature_increasingSpeed_intensity = 1
+        self.game_modus_feature_increasingReflektion = False        # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
+        self.game_modus_feature_Obstacels = 20                       # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
+        
+        # Spiel Mosu Atribute
+        self.game_modus_obstacel_group = pygame.sprite.Group()
         
     def run_game(self):
 		# Drawing the game objects
         self.paddle_group.draw(self.screen)
         self.ball_group.draw(self.screen)
         
-        #Auführen besonderer Spiel-Modi
+        # Auführen besonderer Spiel-Modi
         if self.game_modus_feature_increasingSpeed:
             self.feature_increasing_Speed()
         if self.game_modus_feature_increasingReflektion:
             self.feature_increasing_Reflection()
+        if self.game_modus_feature_Obstacels != 0:
+            self.game_modus_obstacel_group.draw(self.screen)
+            # self.feature_Obstacels()
+
+            pass
 
 		# Updating the game objects
         self.paddle_group.update(self.ball_group)
@@ -90,11 +101,27 @@ class GameState_Manager:
                 # !!!!! Print Statement entfehrnen
                 print(f"Erhöhe Geschwindigkeit auf: {self.ball.speed_x}")
     
+    # Spiel-Modus: je öfter der Ball Reflektiert wird, um so schneller bewegt er sich
     def feature_increasing_Reflection(self):
         if self.game_modus_feature_increasingReflektion:
             self.ball.increasing_reflection()
        
 
+
+# ......................... Obstacels ................................................... #
+
+    def feature_Obstacels(self):
+        # Prüfen ob Position o. anzahl der Hindernisse sich verändern muss
+        pass
+    
+    def feature_Obstacels_initialise(self):
+        self.game_modus_obstacel_group.empty()
+        for x in range(self.game_modus_feature_Obstacels):
+            rand_x_pos = random.randint(int(self.screen_width / 10 ), int(self.screen_width - self.screen_width / 10))
+            rand_y_pos = random.randint(0,self.screen_height)
+            obstacel_1 = Obstacel.Obstacel(rand_x_pos, rand_y_pos)
+            self.game_modus_obstacel_group.add(obstacel_1)
+        self.ball.obstacels = self.game_modus_obstacel_group
 
  
 # --------------------------------------------------------------------------------------- #
@@ -102,21 +129,14 @@ class GameState_Manager:
 # --------------------------------------------------------------------------------------- # 
  
  
- 
 # New Game Methode, die den Speilstand des bisherigen Spiels löscht und mit den neuen Paddels beginnt
     def Start_PvAi_Game(self, player_1 : Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
-        self.paddle_Ai = Paddel.Paddel(self.player_ai,20,self.screen_width/2, 5, self.screen_height)
-
-        self.paddle_group.add(self.paddle_player_1)
-        self.paddle_group.add(self.paddle_Ai)
-
-        self.ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
-        self.ball_group.add(self.ball)
+        # entspricht hier einem AI Paddle
+        self.paddle_player_2 = Paddel.Paddel(self.player_ai,20,self.screen_width/2, 5, self.screen_height)
         
-        #mit dem Erstellen eines neuen Spiels, muss der Timer zurück gesetzt werden
-        self.game_timer = 0
+        self.general_setUp()
         
         return "PvAi"
 
@@ -125,13 +145,20 @@ class GameState_Manager:
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
         self.paddle_player_2 = Paddel.Paddel(player_2,20,self.screen_width/2, 5, self.screen_height)
 
+        self.general_setUp()
+              
+        return "PvP"
+
+    def general_setUp(self):
+        self.paddle_group.empty()
         self.paddle_group.add(self.paddle_player_1)
         self.paddle_group.add(self.paddle_player_2)
-
+        
+        self.ball_group.empty()
         self.ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
         self.ball_group.add(self.ball)
         
-        #mit dem Erstellen eines neuen Spiels, muss der Timer zurück gesetzt werden
-        self.game_timer = 0
+        if self.game_modus_feature_Obstacels != 0:
+            self.feature_Obstacels_initialise()
         
-        return "PvP"
+        self.game_timer = 0

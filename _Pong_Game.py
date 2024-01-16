@@ -71,8 +71,8 @@ player_2 = Player.Player()
 # Spiel - Startzustand initialisieren: 
 Game = GameState.GameState_Manager(screen)
 #(Wird später im Menü ausgeführt):
-# game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
-game_modus = Game.Start_PvP_Game(player_1, player_2)
+game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
+# game_modus = Game.Start_PvP_Game(player_1, player_2)
 
 # ######################################### #
 # Spiel - Loop                              #

@@ -13,6 +13,7 @@ class Ball(pygame.sprite.Sprite):
         self.paddles = paddles
         self.active = False
         self.score_time = 0
+        self.obstacels = pygame.sprite.Group()
         
         self.screen_height = screen_height
         self.screen_width = screen_width
@@ -26,6 +27,7 @@ class Ball(pygame.sprite.Sprite):
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
             self.collisions()
+            self.collision_obstacel()
         else:
              self.restart_counter()
             
@@ -50,7 +52,8 @@ class Ball(pygame.sprite.Sprite):
             if abs(self.rect.bottom - collision_paddle.top) < 10 and self.speed_y > 0:
                 self.rect.bottom = collision_paddle.top
                 self.speed_y *= -1
-        
+
+            
     
     def reset_ball(self):
         self.active = False
@@ -88,3 +91,23 @@ class Ball(pygame.sprite.Sprite):
             self.speed_x = self.speed_x * 1.5
             self.speed_y = self.speed_y * 1.5
             print(f"erhöhe Speed auf: {self.speed_x}")
+           
+    # Reflektion an Hindernissen        
+    def collision_obstacel(self):
+        if self.obstacels:
+            if pygame.sprite.spritecollide(self,self.obstacels,False):
+                # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
+                self.reflections_since_new_round += 1
+                #pygame.mixer.Sound.play(plob_sound)
+                collision_paddle = pygame.sprite.spritecollide(self,self.obstacels,False)[0].rect
+                if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
+                    self.speed_x *= -1
+                if abs(self.rect.left - collision_paddle.right) < 10 and self.speed_x < 0:
+                    self.speed_x *= -1
+                if abs(self.rect.top - collision_paddle.bottom) < 10 and self.speed_y < 0:
+                    self.rect.top = collision_paddle.bottom
+                    self.speed_y *= -1
+                if abs(self.rect.bottom - collision_paddle.top) < 10 and self.speed_y > 0:
+                    self.rect.bottom = collision_paddle.top
+                    self.speed_y *= -1
+        
