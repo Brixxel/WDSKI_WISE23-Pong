@@ -32,7 +32,8 @@ class Ball(pygame.sprite.Sprite):
             #pygame.mixer.Sound.play(plob_sound)
             self.speed_y *= -1
         if pygame.sprite.spritecollide(self,self.paddles,False):
-            #pygame.mixer.Sound.play(plob_sound)
+            hit_sound = pygame.mixer.Sound("sounds/hit_sound.mp3")
+            hit_sound.play()
             collision_paddle = pygame.sprite.spritecollide(self,self.paddles,False)[0].rect
             if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                 self.speed_x *= -1
