@@ -1,6 +1,8 @@
 import pygame
 import Ball
 
+explosion_sound = pygame.mixer.Sound("explosion/explosion_sound.mp3")
+
 class Explosion(pygame.sprite.Sprite):
 	def __init__(self, x, y):
 		pygame.sprite.Sprite.__init__(self)
@@ -51,6 +53,7 @@ while run:
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			pos = pygame.mouse.get_pos()
 			explosion = Explosion(pos[0], pos[1])
+			explosion_sound.play()
 			explosion_group.add(explosion)
 
 
