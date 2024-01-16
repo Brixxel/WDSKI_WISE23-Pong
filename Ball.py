@@ -84,7 +84,7 @@ class Ball(pygame.sprite.Sprite):
     
     # "härtere Reflektion"
     def increasing_reflection(self):
-        if self.reflections_since_new_round % 2 == 0:
+        if self.reflections_since_new_round % 2 == 0 and pygame.sprite.spritecollide(self,self.paddles,False):
             self.speed_x = self.speed_x * 1.5
             self.speed_y = self.speed_y * 1.5
-        print(self.speed_x)
+            print(f"erhöhe Speed auf: {self.speed_x}")

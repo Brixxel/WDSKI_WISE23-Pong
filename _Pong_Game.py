@@ -72,7 +72,7 @@ player_2 = Player.Player()
 Game = GameState.GameState_Manager(screen)
 #(Wird später im Menü ausgeführt):
 # game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
-sgame_modus = Game.Start_PvP_Game(player_1, player_2)
+game_modus = Game.Start_PvP_Game(player_1, player_2)
 
 # ######################################### #
 # Spiel - Loop                              #
