@@ -136,7 +136,6 @@ while run:
             game_in_menue = True
         if quit_button.draw(screen):
             run = False
-           
                     
     # ##### Im Spiel Modus: PvAi ##### #
     if game_paused == False and game_in_menue == False:

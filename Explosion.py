@@ -1,7 +1,7 @@
 import pygame
 import Ball
 
-explosion_sound = pygame.mixer.Sound("explosion/explosion_sound.mp3")
+explosion_sound = pygame.mixer.Sound("sounds/explosion_sound.mp3")
 
 class Explosion(pygame.sprite.Sprite):
 	def __init__(self, x, y):

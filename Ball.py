@@ -29,10 +29,11 @@ class Ball(pygame.sprite.Sprite):
             
     def collisions(self):
         if self.rect.top <= 0 or self.rect.bottom >= self.screen_height:
-            #pygame.mixer.Sound.play(plob_sound)
             self.speed_y *= -1
+            pygame.mixer.Sound("sounds/hit_sound.mp3").play()   #sound border
+
         if pygame.sprite.spritecollide(self,self.paddles,False):
-            pygame.mixer.Sound("sounds/hit_sound.mp3").play()
+            pygame.mixer.Sound("sounds/hit_sound.mp3").play()   #sound paddle
             collision_paddle = pygame.sprite.spritecollide(self,self.paddles,False)[0].rect
             if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                 self.speed_x *= -1
@@ -65,6 +66,7 @@ class Ball(pygame.sprite.Sprite):
             countdown_number = 1
         if current_time - self.score_time >= 2100:
             self.active = True
+            pygame.mixer.Sound("sounds/start_sound.mp3").play()     #start sound
             
         time_counter = pygame.font.Font('freesansbold.ttf', 32).render(str(countdown_number),True,(27,35,43))
         time_counter_rect = time_counter.get_rect(center = (self.screen_width/2,self.screen_height/2 + 50))
