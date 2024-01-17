@@ -53,8 +53,6 @@ class Ball(pygame.sprite.Sprite):
                 self.rect.bottom = collision_paddle.top
                 self.speed_y *= -1
 
-            
-    
     def reset_ball(self):
         self.active = False
         self.speed_x *= random.choice((-1,1))
