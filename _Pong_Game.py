@@ -52,6 +52,14 @@ change_img = pygame.image.load("grafics/button_change.png").convert_alpha()
 skin_img = pygame.image.load("grafics/button_skins.png").convert_alpha()
 creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alpha()
 
+paddle_blue_img = pygame.image.load("skins/Paddle_blue.png").convert_alpha()
+paddle_green_img = pygame.image.load("skins/Paddle_green.png").convert_alpha()
+paddle_white_img = pygame.image.load("skins/Paddle_white.png").convert_alpha()
+paddle_yellow_img = pygame.image.load("skins/Paddle_yellow.png").convert_alpha()
+paddle_red_img = pygame.image.load("skins/Paddle.png").convert_alpha()
+
+paddle_list = [paddle_blue_img, paddle_green_img, paddle_white_img, paddle_yellow_img, paddle_red_img]
+
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
 
@@ -178,8 +186,6 @@ while run:
         if change_button.draw(screen) == True:
             ai_text.blitnew(screen)
 
-        if skin_button.draw(screen):
-            pass
 
     
     
