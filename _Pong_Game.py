@@ -63,7 +63,7 @@ quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, screen_
 
 change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, screen_height /6, change_img, 1)
 skin_button = Button.Button(screen_width / 3.85 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
-creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width()/2, screen_height / 1.5, creategame_img,1)
+creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width()/2, screen_height / 1.5, creategame_img, 1)
 
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img,1)
 # -------------------------------------------------------------------------
