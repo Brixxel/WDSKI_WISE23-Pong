@@ -36,7 +36,7 @@ class GameState_Manager:
         self.game_modus_feature_increasingSpeed_intensity = 1
         self.game_modus_feature_increasingReflektion = False        # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
         self.game_modus_feature_Obstacel_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
-        self.game_modus_feature_Obstacel_difficulty = 5
+        self.game_modus_feature_Obstacel_difficulty = 4
         
         # Spiel Mosu Atribute
         self.game_modus_obstacel_group = pygame.sprite.Group()
@@ -45,6 +45,8 @@ class GameState_Manager:
 		# Drawing the game objects
         self.paddle_group.draw(self.screen)
         self.ball_group.draw(self.screen)
+        
+        
         
         # Auführen besonderer Spiel-Modi
         if self.game_modus_feature_increasingSpeed:
