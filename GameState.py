@@ -8,7 +8,6 @@ class GameState_Manager:
     
         # !!! evtl ja nach KI anpassen
         self.player_ai = AiPlayer.AIPlayer()
-        self.opponent_score = 0
         
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
         self.paddle_player_1 = 0

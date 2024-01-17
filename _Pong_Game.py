@@ -36,6 +36,7 @@ pygame.display.set_caption('Pong')
 # Spiel-Variablen - Stati
 game_paused = False                                 # Gibt an, ob das Spiel pausiert ist
 game_in_menue = False                               # Gibt an, ob man sich im Menü befindet
+game_in_menue_create = False
 game_modus = "PvAi"                                 # Gibt den Spiel-Modus an !!!! Variable von GameState
 
 
@@ -51,6 +52,8 @@ lightning_img = pygame.image.load("grafics/lightning.png").convert_alpha()
 change_img = pygame.image.load("grafics/button_change.png").convert_alpha()
 skin_img = pygame.image.load("grafics/button_skins.png").convert_alpha()
 creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alpha()
+getting_faster_imges = (pygame.image.load(r"grafics\button_getting_faster_01.png").convert_alpha() , pygame.image.load(r"grafics\button_getting_faster_02.png").convert_alpha())
+
 
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
@@ -65,7 +68,10 @@ change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, 
 skin_button = Button.Button(screen_width / 3.85 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
 creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width()/2, screen_height / 1.5, creategame_img, 1)
 
-start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img,1)
+# Buttons im create Game Menü:
+getting_faster_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 5,getting_faster_imges[0] , 1)
+
+start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img ,1)
 # -------------------------------------------------------------------------
 
 
@@ -148,8 +154,7 @@ while run:
                 if event.key == pygame.K_s:
                     Game.paddle_player_2.movement -= Game.paddle_player_2.speed                                  
          
-       
-         
+            
     # Hintergrund des Bildschirms
     screen.fill('#2F373F')
 
@@ -159,9 +164,23 @@ while run:
     playertwo_text = Text.Text(" -Player Two- ", screen_width/1.5, screen_height/6)  
     ai_text = Text.Text(" -AI- ", screen_width/1.39, screen_height/6)  
     
-    # ##### Main - Menü ##### #
+    # --------------------------------------------------------------------------------------------------------------- #
+    #                                             MENÜS                                                               #
+    # --------------------------------------------------------------------------------------------------------------- #
+    
+    # #####  ---------------   Main - Menü      -------------       ##### #
+    # ------------------- Spieler-Auswahl-Menü -------------------------- #
+    """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
+            1.) PvP oder PvAi
+            2.) Ai Schweirigkeit?
+            3.) Skin von Spieler 1 und 2 (wenn keine Ai)
+            
+            5.) Ball-Skin / Hintergrund ?  
+            
+            -- Spieler-Objekte erstellen / verändern // game_modus Variable anpassen
+    """ 
     # Überprüfen auf Spielzustand:
-    if game_paused == True and game_in_menue == True:
+    if game_paused == True and game_in_menue == True and game_in_menue_create == False:
         #Pong und Blitz einfügen
         screen.blit(pong_img,(screen_width / 2 - pong_img.get_width()/2, screen_height / 8))
         screen.blit(lightning_img,(screen_width / 2 - lightning_img.get_width()/2, screen_height / 3))
@@ -172,8 +191,7 @@ while run:
     
         #startbutton einfügen
         if creategame_button.draw(screen):
-            game_in_menue = False
-            game_paused = False
+            game_in_menue_create = True
 
         if change_button.draw(screen) == True:
             ai_text.blitnew(screen)
@@ -181,6 +199,39 @@ while run:
         if skin_button.draw(screen):
             pass
 
+    # -------------- Create Game Menü ------------------------ #
+    """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
+            1.) Block-Spielmodus            (Keine Blöcke, statische Blöcke, sich zunehmend teleportierende Blöcke, sich bewegende Blöcke)
+            2.) Geschwindigkeits Änderung   (An / Aus)
+            3.) Reflektionsverstärkung      (An / Aus)
+            
+  
+    """ 
+    
+    if game_paused == True and game_in_menue == True and game_in_menue_create == True:
+        # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
+        Game = GameState.GameState_Manager(screen)
+        
+        if getting_faster_button.draw(screen) == True:
+            # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
+            getting_faster_button.counter += 1
+            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
+            getting_faster_button.change_picture(getting_faster_imges[getting_faster_button.counter % len(getting_faster_imges)])
+            if getting_faster_button.counter % len(getting_faster_imges) == 0:
+                Game.game_modus_feature_increasingSpeed == False
+            elif getting_faster_button.counter % len(getting_faster_imges) == 1:
+                Game.game_modus_feature_increasingSpeed == True
+        
+        
+        
+        if start_button.draw(screen) == True:
+            # Das Spiel befindet sich nicht mehr im Menü, somit müssen die Menü-Methoden nciht länger auzsgeführt werden
+            game_paused, game_in_menue, game_in_menue_create = False,False,False
+            if game_modus == "PvAi":
+                Game.Start_PvAi_Game(player_1)
+            elif game_modus == "PvP":
+                Game.Start_PvP_Game(player_1, player_2)    
+    
     
     
     # ##### Pausen - Menü ##### #
