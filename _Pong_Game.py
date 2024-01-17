@@ -53,7 +53,7 @@ change_img = pygame.image.load("grafics/button_change.png").convert_alpha()
 skin_img = pygame.image.load("grafics/button_skins.png").convert_alpha()
 creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alpha()
 getting_faster_imges = (pygame.image.load(r"grafics\button_getting_faster_01.png").convert_alpha() , pygame.image.load(r"grafics\button_getting_faster_02.png").convert_alpha())
-
+increasingReflektion_imges = (pygame.image.load(r"grafics\button_harder_reflektion_01.png").convert_alpha() , pygame.image.load(r"grafics\button_harder_reflektion_02.png").convert_alpha())
 
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
@@ -70,6 +70,7 @@ creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width()/
 
 # Buttons im create Game Menü:
 getting_faster_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 5,getting_faster_imges[0] , 1)
+increasing_Reflektion_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 3.2,increasingReflektion_imges[0] , 1)
 
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img ,1)
 # -------------------------------------------------------------------------
@@ -212,16 +213,27 @@ while run:
         # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
         Game = GameState.GameState_Manager(screen)
         
+        # Abfrage über den Spiel-Modus: Ball wird schneller
         if getting_faster_button.draw(screen) == True:
             # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
             getting_faster_button.counter += 1
             # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
             getting_faster_button.change_picture(getting_faster_imges[getting_faster_button.counter % len(getting_faster_imges)])
             if getting_faster_button.counter % len(getting_faster_imges) == 0:
-                Game.game_modus_feature_increasingSpeed == False
+                Game.game_modus_feature_increasingSpeed = False
             elif getting_faster_button.counter % len(getting_faster_imges) == 1:
-                Game.game_modus_feature_increasingSpeed == True
+                Game.game_modus_feature_increasingSpeed = True
         
+        # Abfrage über Spiel-Modus: Ball wird härter reflektiert
+        if increasing_Reflektion_button.draw(screen) == True:
+            # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
+            increasing_Reflektion_button.counter += 1
+            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
+            increasing_Reflektion_button.change_picture(increasingReflektion_imges[increasing_Reflektion_button.counter % len(increasingReflektion_imges)])
+            if increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 0:
+                Game.game_modus_feature_increasingReflektion = False
+            elif increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 1:
+                Game.game_modus_feature_increasingReflektion = True
         
         
         if start_button.draw(screen) == True:
