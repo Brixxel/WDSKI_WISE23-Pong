@@ -22,20 +22,10 @@ class Obstacel(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
         
         self.position = self.generate_valid_position()
+        self.speed_x = self.generate_valid_speed()
+        self.speed_y = self.generate_valid_speed()
         
         self.rect = self.image.get_rect(center = self.position)
-        
-    # Teleportationsähnliche Änderung der Postion
-    def change_position(self):
-        # Blöcke sollten ihre Position erst nach einer geiwssen Zeit ändern
-        if self.ready_for_change:
-            self.position = self.generate_valid_position()
-            self.rect = self.image.get_rect(center = self.position)
-            self.ready_for_change = False
-        
-    # Die Blöcke können sich bewegen (wie ein Ball)
-    def move_position(self):
-        pass
     
     def update(self):
         #Entscheidet je nach Schweirigkeit, wie sich dasHinderniss verändern soll
@@ -43,9 +33,12 @@ class Obstacel(pygame.sprite.Sprite):
             #Die Hindernisse existieren entweder nicht oder sie verändern ihre Position nicht
             pass
         elif self.difficulty < 5:
+            # Die Hindernisse teleportieren sich
             self.change_position()
         else:
+            # Die Hindernisse bewegen sich
             self.move_position()
+            self.collisions()
             
     # Die Hindernisse sollen in bestimmten Abständen ihre position wechseln        
     def check_for_time(self, current_game_timer, obstical_group_index):
@@ -78,5 +71,32 @@ class Obstacel(pygame.sprite.Sprite):
             rand_pos = self.generate_valid_position()
             
         return rand_pos
-            
     
+    def generate_valid_speed(self):
+        if self.difficulty < 5:
+            return 0
+        else:
+            difficulty_modifier = (self.difficulty - 4) * 1.5
+            return random.uniform(- 1 *difficulty_modifier, difficulty_modifier)
+      
+    # Teleportationsähnliche Änderung der Postion
+    def change_position(self):
+        # Blöcke sollten ihre Position erst nach einer geiwssen Zeit ändern
+        if self.ready_for_change:
+            self.position = self.generate_valid_position()
+            self.rect = self.image.get_rect(center = self.position)
+            self.ready_for_change = False    
+        
+    # Die Blöcke können sich bewegen (wie ein Ball)
+    def move_position(self):
+        self.rect.x += self.speed_x
+        self.rect.y += self.speed_y
+        self.collisions()
+        
+    def collisions(self):
+        # Das Hinderniss trifft auf Decke oder Boden:
+        if self.rect.top <= 0 or self.rect.bottom >= self.screen.get_height():
+            self.speed_y *= -1
+        # Das Hinderniss trifft auf eine der Wände:
+        if self.rect.left <= 0 or self.rect.right >= self.screen.get_width():
+            self.speed_x *= -1

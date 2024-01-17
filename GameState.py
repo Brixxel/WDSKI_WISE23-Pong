@@ -35,8 +35,8 @@ class GameState_Manager:
         self.game_modus_feature_increasingSpeed = True             # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
         self.game_modus_feature_increasingSpeed_intensity = 1
         self.game_modus_feature_increasingReflektion = False        # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
-        self.game_modus_feature_Obstacel_count = 50                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
-        self.game_modus_feature_Obstacel_difficulty = 4
+        self.game_modus_feature_Obstacel_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
+        self.game_modus_feature_Obstacel_difficulty = 5
         
         # Spiel Mosu Atribute
         self.game_modus_obstacel_group = pygame.sprite.Group()
@@ -115,9 +115,14 @@ class GameState_Manager:
         # Die Blöcke ändern nach gewisser Zeit ihre Position -> Variable die dem Obstical sagt, dass es sich ändern soll
         count = 0
         for obstacel in self.game_modus_obstacel_group.sprites():
-            if obstacel.difficulty < 5:
+            # Bei einer Schwierigkeit des Hinderniusses von 1, bewegen sie sich nicht
+            # Bei einer Schwierigkeit des Hinderniusses zwischen 2 und 4 teleportieren sie sich (mit zunehmnder Schwierigkeit häufiger)
+            if obstacel.difficulty < 5 and obstacel.difficulty != 1:
                 obstacel.check_for_time(self.game_timer, count)
                 count += 1
+            # Bei einer Schwierigkeit des Hinderniusses von größer, gleich 5, können diese sich bewegen wie ein Ball
+            elif obstacel.difficulty >= 5:
+                obstacel.move_position()
         
     
     # Initialisiert die Hindernisse standartisiert
