@@ -10,6 +10,9 @@ class Ball(pygame.sprite.Sprite):
         self.speed_x = speed_x * random.choice((-1,1))
         self.speed_y = speed_y * random.choice((-1,1))
         
+        self.initial_speed_x = speed_x
+        self.initial_speed_y = speed_y
+        
         self.paddles = paddles
         self.active = False
         self.score_time = 0
@@ -19,7 +22,7 @@ class Ball(pygame.sprite.Sprite):
         self.screen_width = screen_width
         self.screen = screen
         
-        self.reflections_since_new_round = 1
+        self.reflections_since_new_round = 0
         
         
     def update(self):
@@ -55,11 +58,13 @@ class Ball(pygame.sprite.Sprite):
 
     def reset_ball(self):
         self.active = False
-        self.speed_x *= random.choice((-1,1))
-        self.speed_y *= random.choice((-1,1))
+        self.speed_x = random.choice((-1,1)) * self.initial_speed_x
+        self.speed_y = random.choice((-1,1)) * self.initial_speed_y
         self.score_time = pygame.time.get_ticks()
         self.rect.center = (self.screen_width/2,self.screen_height/2)
         #pygame.mixer.Sound.play(score_sound)
+        print(self.speed_x)
+        print(f"Speed Y: {self.speed_y}")
         
     def restart_counter(self):
         current_time = pygame.time.get_ticks()
@@ -88,7 +93,7 @@ class Ball(pygame.sprite.Sprite):
         if self.reflections_since_new_round % 2 == 0 and pygame.sprite.spritecollide(self,self.paddles,False):
             self.speed_x = self.speed_x * 1.5
             self.speed_y = self.speed_y * 1.5
-            print(f"erhöhe Speed auf: {self.speed_x}")
+            print(f"Paddle erhöhete Speed auf: {self.speed_x}")
            
     # Reflektion an Hindernissen        
     def collision_obstacel(self):

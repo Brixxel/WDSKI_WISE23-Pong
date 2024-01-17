@@ -31,11 +31,11 @@ class GameState_Manager:
         # !!!!! Abänderung auf Intensitäts Kriterium (0 - kein Modus Feature - 1,2,3,4 ... in jeweils erhöter Ausführung)
         
         # Optionale Spiel-Modi-Ergänzungen:
-        self.game_modus_feature_increasingSpeed = True             # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
+        self.game_modus_feature_increasingSpeed  = False         # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
         self.game_modus_feature_increasingSpeed_intensity = 1
-        self.game_modus_feature_increasingReflektion = False        # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
+        self.game_modus_feature_increasingReflektion = False       # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
         self.game_modus_feature_Obstacel_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
-        self.game_modus_feature_Obstacel_difficulty = 4
+        self.game_modus_feature_Obstacel_difficulty = 0
         
         # Spiel Mosu Atribute
         self.game_modus_obstacel_group = pygame.sprite.Group()
