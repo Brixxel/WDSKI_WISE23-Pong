@@ -29,7 +29,7 @@ screen_width = pygame.display.Info().current_w
 screen_height = pygame.display.Info().current_h
 #monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
 #screen = pygame.display.set_mode((screen_width,screen_height))
-screen = pygame.display.set_mode((screen_width -70, screen_height -120), pygame.RESIZABLE) ########fullscreen#####
+screen = pygame.display.set_mode((screen_width -70, screen_height -120)) ########fullscreen#####
 pygame.display.set_caption('Pong')
 
 # Spiel-Variablen - Stati

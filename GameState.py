@@ -44,9 +44,11 @@ class GameState_Manager:
     def reset_ball(self):
         if self.ball_group.sprite.rect.right >= self.screen_width:
             self.opponent_score += 1
+            pygame.mixer.Sound("sounds/explosion_sound.wav").play()
             self.ball_group.sprite.reset_ball()
         if self.ball_group.sprite.rect.left <= 0:
             self.player_1.score += 1
+            pygame.mixer.Sound("sounds/explosion_sound.wav").play()
             self.ball_group.sprite.reset_ball()
             
     # Um den aktuellen Spiel-Score von Spieler und Gegner darzustellen:
