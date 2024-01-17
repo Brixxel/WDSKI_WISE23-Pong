@@ -43,7 +43,6 @@ class Paddel(pygame.sprite.Sprite):
         if self.rect.bottom >= screen_height:
             self.rect.bottom = screen_height
 
-
     # Passt die Position des Paddles, abhängig von seiner Bewegung, an
     def update(self, ball_group):
         # Positions Update, wennn es sich um ein Spieler Paddel handelt:
@@ -51,8 +50,7 @@ class Paddel(pygame.sprite.Sprite):
             
             self.rect.y += self.movement
             self.screen_beschränkung(self.screen_height)
-            
-    
+
         # Updaten, wie wenn es sich um eine Ai handelt:
             # anpassen nach Ai Typus (Stärke)    
         elif isinstance(self.player, AiPlayer.AIPlayer):
@@ -62,4 +60,3 @@ class Paddel(pygame.sprite.Sprite):
             if self.rect.bottom > ball_group.sprite.rect.y:
                 self.rect.y -= self.speed
                 self.screen_beschränkung(self.screen_height)            
-        

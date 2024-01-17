@@ -13,10 +13,13 @@ class Ball(pygame.sprite.Sprite):
         self.paddles = paddles
         self.active = False
         self.score_time = 0
+        self.obstacels = pygame.sprite.Group()
         
         self.screen_height = screen_height
         self.screen_width = screen_width
         self.screen = screen
+        
+        self.reflections_since_new_round = 1
         
         
     def update(self):
@@ -24,14 +27,19 @@ class Ball(pygame.sprite.Sprite):
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
             self.collisions()
+            self.collision_obstacel()
         else:
              self.restart_counter()
             
     def collisions(self):
+        # Der Ball trifft auf Decke oder Boden:
         if self.rect.top <= 0 or self.rect.bottom >= self.screen_height:
             #pygame.mixer.Sound.play(plob_sound)
             self.speed_y *= -1
+        # Der Ball trifft auf ein Paddle:
         if pygame.sprite.spritecollide(self,self.paddles,False):
+            # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
+            self.reflections_since_new_round += 1
             #pygame.mixer.Sound.play(plob_sound)
             collision_paddle = pygame.sprite.spritecollide(self,self.paddles,False)[0].rect
             if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
@@ -44,7 +52,7 @@ class Ball(pygame.sprite.Sprite):
             if abs(self.rect.bottom - collision_paddle.top) < 10 and self.speed_y > 0:
                 self.rect.bottom = collision_paddle.top
                 self.speed_y *= -1
-    
+
     def reset_ball(self):
         self.active = False
         self.speed_x *= random.choice((-1,1))
@@ -65,8 +73,39 @@ class Ball(pygame.sprite.Sprite):
             countdown_number = 1
         if current_time - self.score_time >= 2100:
             self.active = True
+            self.reflections_since_new_round = 0
             
         time_counter = pygame.font.Font('freesansbold.ttf', 32).render(str(countdown_number),True,(27,35,43))
         time_counter_rect = time_counter.get_rect(center = (self.screen_width/2,self.screen_height/2 + 50))
         pygame.draw.rect(self.screen,('#2F373F'),time_counter_rect)
         self.screen.blit(time_counter,time_counter_rect)
+    
+# --------------------------------------------------------------------------------------------------------- #
+# Methoden für die Spiel-Modi
+    
+    # "härtere Reflektion"
+    def increasing_reflection(self):
+        if self.reflections_since_new_round % 2 == 0 and pygame.sprite.spritecollide(self,self.paddles,False):
+            self.speed_x = self.speed_x * 1.5
+            self.speed_y = self.speed_y * 1.5
+            print(f"erhöhe Speed auf: {self.speed_x}")
+           
+    # Reflektion an Hindernissen        
+    def collision_obstacel(self):
+        if self.obstacels:
+            if pygame.sprite.spritecollide(self,self.obstacels,False):
+                # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
+                self.reflections_since_new_round += 1
+                #pygame.mixer.Sound.play(plob_sound)
+                collision_paddle = pygame.sprite.spritecollide(self,self.obstacels,False)[0].rect
+                if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
+                    self.speed_x *= -1
+                if abs(self.rect.left - collision_paddle.right) < 10 and self.speed_x < 0:
+                    self.speed_x *= -1
+                if abs(self.rect.top - collision_paddle.bottom) < 10 and self.speed_y < 0:
+                    self.rect.top = collision_paddle.bottom
+                    self.speed_y *= -1
+                if abs(self.rect.bottom - collision_paddle.top) < 10 and self.speed_y > 0:
+                    self.rect.bottom = collision_paddle.top
+                    self.speed_y *= -1
+        

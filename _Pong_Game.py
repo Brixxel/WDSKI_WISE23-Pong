@@ -71,8 +71,8 @@ player_2 = Player.Player()
 # Spiel - Startzustand initialisieren: 
 Game = GameState.GameState_Manager(screen)
 #(Wird später im Menü ausgeführt):
-#game_modus = Game.Start_PvAi_Game(player_1)
-game_modus = Game.Start_PvP_Game(player_1, player_2)
+game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
+# game_modus = Game.Start_PvP_Game(player_1, player_2)
 
 # ######################################### #
 # Spiel - Loop                              #
@@ -95,7 +95,7 @@ while run:
         # -------------------------------------------------------------------------------------- #
         # Inputs - Abhängig von der Situation in der Ausführung (im Menü, oder währed des Spiels)
 
-        # Spiel-Situation: Spieler gegen Ai
+        # Spiel-Typ: Spieler gegen Ai
         if game_modus == "PvAi":
             #Player 1: (wird mit Pfeiltasten gesteuert)
             if event.type == pygame.KEYDOWN:
@@ -111,7 +111,7 @@ while run:
                     Game.paddle_player_1.movement -= Game.paddle_player_1.speed
             #AI Player wird von Ai gesteuert, daher keine weiteren Inputs benötig
         
-        # # Spiel-Situation: Spieler gegen Spieler
+        # # Spiel-Typ: Spieler gegen Spieler
         if game_modus == "PvP":                         # Tasten Belegung / Events für PvP
             #Player 1: (wird mit Pfeiltasten gesteuert)
             #Player 2: (wird mit W- und S-Taste gesteuert)
@@ -125,8 +125,7 @@ while run:
                 if event.key == pygame.K_w:
                     Game.paddle_player_2.movement -= Game.paddle_player_2.speed
                 if event.key == pygame.K_s:
-                    Game.paddle_player_2.movement += Game.paddle_player_2.speed               
-                    
+                    Game.paddle_player_2.movement += Game.paddle_player_2.speed                
                     
             if event.type == pygame.KEYUP:
                 # Player 1:
@@ -140,6 +139,8 @@ while run:
                 if event.key == pygame.K_s:
                     Game.paddle_player_2.movement -= Game.paddle_player_2.speed                                  
          
+       
+         
     # Hintergrund des Bildschirms
     screen.fill('#2F373F')
     
@@ -148,7 +149,7 @@ while run:
     if game_paused == True and game_in_menue == True:
         if start_button.draw(screen):
             game_in_menue = False
-            game_paused = False
+            wgame_paused = False
     
     
     # ##### Pausen - Menü ##### #
