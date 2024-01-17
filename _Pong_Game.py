@@ -50,6 +50,7 @@ pong_img = pygame.image.load("grafics/PONG.png").convert_alpha()
 lightning_img = pygame.image.load("grafics/lightning.png").convert_alpha()
 change_img = pygame.image.load("grafics/button_change.png").convert_alpha()
 skin_img = pygame.image.load("grafics/button_skins.png").convert_alpha()
+creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alpha()
 
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
@@ -62,6 +63,8 @@ quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, screen_
 
 change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, screen_height /6, change_img, 1)
 skin_button = Button.Button(screen_width / 3.85 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
+creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width()/2, screen_height / 1.5, creategame_img,1)
+
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img,1)
 # -------------------------------------------------------------------------
 
@@ -168,7 +171,7 @@ while run:
         playertwo_text.blitnew(screen)
     
         #startbutton einfügen
-        if start_button.draw(screen):
+        if creategame_button.draw(screen):
             game_in_menue = False
             game_paused = False
 
