@@ -55,7 +55,7 @@ class GameState_Manager:
         if self.game_modus_feature_Obstacel_difficulty != 0:
             self.game_modus_obstacel_group.draw(self.screen)
             self.feature_Obstacels()
-            self.game_modus_obstacel_group.update()
+            self.game_modus_obstacel_group.update(self.game_modus_obstacel_group)
             pass
 
 		# Updating the game objects
