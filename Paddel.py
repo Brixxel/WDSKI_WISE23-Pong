@@ -55,6 +55,8 @@ class Paddel(pygame.sprite.Sprite):
             # anpassen nach Ai Typus (Stärke)    
         elif isinstance(self.player, AiPlayer.AIPlayer):
             
+            # An Ai Methode aussourcen !!!!
+            
             if self.rect.top < ball_group.sprite.rect.y:
                 self.rect.y += self.speed
             if self.rect.bottom > ball_group.sprite.rect.y:

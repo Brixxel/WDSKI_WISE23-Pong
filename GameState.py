@@ -8,7 +8,6 @@ class GameState_Manager:
     
         # !!! evtl ja nach KI anpassen
         self.player_ai = AiPlayer.AIPlayer()
-        self.opponent_score = 0
         
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
         self.paddle_player_1 = 0
@@ -32,11 +31,11 @@ class GameState_Manager:
         # !!!!! Abänderung auf Intensitäts Kriterium (0 - kein Modus Feature - 1,2,3,4 ... in jeweils erhöter Ausführung)
         
         # Optionale Spiel-Modi-Ergänzungen:
-        self.game_modus_feature_increasingSpeed = True             # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
+        self.game_modus_feature_increasingSpeed  = False         # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
         self.game_modus_feature_increasingSpeed_intensity = 1
-        self.game_modus_feature_increasingReflektion = False        # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
+        self.game_modus_feature_increasingReflektion = False       # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
         self.game_modus_feature_Obstacel_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
-        self.game_modus_feature_Obstacel_difficulty = 4
+        self.game_modus_feature_Obstacel_difficulty = 0
         
         # Spiel Mosu Atribute
         self.game_modus_obstacel_group = pygame.sprite.Group()
@@ -56,7 +55,7 @@ class GameState_Manager:
         if self.game_modus_feature_Obstacel_difficulty != 0:
             self.game_modus_obstacel_group.draw(self.screen)
             self.feature_Obstacels()
-            self.game_modus_obstacel_group.update()
+            self.game_modus_obstacel_group.update(self.game_modus_obstacel_group)
             pass
 
 		# Updating the game objects

@@ -34,8 +34,9 @@ screen = pygame.display.set_mode((screen_width -70, screen_height -120), pygame.
 pygame.display.set_caption('Pong')
 
 # Spiel-Variablen - Stati
-game_paused = False                                 # Gibt an, ob das Spiel pausiert ist
-game_in_menue = False                               # Gibt an, ob man sich im Menü befindet
+game_paused = True                                 # Gibt an, ob das Spiel pausiert ist
+game_in_menue = True                               # Gibt an, ob man sich im Menü befindet
+game_in_menue_create = False
 game_modus = "PvAi"                                 # Gibt den Spiel-Modus an !!!! Variable von GameState
 
 
@@ -51,6 +52,12 @@ lightning_img = pygame.image.load("grafics/lightning.png").convert_alpha()
 change_img = pygame.image.load("grafics/button_change.png").convert_alpha()
 skin_img = pygame.image.load("grafics/button_skins.png").convert_alpha()
 creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alpha()
+getting_faster_imges = (pygame.image.load(r"grafics\button_getting_faster_01.png").convert_alpha() , pygame.image.load(r"grafics\button_getting_faster_02.png").convert_alpha())
+increasingReflektion_imges = (pygame.image.load(r"grafics\button_harder_reflektion_01.png").convert_alpha() , pygame.image.load(r"grafics\button_harder_reflektion_02.png").convert_alpha())
+moving_obstacel_imges = (pygame.image.load(r"grafics\button_obstacel_01.png").convert_alpha() , pygame.image.load(r"grafics\button_obstacel_02.png").convert_alpha() , 
+                         pygame.image.load(r"grafics\button_obstacel_03.png").convert_alpha() , pygame.image.load(r"grafics\button_obstacel_04.png").convert_alpha() ,
+                         pygame.image.load(r"grafics\button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics\button_obstacel_06.png").convert_alpha())
+
 
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
@@ -65,7 +72,13 @@ change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, 
 skin_button = Button.Button(screen_width / 3.85 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
 creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width()/2, screen_height / 1.5, creategame_img, 1)
 
-start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img,1)
+# Buttons im create Game Menü:
+getting_faster_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 5, getting_faster_imges[0] , 1)
+increasing_Reflektion_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 3.2, increasingReflektion_imges[0] , 1)
+moving_obstacel_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 2.3, moving_obstacel_imges[0] , 1)
+obstacel_counter = ''
+
+start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img ,1)
 # -------------------------------------------------------------------------
 
 
@@ -98,9 +111,16 @@ while run:
             sys.exit()
         # Menü aufrufen und Spiel pausieren?:
         if event.type == pygame.KEYDOWN:
-            if event.key ==pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE:
                 game_paused = True
-
+            
+            # Im Menü um Anzahl an Hindernissen anzugeben:
+            
+            if event.key == pygame.K_BACKSPACE:
+                obstacel_counter = obstacel_counter[:-1]
+            else:
+                obstacel_counter += event.unicode
+            
         # -------------------------------------------------------------------------------------- #
         # Inputs - Abhängig von der Situation in der Ausführung (im Menü, oder währed des Spiels)
 
@@ -148,8 +168,11 @@ while run:
                 if event.key == pygame.K_s:
                     Game.paddle_player_2.movement -= Game.paddle_player_2.speed                                  
          
-       
-         
+            # ------------------------------------------------------------------------------------------------------- #
+            #           User Input in Menu
+            
+            
+            
     # Hintergrund des Bildschirms
     screen.fill('#2F373F')
 
@@ -159,9 +182,23 @@ while run:
     playertwo_text = Text.Text(" -Player Two- ", screen_width/1.5, screen_height/6)  
     ai_text = Text.Text(" -AI- ", screen_width/1.39, screen_height/6)  
     
-    # ##### Main - Menü ##### #
+    # --------------------------------------------------------------------------------------------------------------- #
+    #                                             MENÜS                                                               #
+    # --------------------------------------------------------------------------------------------------------------- #
+    
+    # #####  ---------------   Main - Menü      -------------       ##### #
+    # ------------------- Spieler-Auswahl-Menü -------------------------- #
+    """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
+            1.) PvP oder PvAi
+            2.) Ai Schweirigkeit?
+            3.) Skin von Spieler 1 und 2 (wenn keine Ai)
+            
+            5.) Ball-Skin / Hintergrund ?  
+            
+            -- Spieler-Objekte erstellen / verändern // game_modus Variable anpassen
+    """ 
     # Überprüfen auf Spielzustand:
-    if game_paused == True and game_in_menue == True:
+    if game_paused == True and game_in_menue == True and game_in_menue_create == False:
         #Pong und Blitz einfügen
         screen.blit(pong_img,(screen_width / 2 - pong_img.get_width()/2, screen_height / 8))
         screen.blit(lightning_img,(screen_width / 2 - lightning_img.get_width()/2, screen_height / 3))
@@ -172,8 +209,9 @@ while run:
     
         #startbutton einfügen
         if creategame_button.draw(screen):
-            game_in_menue = False
-            game_paused = False
+            # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
+            Game = GameState.GameState_Manager(screen)
+            game_in_menue_create = True
 
         if change_button.draw(screen) == True:
             ai_text.blitnew(screen)
@@ -181,6 +219,74 @@ while run:
         if skin_button.draw(screen):
             pass
 
+    # -------------- Create Game Menü ------------------------ #
+    """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
+            1.) Block-Spielmodus            (Keine Blöcke, statische Blöcke, sich zunehmend teleportierende Blöcke, sich bewegende Blöcke)
+            2.) Geschwindigkeits Änderung   (An / Aus)
+            3.) Reflektionsverstärkung      (An / Aus)
+            
+  
+    """ 
+    
+    if game_paused == True and game_in_menue == True and game_in_menue_create == True:
+        
+        # Abfrage über den Spiel-Modus: Ball wird schneller
+        if getting_faster_button.draw(screen) == True:
+            # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
+            getting_faster_button.counter += 1
+            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
+            getting_faster_button.change_picture(getting_faster_imges[getting_faster_button.counter % len(getting_faster_imges)])
+
+        # Abfrage über Spiel-Modus: Ball wird härter reflektiert
+        if increasing_Reflektion_button.draw(screen) == True:
+            # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
+            increasing_Reflektion_button.counter += 1
+            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
+            increasing_Reflektion_button.change_picture(increasingReflektion_imges[increasing_Reflektion_button.counter % len(increasingReflektion_imges)])
+            
+        # Abfrage über Spiel-Modus: Hindernisse!!!
+        if moving_obstacel_button.draw(screen) == True:
+            # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
+            moving_obstacel_button.counter += 1
+            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
+            moving_obstacel_button.change_picture(moving_obstacel_imges[moving_obstacel_button.counter % len(moving_obstacel_imges)])
+        
+        text_count_obstacel = Text.Text(obstacel_counter, screen_width/6 , screen_height/6)
+        text_count_obstacel.blitnew(screen)
+        
+        
+        if start_button.draw(screen) == True:
+            # Das Spiel befindet sich nicht mehr im Menü, somit müssen die Menü-Methoden nciht länger auzsgeführt werden
+            game_paused, game_in_menue, game_in_menue_create = False,False,False
+            
+            
+            if increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 0:
+                Game.game_modus_feature_increasingReflektion = False
+            elif increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 1:
+                Game.game_modus_feature_increasingReflektion = True
+            
+            if getting_faster_button.counter % len(getting_faster_imges) == 0:
+                Game.game_modus_feature_increasingSpeed = False
+            elif getting_faster_button.counter % len(getting_faster_imges) == 1:
+                Game.game_modus_feature_increasingSpeed = True
+            
+            Game.game_modus_feature_Obstacel_difficulty = moving_obstacel_button.counter % len(moving_obstacel_imges)
+            
+            try:
+                Game.game_modus_feature_Obstacel_count = int(obstacel_counter)
+                obstacel_counter = ''
+            except:
+                print("Sie haben keine Valide Anzahl eingegeben")
+                Game.game_modus_feature_Obstacel_count = 0
+                obstacel_counter = ''
+            
+            print(f"gewählte Spiel Modi: getting faster: {Game.game_modus_feature_increasingSpeed}; harder Reflektion:  {Game.game_modus_feature_increasingReflektion}; Hindernisse: {Game.game_modus_feature_Obstacel_difficulty}")
+            
+            if game_modus == "PvAi":
+                Game.Start_PvAi_Game(player_1)
+            elif game_modus == "PvP":
+                Game.Start_PvP_Game(player_1, player_2)    
+    
     
     
     # ##### Pausen - Menü ##### #
