@@ -10,6 +10,8 @@ class Player(pygame.sprite.Sprite):
         self.skin = pygame.image.load('skins/Paddle.png')             # Standard-Textur für jedes Paddle
 
         self.player_speed = 15
+        
+        self.highscore = 0
 
 
     def update_score(self, by: int):
