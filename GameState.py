@@ -1,5 +1,6 @@
 import pygame, random
-import Player, Paddel, AiPlayer, Ball
+import Player, Paddel, AiPlayer, Ball, Explosion
+
 
 
 class GameState_Manager:
@@ -22,6 +23,7 @@ class GameState_Manager:
         
         self.ball_group = pygame.sprite.GroupSingle()
         self.paddle_group = pygame.sprite.Group()
+        self.explosion_group = pygame.sprite.Group()
         
         self.screen = screen
         self.screen_width = screen.get_width()
@@ -29,6 +31,7 @@ class GameState_Manager:
 
         self.standart_font = pygame.font.Font('freesansbold.ttf', 32)
         self.accent_color = (27,35,43)
+  
         
     def run_game(self):
 		# Drawing the game objects
@@ -42,12 +45,26 @@ class GameState_Manager:
         self.draw_score()
     
     def reset_ball(self):
+        #explosion_group = pygame.sprite.Group()
+
         if self.ball_group.sprite.rect.right >= self.screen_width:
             self.opponent_score += 1
+            self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.right-20, self.ball_group.sprite.rect.y)
+            self.explosion_group.add(self.explosion)
+            self.explosion_group.update()
+            self.explosion_group.draw(self.screen)
+            self.explosion_group.remove(self.explosion)
+            
             pygame.mixer.Sound("sounds/explosion_sound.wav").play()
+            pygame.display.update()
             self.ball_group.sprite.reset_ball()
         if self.ball_group.sprite.rect.left <= 0:
             self.player_1.score += 1
+            self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.left+20, self.ball_group.sprite.rect.y)
+            self.explosion_group.add(self.explosion)
+            self.explosion_group.update()
+            self.explosion_group.draw(self.screen)
+            self.explosion_group.remove(self.explosion)
             pygame.mixer.Sound("sounds/explosion_sound.wav").play()
             self.ball_group.sprite.reset_ball()
             

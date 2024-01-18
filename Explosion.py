@@ -1,7 +1,7 @@
 import pygame
 import Ball
 
-explosion_sound = pygame.mixer.Sound("sounds/explosion_sound.mp3")
+
 
 class Explosion(pygame.sprite.Sprite):
 	def __init__(self, x, y):
@@ -9,7 +9,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.images = []
 		for num in range(1, 6):
 			img = pygame.image.load(f"explosion/exp{num}.png")
-			img = pygame.transform.scale(img, (100, 100))
+			img = pygame.transform.scale(img, (300, 300))
 			self.images.append(img)
 		self.index = 0
 		self.image = self.images[self.index]
@@ -18,7 +18,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.counter = 0
 
 	def update(self):
-		explosion_speed = 4
+		explosion_speed = 6
 		#update explosion animation
 		self.counter += 1
 
@@ -30,33 +30,3 @@ class Explosion(pygame.sprite.Sprite):
 		#if the animation is complete, reset animation index
 		if self.index >= len(self.images) - 1 and self.counter >= explosion_speed:
 			self.kill()
-			
-
-explosion_group = pygame.sprite.Group()
-
-run = True
-while run:
-
-	clock.tick(fps)
-
-	#draw background
-	draw_bg()
-
-	explosion_group.draw(screen)
-	explosion_group.update()
-
-
-	#event handler
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			run = False
-		if event.type == pygame.MOUSEBUTTONDOWN:
-			pos = pygame.mouse.get_pos()
-			explosion = Explosion(pos[0], pos[1])
-			explosion_sound.play()
-			explosion_group.add(explosion)
-
-
-	pygame.display.update()
-
-pygame.quit()	
