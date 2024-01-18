@@ -56,9 +56,10 @@ class Paddel(pygame.sprite.Sprite):
         elif isinstance(self.player, AiPlayer.AIPlayer):
             
             # An Ai Methode aussourcen !!!!
+            observed_ball = ball_group.sprites()[0]
             
-            if self.rect.top < ball_group.sprite.rect.y:
+            if self.rect.top < observed_ball.rect.y:
                 self.rect.y += self.speed
-            if self.rect.bottom > ball_group.sprite.rect.y:
+            if self.rect.bottom > observed_ball.rect.y:
                 self.rect.y -= self.speed
                 self.screen_beschränkung(self.screen_height)            

@@ -7,8 +7,10 @@ class Ball(pygame.sprite.Sprite):
         self.image = pygame.image.load(path)
         self.rect = self.image.get_rect(center = (x_pos,y_pos))
              
-        self.speed_x = speed_x * random.choice((-1,1))
-        self.speed_y = speed_y * random.choice((-1,1))
+        self.speed_x = speed_x * random.uniform(-1,1)
+        self.speed_y = speed_y * random.uniform(-1,1)
+        if self.speed_x == 0:
+            self.speed_x += 3
         
         self.initial_speed_x = speed_x
         self.initial_speed_y = speed_y
@@ -58,8 +60,8 @@ class Ball(pygame.sprite.Sprite):
 
     def reset_ball(self):
         self.active = False
-        self.speed_x = random.choice((-1,1)) * self.initial_speed_x
-        self.speed_y = random.choice((-1,1)) * self.initial_speed_y
+        self.speed_x = random.uniform(-1,1) * self.initial_speed_x
+        self.speed_y = random.uniform(-1,1) * self.initial_speed_y
         self.score_time = pygame.time.get_ticks()
         self.rect.center = (self.screen_width/2,self.screen_height/2)
         #pygame.mixer.Sound.play(score_sound)
