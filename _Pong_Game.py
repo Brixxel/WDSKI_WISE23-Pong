@@ -57,15 +57,13 @@ increasingReflektion_imges = (pygame.image.load(r"grafics\button_harder_reflekti
 moving_obstacel_imges = (pygame.image.load(r"grafics\button_obstacel_01.png").convert_alpha() , pygame.image.load(r"grafics\button_obstacel_02.png").convert_alpha() , 
                          pygame.image.load(r"grafics\button_obstacel_03.png").convert_alpha() , pygame.image.load(r"grafics\button_obstacel_04.png").convert_alpha() ,
                          pygame.image.load(r"grafics\button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics\button_obstacel_06.png").convert_alpha())
-
-
-paddle_blue_img = pygame.image.load("skins/Paddle_blue.png").convert_alpha()
-paddle_green_img = pygame.image.load("skins/Paddle_green.png").convert_alpha()
-paddle_white_img = pygame.image.load("skins/Paddle_white.png").convert_alpha()
-paddle_yellow_img = pygame.image.load("skins/Paddle_yellow.png").convert_alpha()
-paddle_red_img = pygame.image.load("skins/Paddle.png").convert_alpha()
-
-paddle_list = [paddle_blue_img, paddle_green_img, paddle_white_img, paddle_yellow_img, paddle_red_img]
+paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
+              pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
+              pygame.image.load("skins/Paddle.png").convert_alpha()]
+playerone_img = pygame.image.load("grafics/player_one.png").convert_alpha()
+two = pygame.image.load("grafics/player_two.png").convert_alpha()
+ai = pygame.image.load("grafics/ai_player.png").convert_alpha()
+player_img = (two, ai)
 
 # -------------------------------------------------------------------------
 # Allgemeine Instanzen:
@@ -76,9 +74,14 @@ options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, s
 home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, screen_height / 2.3, home_img, 1)
 quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, screen_height / 1.85, quit_img, 1)
 
-change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, screen_height /6, change_img, 1)
+change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, screen_height /9, change_img, 1)
 skin_button = Button.Button(screen_width / 3.85 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
-creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width()/2, screen_height / 1.5, creategame_img, 1)
+skin2_button = Button.Button(screen_width / 1.33 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
+creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width(), screen_height / 1.5, creategame_img, 2)
+paddle_button = Button.Button(screen_width / 3.85, screen_height / 3, paddle_img[4],1)
+paddle2_button = Button.Button(screen_width / 1.33, screen_height / 3, paddle_img[4],1)
+playerone_button = Button.Button(screen_width / 5 - playerone_img.get_width() / 2, screen_height / 13, playerone_img, 5)
+playertwo_ai_button = Button.Button(screen_width / 1.45 - player_img[1].get_width() / 2, screen_height / 13, player_img[1], 5)
 
 # Buttons im create Game Menü:
 getting_faster_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 5, getting_faster_imges[0] , 1)
@@ -96,6 +99,7 @@ start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_
 # !!!!!! hier evtl alten Spielstand laden !!!!!! #
 player_1 = Player.Player()
 player_2 = Player.Player()
+ai_player = AiPlayer.AIPlayer()
 # --------------------------------------------------------------------------
 
 # Spiel - Startzustand initialisieren: 
@@ -184,11 +188,7 @@ while run:
     # Hintergrund des Bildschirms
     screen.fill('#2F373F')
 
-    ##### Player 1 Schrift erzeugen #####
- 
-    playerone_text = Text.Text(" -Player One- ", screen_width/6 , screen_height/6)  
-    playertwo_text = Text.Text(" -Player Two- ", screen_width/1.5, screen_height/6)  
-    ai_text = Text.Text(" -AI- ", screen_width/1.39, screen_height/6)  
+  
     
     # --------------------------------------------------------------------------------------------------------------- #
     #                                             MENÜS                                                               #
@@ -210,10 +210,11 @@ while run:
         #Pong und Blitz einfügen
         screen.blit(pong_img,(screen_width / 2 - pong_img.get_width()/2, screen_height / 8))
         screen.blit(lightning_img,(screen_width / 2 - lightning_img.get_width()/2, screen_height / 3))
+        paddle_button.draw(screen)
+        
 
-        #Spieler 1 anzeigen
-        playerone_text.blitnew(screen)
-        playertwo_text.blitnew(screen)
+        playerone_button.draw(screen)
+        playertwo_ai_button.draw(screen)
     
         #startbutton einfügen
         if creategame_button.draw(screen):
@@ -222,7 +223,28 @@ while run:
             game_in_menue_create = True
 
         if change_button.draw(screen) == True:
-            ai_text.blitnew(screen)
+            change_button.counter += 1
+            playertwo_ai_button.change_picture(player_img[change_button.counter % len(player_img)])
+            if change_button.counter % 2 == 0:
+                game_modus = "PvP"
+
+            else:
+                game_modus = "PvAi"      
+
+        if game_modus == "PvP":
+            paddle2_button.draw(screen)
+            if skin2_button.draw(screen) == True:
+                skin2_button.counter += 1
+                paddle2_button.change_picture(paddle_img[skin2_button.counter % len(paddle_img)])
+                player_2.skin = paddle_img[skin2_button.counter % len(paddle_img)]
+
+    
+        if skin_button.draw(screen) == True:
+            skin_button.counter += 1
+            paddle_button.change_picture(paddle_img[skin_button.counter % len(paddle_img)])
+            player_1.skin = paddle_img[skin_button.counter % len(paddle_img)]
+
+
 
 
     # -------------- Create Game Menü ------------------------ #
