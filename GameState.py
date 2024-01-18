@@ -51,7 +51,6 @@ class GameState_Manager:
             self.opponent_score += 1
             self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.right-20, self.ball_group.sprite.rect.y)
             self.explosion_group.add(self.explosion)
-            self.explosion_group.update()
             self.explosion_group.draw(self.screen)
             self.explosion_group.remove(self.explosion)
             
@@ -62,7 +61,6 @@ class GameState_Manager:
             self.player_1.score += 1
             self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.left+20, self.ball_group.sprite.rect.y)
             self.explosion_group.add(self.explosion)
-            self.explosion_group.update()
             self.explosion_group.draw(self.screen)
             self.explosion_group.remove(self.explosion)
             pygame.mixer.Sound("sounds/explosion_sound.wav").play()
