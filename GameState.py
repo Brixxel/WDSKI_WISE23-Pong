@@ -104,10 +104,10 @@ class GameState_Manager:
         if self.game_modus_feature_increasingSpeed:
             if self.game_timer % 1000 == 0:
                 for ball in self.ball_group.sprites():
-                    ball.speed_x = self.ball.speed_x * 1.1
-                    ball.speed_y = self.ball.speed_y * 1.1
-                # !!!!! Print Statement entfehrnen
-                print(f"Erhöhe Geschwindigkeit auf: {self.ball.speed_x}")
+                    ball.speed_x = ball.speed_x * 1.1
+                    ball.speed_y = ball.speed_y * 1.1
+                    # !!!!! Print Statement entfehrnen
+                    print(f"Erhöhe Geschwindigkeit auf: {ball.speed_x}")
     
     # Spiel-Modus: je öfter der Ball Reflektiert wird, um so schneller bewegt er sich
     def feature_increasing_Reflection(self):
