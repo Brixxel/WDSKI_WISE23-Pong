@@ -12,9 +12,10 @@ class GameState_Manager:
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
         self.paddle_player_1 = 0
         self.paddle_player_2 = 0
-        self.ball = 0
+        #self.ball = 0
+        #self.ball02 = 0
         
-        self.ball_group = pygame.sprite.GroupSingle()
+        self.ball_group = pygame.sprite.Group()
         self.paddle_group = pygame.sprite.Group()
         
         self.screen = screen
@@ -36,6 +37,8 @@ class GameState_Manager:
         self.game_modus_feature_increasingReflektion = False       # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
         self.game_modus_feature_Obstacel_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
         self.game_modus_feature_Obstacel_difficulty = 0
+
+        self.game_modus_balls_count = 12                             # Spielmodus, der die Anzahl der Bälle veränderlich macht
         
         # Spiel Mosu Atribute
         self.game_modus_obstacel_group = pygame.sprite.Group()
@@ -69,12 +72,14 @@ class GameState_Manager:
     
     # Wenn ein Punkt erziehlt wurde: (Sowohl Überprüfung wie auch Score Erhöhung)
     def reset_ball(self):
-        if self.ball_group.sprite.rect.right >= self.screen_width:
-            self.paddle_player_2.player.score += 1
-            self.ball_group.sprite.reset_ball()
-        if self.ball_group.sprite.rect.left <= 0:
-            self.paddle_player_1.player.score += 1
-            self.ball_group.sprite.reset_ball()
+        for ball in self.ball_group.sprites():
+            
+            if ball.rect.right >= self.screen_width:
+                self.paddle_player_2.player.score += 1
+                ball.reset_ball()
+            if ball.rect.left <= 0:
+                self.paddle_player_1.player.score += 1
+                ball.reset_ball()
             
     # Um den aktuellen Spiel-Score von Spieler und Gegner darzustellen:
     def draw_score(self):
@@ -98,15 +103,17 @@ class GameState_Manager:
     def feature_increasing_Speed(self):
         if self.game_modus_feature_increasingSpeed:
             if self.game_timer % 1000 == 0:
-                self.ball.speed_x = self.ball.speed_x * 1.1
-                self.ball.speed_y = self.ball.speed_y * 1.1
+                for ball in self.ball_group.sprites():
+                    ball.speed_x = self.ball.speed_x * 1.1
+                    ball.speed_y = self.ball.speed_y * 1.1
                 # !!!!! Print Statement entfehrnen
                 print(f"Erhöhe Geschwindigkeit auf: {self.ball.speed_x}")
     
     # Spiel-Modus: je öfter der Ball Reflektiert wird, um so schneller bewegt er sich
     def feature_increasing_Reflection(self):
         if self.game_modus_feature_increasingReflektion:
-            self.ball.increasing_reflection()
+            for ball in self.ball_group.sprites():
+                ball.increasing_reflection()
        
 
 
@@ -135,7 +142,8 @@ class GameState_Manager:
             rand_scale = random.uniform(1,3.5)
             obstacel_1 = Obstacel.Obstacel(self.screen, rand_scale, self.game_modus_feature_Obstacel_difficulty)
             self.game_modus_obstacel_group.add(obstacel_1)
-        self.ball.obstacels = self.game_modus_obstacel_group
+        for ball in self.ball_group.sprites():
+            ball.obstacels = self.game_modus_obstacel_group
 
  
 # --------------------------------------------------------------------------------------- #
@@ -169,8 +177,9 @@ class GameState_Manager:
         self.paddle_group.add(self.paddle_player_2)
         
         self.ball_group.empty()
-        self.ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
-        self.ball_group.add(self.ball)
+        for x in range(self.game_modus_balls_count):
+            ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
+            self.ball_group.add(ball)
         
         if self.game_modus_feature_Obstacel_difficulty != 0:
             self.feature_Obstacels_initialise()
