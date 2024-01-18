@@ -222,6 +222,7 @@ while run:
             Game = GameState.GameState_Manager(screen)
             game_in_menue_create = True
 
+        # AI oder PLayer auswählen
         if change_button.draw(screen) == True:
             change_button.counter += 1
             playertwo_ai_button.change_picture(player_img[change_button.counter % len(player_img)])
@@ -231,6 +232,7 @@ while run:
             else:
                 game_modus = "PvAi"      
 
+        #skins bei Player2 aussuchen
         if game_modus == "PvP":
             paddle2_button.draw(screen)
             if skin2_button.draw(screen) == True:
@@ -238,7 +240,7 @@ while run:
                 paddle2_button.change_picture(paddle_img[skin2_button.counter % len(paddle_img)])
                 player_2.skin = paddle_img[skin2_button.counter % len(paddle_img)]
 
-    
+        #skins bei Player1 aussuchen
         if skin_button.draw(screen) == True:
             skin_button.counter += 1
             paddle_button.change_picture(paddle_img[skin_button.counter % len(paddle_img)])
