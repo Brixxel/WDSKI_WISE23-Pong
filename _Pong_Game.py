@@ -24,13 +24,17 @@ pygame.mixer.pre_init(44100,-16,2,512)
 pygame.init()
 clock = pygame.time.Clock()
 
+
 # Bildschirm - Screen - (Größe evtl anpassen)
 os.environ["SDL_VIDEO_CENTERED"] = "1" 
-screen_width = pygame.display.Info().current_w
-screen_height = pygame.display.Info().current_h
+screen_width_monitor = pygame.display.Info().current_w
+screen_height_monitor = pygame.display.Info().current_h
+screen_height = (screen_height_monitor - 180)
+screen_width = (2)*(screen_height - 180)
+
 #monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
 #screen = pygame.display.set_mode((screen_width,screen_height))
-screen = pygame.display.set_mode((screen_width -70, screen_height -120), pygame.RESIZABLE) ########fullscreen#####
+screen = pygame.display.set_mode(( screen_width  , screen_height ), pygame.RESIZABLE) ########fullscreen#####
 pygame.display.set_caption('Pong')
 
 # Spiel-Variablen - Stati
@@ -216,10 +220,11 @@ while run:
         playerone_button.draw(screen)
         playertwo_ai_button.draw(screen)
     
-        #startbutton einfügen
+        #startbutton einfügen - --- 
         if creategame_button.draw(screen):
             # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
             Game = GameState.GameState_Manager(screen)
+            # !!!!!!!!! kurzes Abwarten vor neuladen der SEite
             game_in_menue_create = True
 
         # AI oder PLayer auswählen
@@ -259,7 +264,7 @@ while run:
     """ 
     
     if game_paused == True and game_in_menue == True and game_in_menue_create == True:
-        
+        print("Starte Spiel!!!")
         # Abfrage über den Spiel-Modus: Ball wird schneller
         if getting_faster_button.draw(screen) == True:
             # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
@@ -288,7 +293,7 @@ while run:
         if start_button.draw(screen) == True:
             # Das Spiel befindet sich nicht mehr im Menü, somit müssen die Menü-Methoden nciht länger auzsgeführt werden
             game_paused, game_in_menue, game_in_menue_create = False,False,False
-            
+            print("Starte Spiel Jetzt gedrückt!!!")
             
             if increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 0:
                 Game.game_modus_feature_increasingReflektion = False
