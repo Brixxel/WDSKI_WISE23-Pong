@@ -66,8 +66,8 @@ moving_obstacel_imges = (pygame.image.load(r"grafics\button_obstacel_01.png").co
 paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
               pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
               pygame.image.load("skins/Paddle.png").convert_alpha()]
-multiball_img = [pygame.image.load(r"grafics\button_multiball_01.png").convert_alpha(),pygame.image.load(r"grafics\button_multiball_02.png").convert_alpha(),
-                pygame.image.load(r"grafics\button_multiball_03.png").convert_alpha(),pygame.image.load(r"grafics\button_multiball_04.png").convert_alpha(),]
+multiball_img = (pygame.image.load(r"grafics\button_multiball_01.png").convert_alpha(),pygame.image.load(r"grafics\button_multiball_02.png").convert_alpha(),
+                pygame.image.load(r"grafics\button_multiball_03.png").convert_alpha(),pygame.image.load(r"grafics\button_multiball_04.png").convert_alpha(),)
 playerone_img = pygame.image.load("grafics/player_one.png").convert_alpha()
 two = pygame.image.load("grafics/player_two.png").convert_alpha()
 ai = pygame.image.load("grafics/ai_player.png").convert_alpha()
@@ -78,10 +78,10 @@ blöckeanzahl_img = pygame.image.load("grafics/anzahl_blöcke.png").convert_alph
 # Allgemeine Instanzen:
 
 # Buttons:  !!!!! Zentrierung relativ zur Höhe !!!!!
-resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, screen_height / 5, resume_img, 1)    #########optimierte Positionene############
-options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, screen_height / 3.2, options_img, 1)  ###ungefäre Höhe abgeschätzt####
-home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, screen_height / 2.3, home_img, 1)
-quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, screen_height / 1.85, quit_img, 1)
+resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, 7 * screen_height / 20, resume_img, 1)    #########optimierte Positionene############
+options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, 9 * screen_height / 20, options_img, 1)  ###ungefäre Höhe abgeschätzt####
+home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, 11 * screen_height / 20, home_img, 1)
+quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, 13 * screen_height / 20, quit_img, 1)
 
 change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, screen_height /9, change_img, 1)
 skin_button = Button.Button(screen_width / 3.85 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
@@ -93,15 +93,15 @@ playerone_button = Button.Button(screen_width / 5 - playerone_img.get_width() / 
 playertwo_ai_button = Button.Button(screen_width / 1.45 - player_img[1].get_width() / 2, screen_height / 13, player_img[1], 5)
 
 # Buttons im create Game Menü:
-getting_faster_button = Button.Button(screen_width / 2 - (resume_img.get_width()/2)*3, screen_height / 5, getting_faster_imges[0] , 4)
-increasing_Reflektion_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height / 3.2, increasingReflektion_imges[0] , 4)
-moving_obstacel_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height / 2.3, moving_obstacel_imges[0] , 4)
+getting_faster_button = Button.Button(screen_width / 2 - (resume_img.get_width()/2)*3, screen_height -  5 * screen_height / 12, getting_faster_imges[0] , 4)
+increasing_Reflektion_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  4 * screen_height / 12, increasingReflektion_imges[0] , 4)
+moving_obstacel_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  3 * screen_height / 12, moving_obstacel_imges[0] , 4)
 obstacel_counter = ''
-multiball_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height / 7, multiball_img[0] , 4)
-blöckeanzahl_button = Button.Button(screen_width / 2 - (blöckeanzahl_img.get_width() / 2)*4, screen_height / 2, blöckeanzahl_img, 4)
+multiball_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  2 * screen_height / 12, multiball_img[0] , 4)
+blöckeanzahl_button = Button.Button(screen_width / 2 - (blöckeanzahl_img.get_width() / 2)*4, screen_height -  1.5 * screen_height / 12, blöckeanzahl_img, 4)
 
 
-start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img ,1)
+start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height -  9 * screen_height / 12, start_img ,1)
 # -------------------------------------------------------------------------
 
 
@@ -218,6 +218,7 @@ while run:
     """ 
     # Überprüfen auf Spielzustand:
     if game_paused == True and game_in_menue == True and game_in_menue_create == False:
+        
         #Pong und Blitz einfügen
         screen.blit(pong_img,(screen_width / 2 - pong_img.get_width()/2, screen_height / 8))
         screen.blit(lightning_img,(screen_width / 2 - lightning_img.get_width()/2, screen_height / 3))
@@ -254,7 +255,8 @@ while run:
                 paddle2_button.change_picture(paddle_img[skin2_button.counter % len(paddle_img)])
                 player_2.skin = paddle_img[skin2_button.counter % len(paddle_img)]
             score_person2 = Text.Text(f"score: {player_2.score}", screen_width/1.5 , screen_height/1.5)
-            score_person2.blitnew(screen)       
+            score_person2.blitnew(screen)
+            player_2.update_highscore()        
             highscore_person2 = Text.Text(f"highscore: {player_2.highscore}", screen_width/1.5 , screen_height/1.4)
             highscore_person2.blitnew(screen)    
 
@@ -265,7 +267,8 @@ while run:
             player_1.skin = paddle_img[skin_button.counter % len(paddle_img)]
 
         score_person1 = Text.Text(f"score: {player_1.score}", screen_width/6 , screen_height/1.5)
-        score_person1.blitnew(screen)    
+        score_person1.blitnew(screen)
+        player_1.update_highscore()   
         highscore_person1 = Text.Text(f"highscore: {player_1.highscore}", screen_width/6 , screen_height/1.4)
         highscore_person1.blitnew(screen)    
 
@@ -296,7 +299,7 @@ while run:
             # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
             increasing_Reflektion_button.change_picture(increasingReflektion_imges[increasing_Reflektion_button.counter % len(increasingReflektion_imges)])
 
-        text_count_obstacel = Text.Text(f"geben sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width/3.3 , screen_height/2)
+        text_count_obstacel = Text.Text(f"geben sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width - 5*screen_width/8, screen_height -  6 * screen_height / 12)
         text_count_obstacel.blitnew(screen)
          
         # Abfrage über Spiel-Modus: Hindernisse!!!
@@ -308,7 +311,12 @@ while run:
             if moving_obstacel_button.counter % len(moving_obstacel_imges) != 0:
                 text_count_obstacel.remove()
             
-                
+        if multiball_button.draw(screen):
+            # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
+            multiball_button.counter += 1
+            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
+            multiball_button.change_picture(multiball_img[multiball_button.counter % len(multiball_img)])
+            pass      
             
         
         
@@ -328,6 +336,7 @@ while run:
                 Game.game_modus_feature_increasingSpeed = True
             
             Game.game_modus_feature_Obstacel_difficulty = moving_obstacel_button.counter % len(moving_obstacel_imges)
+            Game.game_modus_balls_count =  2 ** (multiball_button.counter % len(multiball_img))
             
             try:
                 Game.game_modus_feature_Obstacel_count = int(obstacel_counter)
