@@ -15,7 +15,7 @@ class GameState_Manager:
         #self.ball = 0
         #self.ball02 = 0
         
-        self.ball_group = pygame.sprite.Group()
+        self.ball_group = pygame.sprite.GroupSingle()
         self.paddle_group = pygame.sprite.Group()
         self.explosion_group = pygame.sprite.Group()
         
