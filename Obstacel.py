@@ -1,5 +1,6 @@
 import pygame
 import random
+import os
 
 """
 Obstacels versdchiedener Typen sollen unterscheideliche Reflektions Eigenschaften haben
@@ -15,8 +16,9 @@ class Obstacel(pygame.sprite.Sprite):
         
         self.difficulty = difficulty
         self.ready_for_change = False
-         
-        self.image = pygame.image.load('grafics/Hinderniss_1.png')
+        # folderpath = "skins/obstacle_skins"
+        # randomimage = self.change_img(folderpath)
+        self.image = pygame.image.load(self.change_img())
         width = self.image.get_width()
         height = self.image.get_height()
         self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
@@ -55,8 +57,20 @@ class Obstacel(pygame.sprite.Sprite):
         if (current_game_timer + (obstical_group_index)*40 ) % diff_modifier == 0:
             self.ready_for_change = True
     
-    def change_img():
-        pass
+    def change_img(self,directory="."):
+        
+        self.imgExtension = ["jpg"] 
+        self.allImages = list()
+
+        
+        for img in os.listdir(directory): 
+            ext = img.split(".")[len(img.split(".")) - 1]
+            if (ext in self.imgExtension):
+                self.allImages.append(img)
+        self.choice = random.randint(0, len(self.allImages) - 1)
+        self.chosenImage = self.allImages[self.choice] 
+        return self.chosenImage
+    
     
     # Funktion, welche valide Werte für die Position des Hindernisses generieren
     def generate_valid_position(self):
