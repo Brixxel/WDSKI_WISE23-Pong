@@ -11,22 +11,27 @@ class Ball(pygame.sprite.Sprite):
         self.speed_x = self.generate_valid_speed()[0]
         self.speed_y = self.generate_valid_speed()[1]
         
+        # Zustands-Atribute des Balls
         self.paddles = paddles
         self.active = False
         self.score_time = 0
         self.obstacels = pygame.sprite.Group()
         
+        # Variablen, die der Ball über den Screen / das Spielfeld braucht
         self.screen_height = screen_height
         self.screen_width = screen_width
         self.screen = screen
         
         self.reflections_since_new_round = 0
         
-        
+    # Relevanteste Methode, die den Ball pro Spiel-Tick, updatet    
     def update(self):
+        # Wenn der Ball im Spiel ist (Sich bewegt und nicht gerade wartet):
         if self.active:
+            # verändert er seine Position, abhängig von seiner Bewegungsrichtung
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
+            # Und überprüft auf Kollisionen und damit einhergehende Reflektionen
             self.collisions()
             self.collision_obstacel()
         else:
@@ -100,7 +105,9 @@ class Ball(pygame.sprite.Sprite):
             if pygame.sprite.spritecollide(self,self.obstacels,False):
                 # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
                 self.reflections_since_new_round += 1
+                # Sound, für das Reflektieren
                 pygame.mixer.Sound("sounds/hit_sound.mp3").play()
+                # Richtungsänderung des Balls, abhängig auf welcher Seitde er auf ein Hinderniss getroffen ist
                 collision_paddle = pygame.sprite.spritecollide(self,self.obstacels,False)[0].rect
                 if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                     self.speed_x *= -1
@@ -112,13 +119,15 @@ class Ball(pygame.sprite.Sprite):
                 if abs(self.rect.bottom - collision_paddle.top) < 10 and self.speed_y > 0:
                     self.rect.bottom = collision_paddle.top
                     self.speed_y *= -1
-    
+                    
+    # Methode, die einen Valieden Richtuingsvektors eines Balls zurückgibt
     def generate_valid_speed(self):
         # Ursprungs-Geschwindigkeis-Vektor
         speed = (0 , 0)
-        
+        # Der Ball sollte sich möglichst nicht senk- bzw. wagerecht bewegen, dass wird durch den Vergleich der quadratischen Komponenten garantiert
         while speed[0]**2 < 6 or speed[1]**2 < 6:
             speed_x =  random.uniform(-5,5)
             speed_y =  random.uniform(-5,5)
             speed = (speed_x, speed_y)
+        # das korrekte Speed-Tupel, wird übergeben
         return speed

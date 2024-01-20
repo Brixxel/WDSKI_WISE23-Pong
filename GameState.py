@@ -65,6 +65,7 @@ class GameState_Manager:
 		# Updating the game objects
         self.paddle_group.update(self.ball_group)
         self.ball_group.update()
+        self.explosion_group.update()
         self.reset_ball()
         self.draw_score()
         
@@ -77,14 +78,14 @@ class GameState_Manager:
             
             if ball.rect.right >= self.screen_width:
                 self.paddle_player_2.player.score += 1
-                self.explosion = Explosion.Explosion(ball.rect.right-20, ball.rect.y)
+                self.explosion = Explosion.Explosion(ball.rect.right - 20, ball.rect.y)
                 self.explosion_group.add(self.explosion)
                 self.explosion_group.draw(self.screen)
                 self.explosion_group.remove(self.explosion)
-
                 pygame.mixer.Sound("sounds/explosion_sound.wav").play()
                 pygame.display.update()
                 ball.reset_ball()
+                
             if ball.rect.left <= 0:
                 self.explosion = Explosion.Explosion(ball.rect.left+20, ball.rect.y)
                 self.explosion_group.add(self.explosion)
