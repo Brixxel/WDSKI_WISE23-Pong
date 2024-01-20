@@ -15,7 +15,7 @@ class GameState_Manager:
         #self.ball = 0
         #self.ball02 = 0
         
-        self.ball_group = pygame.sprite.GroupSingle()
+        self.ball_group = pygame.sprite.Group()
         self.paddle_group = pygame.sprite.Group()
         self.explosion_group = pygame.sprite.Group()
         
@@ -65,6 +65,7 @@ class GameState_Manager:
 		# Updating the game objects
         self.paddle_group.update(self.ball_group)
         self.ball_group.update()
+        self.explosion_group.update()
         self.reset_ball()
         self.draw_score()
         
@@ -77,16 +78,16 @@ class GameState_Manager:
             
             if ball.rect.right >= self.screen_width:
                 self.paddle_player_2.player.score += 1
-                self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.right-20, self.ball_group.sprite.rect.y)
+                self.explosion = Explosion.Explosion(ball.rect.right - 20, ball.rect.y)
                 self.explosion_group.add(self.explosion)
                 self.explosion_group.draw(self.screen)
                 self.explosion_group.remove(self.explosion)
-
                 pygame.mixer.Sound("sounds/explosion_sound.wav").play()
                 pygame.display.update()
                 ball.reset_ball()
+                
             if ball.rect.left <= 0:
-                self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.left+20, self.ball_group.sprite.rect.y)
+                self.explosion = Explosion.Explosion(ball.rect.left+20, ball.rect.y)
                 self.explosion_group.add(self.explosion)
                 self.explosion_group.draw(self.screen)
                 self.explosion_group.remove(self.explosion)
@@ -191,7 +192,7 @@ class GameState_Manager:
         
         self.ball_group.empty()
         for x in range(self.game_modus_balls_count):
-            ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
+            ball = Ball.Ball('skins/Ball.png', self.screen_width/2, self.screen_height/2, self.paddle_group, self.screen_height, self.screen_width, self.screen)
             self.ball_group.add(ball)
         
         if self.game_modus_feature_Obstacel_difficulty != 0:

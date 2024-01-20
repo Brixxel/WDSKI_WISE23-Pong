@@ -58,7 +58,10 @@ getting_faster_imges = (pygame.image.load(r"grafics/button_getting_faster_01.png
 increasingReflektion_imges = (pygame.image.load(r"grafics/button_harder_reflektion_01.png").convert_alpha() , pygame.image.load(r"grafics/button_harder_reflektion_02.png").convert_alpha())
 moving_obstacel_imges = (pygame.image.load(r"grafics/button_obstacel_01.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_02.png").convert_alpha() , 
                          pygame.image.load(r"grafics/button_obstacel_03.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_04.png").convert_alpha() ,
-                         pygame.image.load(r"grafics/button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_06.png").convert_alpha())
+                         pygame.image.load(r"grafics/button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_06.png").convert_alpha() ,
+                         pygame.image.load(r"grafics/button_obstacel_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_08.png").convert_alpha())
+
+
 paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
               pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
               pygame.image.load("skins/Paddle.png").convert_alpha()]
@@ -182,14 +185,10 @@ while run:
                     Game.paddle_player_2.movement -= Game.paddle_player_2.speed                                  
          
             # ------------------------------------------------------------------------------------------------------- #
-            #           User Input in Menu
-            
-            
+            #           User Input in Menu         
             
     # Hintergrund des Bildschirms
     screen.fill('#2F373F')
-
-  
     
     # --------------------------------------------------------------------------------------------------------------- #
     #                                                    MENÜS                                                        #
