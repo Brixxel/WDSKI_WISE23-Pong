@@ -191,7 +191,7 @@ class GameState_Manager:
         
         self.ball_group.empty()
         for x in range(self.game_modus_balls_count):
-            ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
+            ball = Ball.Ball('skins/Ball.png', self.screen_width/2, self.screen_height/2, self.paddle_group, self.screen_height, self.screen_width, self.screen)
             self.ball_group.add(ball)
         
         if self.game_modus_feature_Obstacel_difficulty != 0:
