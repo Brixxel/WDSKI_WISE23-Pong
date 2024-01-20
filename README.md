@@ -49,3 +49,9 @@ Wir haben uns dafür entschieden, ein pixel haftes Design und Neonfarben für un
   -Futuristisches Gefühl mit Neonfarben: Neon Farben vermitteln ein futuristisches und lebendiges Gefühl. Die kräftigen Farben machen unser Spiel dynamischer und aufregender, was besonders gut zu einem Pong-Spiel passt.
   -Einzigartige Markenkennzeichnung: Die Kombination aus pixeligen Grafiken und Neonfarben verleiht unserem Spiel eine unverwechselbare Identität. Spieler können unser Spiel leicht erkennen und sich daran erinnern.
 Unsere Designentscheidungen basieren auf unseren persönlichen Präferenzen, dem gewünschten Spielerlebnis und dem Stil, den wir für unser Spiel schaffen möchten.
+
+# Quellen #
+https://www.pixilart.com/
+https://www.python-lernen.de/
+https://pythonprogramming.net/
+https://www.geeksforgeeks.org/

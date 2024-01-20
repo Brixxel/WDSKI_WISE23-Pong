@@ -185,6 +185,9 @@ class GameState_Manager:
         return "PvP"
 
     def general_setUp(self):
+
+        self.screen.fill('#00F700')
+        
         self.paddle_group.empty()
         self.paddle_group.add(self.paddle_player_1)
         self.paddle_group.add(self.paddle_player_2)
@@ -193,6 +196,7 @@ class GameState_Manager:
         for x in range(self.game_modus_balls_count):
             ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
             self.ball_group.add(ball)
+            
         
         if self.game_modus_feature_Obstacel_difficulty != 0:
             self.feature_Obstacels_initialise()
