@@ -54,12 +54,16 @@ class Paddel(pygame.sprite.Sprite):
         # Updaten, wie wenn es sich um eine Ai handelt:
             # anpassen nach Ai Typus (Stärke)    
         elif isinstance(self.player, AiPlayer.AIPlayer):
+            print(f"die Schwierigkeit der KI beträgt: {self.player.difficulty}")
+            action = self.player.operating()
+            
+            action(ball_group , self)
             
             # An Ai Methode aussourcen !!!!
-            observed_ball = ball_group.sprites()[0]
+            # observed_ball = ball_group.sprites()[0]
             
-            if self.rect.top < observed_ball.rect.y:
-                self.rect.y += self.speed
-            if self.rect.bottom > observed_ball.rect.y:
-                self.rect.y -= self.speed
-                self.screen_beschränkung(self.screen_height)            
+            # if self.rect.top < observed_ball.rect.y:
+            #     self.rect.y += self.speed
+            # if self.rect.bottom > observed_ball.rect.y:
+            #     self.rect.y -= self.speed
+            #     self.screen_beschränkung(self.screen_height)            

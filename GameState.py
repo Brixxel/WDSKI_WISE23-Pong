@@ -4,10 +4,10 @@ import Player, Paddel, AiPlayer, Ball, Obstacel, Explosion
 
 class GameState_Manager:
     
-    def __init__(self, screen):
+    def __init__(self, screen, ai_player):
     
-        # !!! evtl ja nach KI anpassen
-        self.player_ai = AiPlayer.AIPlayer()
+        # die KI
+        self.player_ai = ai_player
         
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
         self.paddle_player_1 = 0
@@ -46,6 +46,7 @@ class GameState_Manager:
         
     def run_game(self):
 		# Drawing the game objects
+        print(f"die Schwierigkeit der KI beträgt: {self.player_ai.difficulty}")
         self.paddle_group.draw(self.screen)
         self.ball_group.draw(self.screen)
         
@@ -169,8 +170,11 @@ class GameState_Manager:
     def Start_PvAi_Game(self, player_1 : Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
+        
         # entspricht hier einem AI Paddle
-        self.paddle_player_2 = Paddel.Paddel(self.player_ai,20,self.screen_width/2, 5, self.screen_height)
+        self.paddle_player_2 = Paddel.Paddel(self.player_ai, 20 ,self.screen_width/2, 5, self.screen_height)
+        print(f"die Schwierigkeit der KI beträgt: {self.player_ai.difficulty}")
+        #print(f"die Schwierigkeit der KI-Spieler beträgt: {self.paddle_player_2.difficulty}")
         
         self.general_setUp()
         

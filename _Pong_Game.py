@@ -103,6 +103,7 @@ start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_
 # Spiel-Objekte
 player_1 = Player.Player()
 player_2 = Player.Player()
+player_Ai = AiPlayer.AIPlayer()
 
 # --------------------------------------------------------------------------
 
@@ -218,7 +219,7 @@ while run:
         if creategame_button.draw(screen):
             # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
             current_time = pygame.time.get_ticks()
-            Game = GameState.GameState_Manager(screen)
+            Game = GameState.GameState_Manager(screen, player_Ai)
             # !!!!!!!!! kurzes Abwarten vor neuladen der Seite
             game_in_menue_create = True
            
@@ -250,7 +251,10 @@ while run:
         if game_modus == "PvAi":
             if ai_button.draw(screen):
                 ai_button.counter += 1
-                ai_button.change_picture(ai_imgs[ai_button.counter % len(ai_imgs)])       
+                ai_button.change_picture(ai_imgs[ai_button.counter % len(ai_imgs)])
+                # Anpassen der Schwierigkeit des AI-Spielers 
+                player_Ai.difficulty = ai_button.counter % len(ai_imgs)
+                print(f"die Schwierigkeit der KI beträgt: {player_Ai.difficulty}")   
 
         # Button zum skins bei Player1 aussuchen
         if skin_button.draw(screen) == True:
@@ -320,6 +324,7 @@ while run:
         if start_button.draw(screen) == True:
             # Das Spiel befindet sich nicht mehr im Menü, somit müssen die Menü-Methoden nciht länger auzsgeführt werden
             game_paused, game_in_menue, game_in_menue_create = False,False,False
+            print(f"die Schwierigkeit der KI beträgt beim Starten: {Game.player_ai.difficulty}")
             
             if increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 0:
                 Game.game_modus_feature_increasingReflektion = False
