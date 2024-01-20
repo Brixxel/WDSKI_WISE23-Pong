@@ -72,6 +72,7 @@ two = pygame.image.load("grafics/player_two.png").convert_alpha()
 ai = pygame.image.load("grafics/ai_player.png").convert_alpha()
 player_img = (two, ai)
 blöckeanzahl_img = pygame.image.load("grafics/anzahl_blöcke.png").convert_alpha()
+ai_imgs = (pygame.image.load(r"grafics/button_easy.png").convert_alpha(), pygame.image.load(r"grafics/button_medium.png").convert_alpha(),pygame.image.load(r"grafics/button_hard.png").convert_alpha())
 
 # ----------------------------------------------------------------------------------------------------
 # Allgemeine Instanzen:
@@ -90,6 +91,7 @@ paddle_button = Button.Button(screen_width / 3.85, screen_height / 3, paddle_img
 paddle2_button = Button.Button(screen_width / 1.33, screen_height / 3, paddle_img[4],1)
 playerone_button = Button.Button(screen_width / 5 - playerone_img.get_width() / 2, screen_height / 13, playerone_img, 5)
 playertwo_ai_button = Button.Button(screen_width / 1.45 - player_img[1].get_width() / 2, screen_height / 13, player_img[1], 5)
+ai_button = Button.Button(screen_width / 1.45 - ai_imgs[1].get_width() / 2, screen_height / 3, ai_imgs[0], 4)
 
 # Buttons im create Game Menü:
 getting_faster_button = Button.Button(screen_width / 2 - (resume_img.get_width()/2)*3, screen_height -  5 * screen_height / 12, getting_faster_imges[0] , 4)
@@ -255,7 +257,12 @@ while run:
             score_person2.blitnew(screen)
             player_2.update_highscore()        
             highscore_person2 = Text.Text(f"highscore: {player_2.highscore}", screen_width/1.5 , screen_height/1.4)
-            highscore_person2.blitnew(screen)    
+            highscore_person2.blitnew(screen) 
+
+        if game_modus == "PvAi":
+            if ai_button.draw(screen):
+                ai_button.counter += 1
+                ai_button.change_picture(ai_imgs[ai_button.counter % len(ai_imgs)])       
 
         #skins bei Player1 aussuchen
         if skin_button.draw(screen) == True:
@@ -268,6 +275,7 @@ while run:
         player_1.update_highscore()   
         highscore_person1 = Text.Text(f"highscore: {player_1.highscore}", screen_width/6 , screen_height/1.4)
         highscore_person1.blitnew(screen)    
+
 
 
 
