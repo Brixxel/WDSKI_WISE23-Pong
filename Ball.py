@@ -39,13 +39,13 @@ class Ball(pygame.sprite.Sprite):
     def collisions(self):
         # Der Ball trifft auf Decke oder Boden:
         if self.rect.top <= 0 or self.rect.bottom >= self.screen_height:
-            #pygame.mixer.Sound.play(plob_sound)
+            pygame.mixer.Sound("sounds/hit_sound.mp3").play()
             self.speed_y *= -1
         # Der Ball trifft auf ein Paddle:
         if pygame.sprite.spritecollide(self,self.paddles,False):
             # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
             self.reflections_since_new_round += 1
-            #pygame.mixer.Sound.play(plob_sound)
+            pygame.mixer.Sound("sounds/hit_sound.mp3").play()
             collision_paddle = pygame.sprite.spritecollide(self,self.paddles,False)[0].rect
             if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                 self.speed_x *= -1
@@ -79,6 +79,7 @@ class Ball(pygame.sprite.Sprite):
         if 1400 < current_time - self.score_time <= 2100:
             countdown_number = 1
         if current_time - self.score_time >= 2100:
+            pygame.mixer.Sound("sounds/start_sound.mp3").play()
             self.active = True
             self.reflections_since_new_round = 0
             
@@ -103,7 +104,7 @@ class Ball(pygame.sprite.Sprite):
             if pygame.sprite.spritecollide(self,self.obstacels,False):
                 # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
                 self.reflections_since_new_round += 1
-                #pygame.mixer.Sound.play(plob_sound)
+                pygame.mixer.Sound("sounds/hit_sound.mp3").play()
                 collision_paddle = pygame.sprite.spritecollide(self,self.obstacels,False)[0].rect
                 if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                     self.speed_x *= -1
