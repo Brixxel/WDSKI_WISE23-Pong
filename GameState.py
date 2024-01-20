@@ -15,7 +15,7 @@ class GameState_Manager:
         #self.ball = 0
         #self.ball02 = 0
         
-        self.ball_group = pygame.sprite.GroupSingle()
+        self.ball_group = pygame.sprite.Group()
         self.paddle_group = pygame.sprite.Group()
         self.explosion_group = pygame.sprite.Group()
         
@@ -77,7 +77,7 @@ class GameState_Manager:
             
             if ball.rect.right >= self.screen_width:
                 self.paddle_player_2.player.score += 1
-                self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.right-20, self.ball_group.sprite.rect.y)
+                self.explosion = Explosion.Explosion(ball.rect.right-20, ball.rect.y)
                 self.explosion_group.add(self.explosion)
                 self.explosion_group.draw(self.screen)
                 self.explosion_group.remove(self.explosion)
@@ -86,7 +86,7 @@ class GameState_Manager:
                 pygame.display.update()
                 ball.reset_ball()
             if ball.rect.left <= 0:
-                self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.left+20, self.ball_group.sprite.rect.y)
+                self.explosion = Explosion.Explosion(ball.rect.left+20, ball.rect.y)
                 self.explosion_group.add(self.explosion)
                 self.explosion_group.draw(self.screen)
                 self.explosion_group.remove(self.explosion)
