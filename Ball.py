@@ -41,17 +41,19 @@ class Ball(pygame.sprite.Sprite):
         # Der Ball trifft auf Decke oder Boden:
         if self.rect.top <= 0 or self.rect.bottom >= self.screen_height:
             pygame.mixer.Sound("sounds/hit_sound.mp3").play()
-            self.speed_y *= -1
+            self.speed_y *= -1 # Richtung der vertikalen Geschwindigkeitskomponente umkehren
         # Der Ball trifft auf ein Paddle:
         if pygame.sprite.spritecollide(self,self.paddles,False):
             # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
             self.reflections_since_new_round += 1
             pygame.mixer.Sound("sounds/hit_sound.mp3").play()
             collision_paddle = pygame.sprite.spritecollide(self,self.paddles,False)[0].rect
+             # Abhängig davon, wo der Ball das Paddle getroffen hat, die Richtung der horizontalen Geschwindigkeitskomponente ändern
             if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                 self.speed_x *= -1
             if abs(self.rect.left - collision_paddle.right) < 10 and self.speed_x < 0:
                 self.speed_x *= -1
+            # Abhängig davon, wo der Ball das Paddle getroffen hat, die Richtung der vertikalen Geschwindigkeitskomponente ändern
             if abs(self.rect.top - collision_paddle.bottom) < 10 and self.speed_y < 0:
                 self.rect.top = collision_paddle.bottom
                 self.speed_y *= -1
@@ -129,5 +131,5 @@ class Ball(pygame.sprite.Sprite):
             speed_x =  random.uniform(-5,5)
             speed_y =  random.uniform(-5,5)
             speed = (speed_x, speed_y)
-        # das korrekte Speed-Tupel, wird übergeben
+        # das korrekte Speed-Tupel wird übergeben
         return speed

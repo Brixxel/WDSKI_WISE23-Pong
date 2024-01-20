@@ -31,9 +31,13 @@ class Paddel(pygame.sprite.Sprite):
         
         # Gibt die aktuelle Bewegung des Paddels an / (Wird dann per TastenEingabe temporär verändert)
         self.movement = 0
+        self.moving_up = True
         
         # Standart Info, wie der Bildschrim aussieht
         self.screen_height = screen_height
+        
+        if isinstance(self.player, AiPlayer.AIPlayer):
+            self.action = self.player.operating()
 
     # Das Paddle kann sich nur innerhalb des Bildschirms bewegen, 
     # daher muss seine Bewegung eingeschränlt werden
@@ -54,16 +58,6 @@ class Paddel(pygame.sprite.Sprite):
         # Updaten, wie wenn es sich um eine Ai handelt:
             # anpassen nach Ai Typus (Stärke)    
         elif isinstance(self.player, AiPlayer.AIPlayer):
-            print(f"die Schwierigkeit der KI beträgt: {self.player.difficulty}")
-            action = self.player.operating()
-            
-            action(ball_group , self)
-            
-            # An Ai Methode aussourcen !!!!
-            # observed_ball = ball_group.sprites()[0]
-            
-            # if self.rect.top < observed_ball.rect.y:
-            #     self.rect.y += self.speed
-            # if self.rect.bottom > observed_ball.rect.y:
-            #     self.rect.y -= self.speed
-            #     self.screen_beschränkung(self.screen_height)            
+            #action = self.player.operating()      
+            self.action(ball_group , self)
+      

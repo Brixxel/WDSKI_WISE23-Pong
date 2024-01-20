@@ -108,9 +108,9 @@ player_Ai = AiPlayer.AIPlayer()
 # --------------------------------------------------------------------------
 
 # Spiel - Startzustand initialisieren: 
-Game = GameState.GameState_Manager(screen)
+# Game = GameState.GameState_Manager(screen, player_Ai)
 #(Wird später im Menü ausgeführt):
-game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
+# game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
 # game_modus = Game.Start_PvP_Game(player_1, player_2)
 
 # ######################################### #
@@ -253,8 +253,7 @@ while run:
                 ai_button.counter += 1
                 ai_button.change_picture(ai_imgs[ai_button.counter % len(ai_imgs)])
                 # Anpassen der Schwierigkeit des AI-Spielers 
-                player_Ai.difficulty = ai_button.counter % len(ai_imgs)
-                print(f"die Schwierigkeit der KI beträgt: {player_Ai.difficulty}")   
+                player_Ai.difficulty = ai_button.counter % len(ai_imgs) 
 
         # Button zum skins bei Player1 aussuchen
         if skin_button.draw(screen) == True:
