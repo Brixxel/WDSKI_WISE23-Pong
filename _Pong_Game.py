@@ -78,15 +78,15 @@ options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, 9
 home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, 11 * screen_height / 20, home_img, 1)
 quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, 13 * screen_height / 20, quit_img, 1)
 #Buttons im main Menü:
-change_button = Button.Button(screen_width / 1.33 - change_img.get_width() / 2, screen_height /9, change_img, 1)
-skin_button = Button.Button(screen_width / 3.85 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
-skin2_button = Button.Button(screen_width / 1.33 - skin_img.get_width() / 2, screen_height /6, skin_img, 1)
-creategame_button = Button.Button(screen_width / 2 - creategame_img.get_width(), screen_height / 1.5, creategame_img, 2)
-paddle_button = Button.Button(screen_width / 3.85, screen_height / 3, paddle_img[4],1)
-paddle2_button = Button.Button(screen_width / 1.33, screen_height / 3, paddle_img[4],1)
-playerone_button = Button.Button(screen_width / 5 - playerone_img.get_width() / 2, screen_height / 13, playerone_img, 5)
-playertwo_ai_button = Button.Button(screen_width / 1.45 - player_img[1].get_width() / 2, screen_height / 13, player_img[1], 5)
-ai_button = Button.Button(screen_width / 1.45 - ai_imgs[1].get_width() / 2, screen_height / 3, ai_imgs[0], 4)
+change_button = Button.Button(screen_width / 20 * 17 - change_img.get_width() / 2, 1 * screen_height / 20, change_img, 1)
+skin_button = Button.Button(screen_width / 20 * 3 - skin_img.get_width() / 2, 4 * screen_height /20, skin_img, 1)
+skin2_button = Button.Button(screen_width / 20 * 17 - skin_img.get_width() / 2, 4 * screen_height /20, skin_img, 1)
+creategame_button = Button.Button(screen_width / 20 * 10 - creategame_img.get_width(), 14 * screen_height / 20, creategame_img, 2)
+paddle_button = Button.Button(screen_width / 20 * 3, 8 * screen_height / 20, paddle_img[4],1)
+paddle2_button = Button.Button(screen_width / 20 * 17, 8 * screen_height / 20, paddle_img[4],1)
+playerone_button = Button.Button(screen_width / 20  - playerone_img.get_width() / 2, (3/5) * screen_height / 20, playerone_img, 5)
+playertwo_ai_button = Button.Button(screen_width / 20 * 15 - player_img[1].get_width() / 2, (3/5) * screen_height / 20, player_img[1], 5)
+ai_button = Button.Button(screen_width / 20 * 16 - ai_imgs[1].get_width() / 2, 9 * screen_height / 20, ai_imgs[0], 4)
 # Buttons im create Game Menü:
 getting_faster_button = Button.Button(screen_width / 2 - (resume_img.get_width()/2)*3, screen_height -  5 * screen_height / 12, getting_faster_imges[0] , 4)
 increasing_Reflektion_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  4 * screen_height / 12, increasingReflektion_imges[0] , 4)
@@ -241,10 +241,10 @@ while run:
                 skin2_button.counter += 1
                 paddle2_button.change_picture(paddle_img[skin2_button.counter % len(paddle_img)])
                 player_2.skin = paddle_img[skin2_button.counter % len(paddle_img)]
-            score_person2 = Text.Text(f"score: {player_2.score}", screen_width/1.5 , screen_height/1.5)
+            score_person2 = Text.Text(f"score: {player_2.score}", screen_width/20 * 15 , 15 * screen_height/20)
             score_person2.blitnew(screen)
             player_2.update_highscore()        
-            highscore_person2 = Text.Text(f"highscore: {player_2.highscore}", screen_width/1.5 , screen_height/1.4)
+            highscore_person2 = Text.Text(f"highscore: {player_2.highscore}", screen_width/20 * 15 , 16 * screen_height/20)
             highscore_person2.blitnew(screen) 
 
         # Button zum Schwierigkeitsgrad einstellen der AI
@@ -260,10 +260,10 @@ while run:
             player_1.skin = paddle_img[skin_button.counter % len(paddle_img)]
 
         #Score und Highscore einblenden
-        score_person1 = Text.Text(f"score: {player_1.score}", screen_width/6 , screen_height/1.5)
+        score_person1 = Text.Text(f"score: {player_1.score}", screen_width/20 * 1 , 15 * screen_height/20)
         score_person1.blitnew(screen)
         player_1.update_highscore()   
-        highscore_person1 = Text.Text(f"highscore: {player_1.highscore}", screen_width/6 , screen_height/1.4)
+        highscore_person1 = Text.Text(f"highscore: {player_1.highscore}", screen_width/20 * 1, 16 * screen_height/20)
         highscore_person1.blitnew(screen)    
 
 
