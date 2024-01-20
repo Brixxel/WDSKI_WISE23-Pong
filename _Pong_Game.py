@@ -42,10 +42,8 @@ game_paused = True                                 # Gibt an, ob das Spiel pausi
 game_in_menue = True                               # Gibt an, ob man sich im Menü befindet
 game_in_menue_create = False
 game_modus = "PvAi"    
-mit_blöcken = "aus"                             # Gibt den Spiel-Modus an !!!! Variable von GameState
+mit_blöcken = "aus"                                 # Gibt den Spiel-Modus an !!!! Variable von GameState
 
-
-# Zu reduzierende globale Variablen
 # Farben und Bilder
 resume_img = pygame.image.load("grafics/button_resume.png").convert_alpha()
 options_img = pygame.image.load("grafics/button_options.png").convert_alpha()
@@ -74,7 +72,7 @@ ai = pygame.image.load("grafics/ai_player.png").convert_alpha()
 player_img = (two, ai)
 blöckeanzahl_img = pygame.image.load("grafics/anzahl_blöcke.png").convert_alpha()
 
-# -------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------
 # Allgemeine Instanzen:
 
 # Buttons:  !!!!! Zentrierung relativ zur Höhe !!!!!
@@ -102,7 +100,7 @@ blöckeanzahl_button = Button.Button(screen_width / 2 - (blöckeanzahl_img.get_w
 
 
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height -  9 * screen_height / 12, start_img ,1)
-# -------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------
 
 
 
@@ -284,7 +282,7 @@ while run:
     """ 
     
     if game_paused == True and game_in_menue == True and game_in_menue_create == True:
-        print("Starte Spiel!!!")
+        
         # Abfrage über den Spiel-Modus: Ball wird schneller
         if getting_faster_button.draw(screen) == True:
             # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
@@ -323,7 +321,6 @@ while run:
         if start_button.draw(screen) == True:
             # Das Spiel befindet sich nicht mehr im Menü, somit müssen die Menü-Methoden nciht länger auzsgeführt werden
             game_paused, game_in_menue, game_in_menue_create = False,False,False
-            print("Starte Spiel Jetzt gedrückt!!!")
             
             if increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 0:
                 Game.game_modus_feature_increasingReflektion = False
