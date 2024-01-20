@@ -38,7 +38,7 @@ game_paused = True                                 # Gibt an, ob das Spiel pausi
 game_in_menue = True                               # Gibt an, ob man sich im Menü befindet
 game_in_menue_create = False
 game_modus = "PvAi"    
-mit_blöcken = "aus"                             # Gibt den Spiel-Modus an !!!! Variable von GameState
+mit_blöcken = False                            # Gibt den Spiel-Modus an !!!! Variable von GameState
 
 
 # Zu reduzierende globale Variablen
@@ -239,7 +239,8 @@ while run:
                 game_modus = "PvP"
 
             else:
-                game_modus = "PvAi"      
+                game_modus = "PvAi"
+                      
 
         #skins bei Player2 aussuchen
         if game_modus == "PvP":
@@ -291,17 +292,23 @@ while run:
             # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
             increasing_Reflektion_button.change_picture(increasingReflektion_imges[increasing_Reflektion_button.counter % len(increasingReflektion_imges)])
 
-        text_count_obstacel = Text.Text(f"geben sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width/3.3 , screen_height/2)
-        text_count_obstacel.blitnew(screen)
+        
          
         # Abfrage über Spiel-Modus: Hindernisse!!!
         if moving_obstacel_button.draw(screen) == True:
             # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
             moving_obstacel_button.counter += 1
+            print(moving_obstacel_button.counter)
             # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
             moving_obstacel_button.change_picture(moving_obstacel_imges[moving_obstacel_button.counter % len(moving_obstacel_imges)])
-            if moving_obstacel_button.counter % len(moving_obstacel_imges) != 0:
-                text_count_obstacel.remove()
+        if moving_obstacel_button.counter % len(moving_obstacel_imges) != 0:
+            mit_blöcken = True
+            print(moving_obstacel_button.counter)
+            if mit_blöcken:
+                print(moving_obstacel_button.counter)
+                text_count_obstacel = Text.Text(f"geben sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width/3.3 , screen_height/2)
+                text_count_obstacel.blitnew(screen)
+
             
                 
             

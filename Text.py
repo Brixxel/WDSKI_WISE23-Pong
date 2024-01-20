@@ -15,4 +15,4 @@ class Text(pygame.sprite.Sprite):
     def blitnew (self,surface):
         surface.blit(self.img, self.pos)
     def remove(self):
-        self.text = None    
+        self.text = " "    
