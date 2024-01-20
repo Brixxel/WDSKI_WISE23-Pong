@@ -1,5 +1,5 @@
 import pygame, random
-import Player, Paddel, AiPlayer, Ball, Obstacel
+import Player, Paddel, AiPlayer, Ball, Obstacel, Explosion
 
 
 class GameState_Manager:
@@ -15,8 +15,9 @@ class GameState_Manager:
         #self.ball = 0
         #self.ball02 = 0
         
-        self.ball_group = pygame.sprite.Group()
+        self.ball_group = pygame.sprite.GroupSingle()
         self.paddle_group = pygame.sprite.Group()
+        self.explosion_group = pygame.sprite.Group()
         
         self.screen = screen
         self.screen_width = screen.get_width()
@@ -76,8 +77,20 @@ class GameState_Manager:
             
             if ball.rect.right >= self.screen_width:
                 self.paddle_player_2.player.score += 1
+                self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.right-20, self.ball_group.sprite.rect.y)
+                self.explosion_group.add(self.explosion)
+                self.explosion_group.draw(self.screen)
+                self.explosion_group.remove(self.explosion)
+
+                pygame.mixer.Sound("sounds/explosion_sound.wav").play()
+                pygame.display.update()
                 ball.reset_ball()
             if ball.rect.left <= 0:
+                self.explosion = Explosion.Explosion(self.ball_group.sprite.rect.left+20, self.ball_group.sprite.rect.y)
+                self.explosion_group.add(self.explosion)
+                self.explosion_group.draw(self.screen)
+                self.explosion_group.remove(self.explosion)
+                pygame.mixer.Sound("sounds/explosion_sound.wav").play()
                 self.paddle_player_1.player.score += 1
                 ball.reset_ball()
             
