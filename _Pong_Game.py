@@ -200,7 +200,7 @@ while run:
   
     
     # --------------------------------------------------------------------------------------------------------------- #
-    #                                             MENÜS                                                               #
+    #                                                    MENÜS                                                        #
     # --------------------------------------------------------------------------------------------------------------- #
     
     # #####  ---------------   Main - Menü      -------------       ##### #
@@ -208,13 +208,11 @@ while run:
     """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
             1.) PvP oder PvAi
             2.) Ai Schweirigkeit?
-            3.) Skin von Spieler 1 und 2 (wenn keine Ai)
-            
-            5.) Ball-Skin / Hintergrund ?  
+            3.) Skin von Spieler 1 und 2 (wenn keine Ai) 
             
             -- Spieler-Objekte erstellen / verändern // game_modus Variable anpassen
     """ 
-    # Überprüfen auf Spielzustand:
+    # Überprüfen auf Spiel- / Menü-zustand:
     if game_paused == True and game_in_menue == True and game_in_menue_create == False:
         
         #Pong und Blitz einfügen
@@ -275,12 +273,12 @@ while run:
     # -------------- Create Game Menü ------------------------ #
     """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
             1.) Block-Spielmodus            (Keine Blöcke, statische Blöcke, sich zunehmend teleportierende Blöcke, sich bewegende Blöcke)
+                Anzahl an Hindernissen      (User-Typer-Input)
             2.) Geschwindigkeits Änderung   (An / Aus)
             3.) Reflektionsverstärkung      (An / Aus)
-            
-  
+            4.) Multiball                   (An / Aus)
     """ 
-    
+    # Überprüfen auf Spiel- / Menü-zustand:
     if game_paused == True and game_in_menue == True and game_in_menue_create == True:
         
         # Abfrage über den Spiel-Modus: Ball wird schneller
@@ -297,16 +295,19 @@ while run:
             # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
             increasing_Reflektion_button.change_picture(increasingReflektion_imges[increasing_Reflektion_button.counter % len(increasingReflektion_imges)])
 
-        text_count_obstacel = Text.Text(f"geben sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width - 5*screen_width/8, screen_height -  6 * screen_height / 12)
-        text_count_obstacel.blitnew(screen)
-         
+        # Abfrage nach geünschter Anzahl von Hindernissen:
+        text_count_obstacel = Text.Text(f"Geben Sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width - 5*screen_width/8, screen_height -  6 * screen_height / 12)
+        if moving_obstacel_button.counter % len(moving_obstacel_imges) != 0: 
+            text_count_obstacel.blitnew(screen)
+        
         # Abfrage über Spiel-Modus: Hindernisse!!!
         if moving_obstacel_button.draw(screen) == True:
             # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
             moving_obstacel_button.counter += 1
-            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild bestimmt:
+            # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild und daraus später der übergebene Wert bestimmt:
             moving_obstacel_button.change_picture(moving_obstacel_imges[moving_obstacel_button.counter % len(moving_obstacel_imges)])
-            if moving_obstacel_button.counter % len(moving_obstacel_imges) != 0:
+            
+            if moving_obstacel_button.counter % len(moving_obstacel_imges) > 0:
                 text_count_obstacel.remove()
             
         if multiball_button.draw(screen):

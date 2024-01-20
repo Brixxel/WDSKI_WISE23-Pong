@@ -9,7 +9,7 @@ class Text(pygame.sprite.Sprite):
         self.antialias = True
         self.colour = (157,0,255)    
         self.background = None
-        self.font = pygame.font.SysFont('Courier New.ttf',30)
+        self.font = pygame.font.SysFont('Arial.ttf',30)
         self.img = self.font.render(self.text, self.antialias, self.colour,self.background)
         self.pos = (x,y)   
     def blitnew (self,surface):
