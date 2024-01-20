@@ -17,4 +17,8 @@ class Player(pygame.sprite.Sprite):
     def update_score(self, by: int):
         self.score += by
         return self.score
+    
+    def update_highscore(self):
+        if self.score > self.highscore:
+            self.highscore = self.score
    
