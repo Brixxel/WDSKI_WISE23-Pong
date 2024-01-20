@@ -97,7 +97,7 @@ multiball_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)
 blöckeanzahl_button = Button.Button(screen_width / 2 - (blöckeanzahl_img.get_width() / 2)*4, screen_height / 2, blöckeanzahl_img, 4)
 
 
-start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.5, start_img ,1)
+start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height / 1.7, start_img ,1)
 # -------------------------------------------------------------------------
 
 
@@ -229,6 +229,8 @@ while run:
             current_time = pygame.time.get_ticks()
             Game = GameState.GameState_Manager(screen)
             game_in_menue_create = True
+        
+            
            
 
         # AI oder PLayer auswählen
