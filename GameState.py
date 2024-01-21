@@ -7,11 +7,11 @@ class GameState:
     def __init__(self, screen, ai_player):
     
         # die KI
-        self.player_ai = ai_player
+        self.player_ai: AiPlayer.AIPlayer = ai_player
         
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
-        self.paddle_player_1 = 0
-        self.paddle_player_2 = 0
+        self.paddle_player_1: Paddel.Paddel
+        self.paddle_player_2: Paddel.Paddel
         
         self.ball_group = pygame.sprite.Group()
         self.paddle_group = pygame.sprite.Group()
