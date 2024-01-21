@@ -12,12 +12,12 @@ Das Paddel wird einem Spieler / AiSpieler zugeordnet - übernimmt von diesem den
 
 class Paddel(pygame.sprite.Sprite):
     
-    def __init__(self, player,x_pos,y_pos,speed, screen_height):
+    def __init__(self, player: Player.Player ,x_pos: int ,y_pos: int,speed, screen_height):
         # verpflichtender Aufruf des Übergeordneten Gruppen Konstruktors
         pygame.sprite.Sprite.__init__(self)
         
         #legt fest, welchem Player das Paddel zugeordnet ist
-        self.player = player
+        self.player: Player.Player = player
 
         # Generiert das Paddle, mit dem Aussehen und der Pixel-Größe des gewählten PNGs
         self.image = player.skin
@@ -30,7 +30,7 @@ class Paddel(pygame.sprite.Sprite):
         
         # Gibt die aktuelle Bewegung des Paddels an / (Wird dann per TastenEingabe temporär verändert)
         self.movement = 0
-        self.moving_up = True
+        self.moving_up: bool = True
         
         # Standart Info, wie der Bildschrim aussieht
         self.screen_height = screen_height

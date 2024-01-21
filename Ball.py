@@ -20,7 +20,7 @@ class Ball(pygame.sprite.Sprite):
         self.speed_y = self.generate_valid_speed()[1]
         
         # Zustands-Atribute des Balls
-        self.paddles = paddles
+        self.paddles: pygame.sprite.Group() = paddles
         self.active = False
         self.score_time = 0
         self.obstacles = pygame.sprite.Group()
