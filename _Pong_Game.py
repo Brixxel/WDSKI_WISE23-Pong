@@ -37,13 +37,14 @@ screen_width = (2)*(screen_height - 180)
 screen = pygame.display.set_mode(( screen_width  , screen_height ), pygame.RESIZABLE) ########fullscreen#####
 pygame.display.set_caption('Pong')
 
-# Spiel-Variablen - Statisch
+# Spiel-Variablen - (Start-Zustand, bei erst Initialisierung)
 game_paused = True                                 # Gibt an, ob das Spiel pausiert ist
 game_in_menue = True                               # Gibt an, ob man sich im Menü befindet
 game_in_menue_create = False                       # Gibt an, ob man sich im Create-Menü befindet
-game_modus = "PvAi"                                # Gibt den Spiel-Modus an !!!! Variable von GameState
+game_modus = "PvAi"                                # Gibt den Spiel-Modus an
 
-#Bilder werden importiert
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# Bilder importieren und zu Grafiken speichern
 resume_img = pygame.image.load("grafics/button_resume.png").convert_alpha()
 options_img = pygame.image.load("grafics/button_options.png").convert_alpha()
 quit_img = pygame.image.load("grafics/button_quit.png").convert_alpha()
@@ -54,13 +55,13 @@ lightning_img = pygame.image.load("grafics/lightning.png").convert_alpha()
 change_img = pygame.image.load("grafics/button_change.png").convert_alpha()
 skin_img = pygame.image.load("grafics/button_skins.png").convert_alpha()
 creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alpha()
+# Für Buttons, die mehrere Zustände haben, wird ein Tupel aus allen möglichen Bildern eines Zustands angelegt:
 getting_faster_imges = (pygame.image.load(r"grafics/button_getting_faster_01.png").convert_alpha() , pygame.image.load(r"grafics/button_getting_faster_02.png").convert_alpha())
 increasingReflektion_imges = (pygame.image.load(r"grafics/button_harder_reflektion_01.png").convert_alpha() , pygame.image.load(r"grafics/button_harder_reflektion_02.png").convert_alpha())
 moving_obstacel_imges = (pygame.image.load(r"grafics/button_obstacel_01.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_02.png").convert_alpha() , 
                          pygame.image.load(r"grafics/button_obstacel_03.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_04.png").convert_alpha() ,
                          pygame.image.load(r"grafics/button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_06.png").convert_alpha() ,
                          pygame.image.load(r"grafics/button_obstacel_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_08.png").convert_alpha())
-
 
 paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
               pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
@@ -98,19 +99,14 @@ obstacel_counter = ''
 multiball_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  2 * screen_height / 12, multiball_img[0] , 4)
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height -  9 * screen_height / 12, start_img ,1)
 
-# -------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------- #
 
-# Spiel-Objekte
+# Spieler-Objekte
 player_1 = Player.Player()
 player_2 = Player.Player()
+player_Ai = AiPlayer.AIPlayer()
 
-# --------------------------------------------------------------------------
-
-# Spiel - Startzustand initialisieren: 
-Game = GameState.GameState_Manager(screen)
-#(Wird später im Menü ausgeführt):
-game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
-# game_modus = Game.Start_PvP_Game(player_1, player_2)
+# ------------------------------------------------------------------------------------------------------- #
 
 # ######################################### #
 # Spiel - Loop                              #
@@ -218,7 +214,7 @@ while run:
         if creategame_button.draw(screen):
             # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
             current_time = pygame.time.get_ticks()
-            Game = GameState.GameState_Manager(screen)
+            Game = GameState.GameState_Manager(screen, player_Ai)
             # !!!!!!!!! kurzes Abwarten vor neuladen der Seite
             game_in_menue_create = True
            
@@ -250,7 +246,9 @@ while run:
         if game_modus == "PvAi":
             if ai_button.draw(screen):
                 ai_button.counter += 1
-                ai_button.change_picture(ai_imgs[ai_button.counter % len(ai_imgs)])       
+                ai_button.change_picture(ai_imgs[ai_button.counter % len(ai_imgs)])
+                # Anpassen der Schwierigkeit des AI-Spielers 
+                player_Ai.difficulty = ai_button.counter % len(ai_imgs) 
 
         # Button zum skins bei Player1 aussuchen
         if skin_button.draw(screen) == True:
