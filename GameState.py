@@ -28,19 +28,17 @@ class GameState:
         self.accent_color = (27,35,43)
         
         
-        # !!!!! Abänderung auf Intensitäts Kriterium (0 - kein Modus Feature - 1,2,3,4 ... in jeweils erhöter Ausführung)
-        
         # Optionale Spiel-Modi-Ergänzungen:
-        self.game_modus_feature_increasingSpeed  = False         # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
+        self.game_modus_feature_increasingSpeed  = False            # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
         self.game_modus_feature_increasingSpeed_intensity = 1
-        self.game_modus_feature_increasingReflektion = False       # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
+        self.game_modus_feature_increasingReflektion = False        # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
         self.game_modus_feature_obstacle_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
-        self.game_modus_feature_obstacle_difficulty = 0
+        self.game_modus_feature_obstacle_difficulty = 0             # Gibt an, ob es statische(1), sich teleporteierende(2,3,4) oder sich bewegende Hindernisse sind(5,6,7)   
 
-        self.game_modus_balls_count = 12                             # Spielmodus, der die Anzahl der Bälle veränderlich macht
+        self.game_modus_balls_count = 1                             # Spielmodus, der die Anzahl der Bälle veränderlich macht
         
-        # Spiel Mosu Atribute
-        self.game_modus_obstacle_group = pygame.sprite.Group()
+        # Spiel Modus Atribute
+        self.game_modus_obstacle_group = pygame.sprite.Group()      # Speichert alle Hindernisse des aktuellen Spiels
         
     def run_game(self):
         
@@ -49,18 +47,18 @@ class GameState:
         self.ball_group.draw(self.screen)
         
 
-        # Auführen besonderer Spiel-Modi
+        # Auführen besonderer Spiel-Modi, sofern diese aktiviert sind
         if self.game_modus_feature_increasingSpeed:
             self.feature_increasing_Speed()
         if self.game_modus_feature_increasingReflektion:
             self.feature_increasing_Reflection()
         if self.game_modus_feature_obstacle_difficulty != 0:
+            # 0 stünde für keine Hindernisse
             self.game_modus_obstacle_group.draw(self.screen)
             self.feature_obstacles()
             self.game_modus_obstacle_group.update(self.game_modus_obstacle_group)
-            pass
 
-        # Updating the game objects
+        # Updating der game Objekte
         self.paddle_group.update(self.ball_group)
         self.ball_group.update()
         self.explosion_group.update()
@@ -98,6 +96,7 @@ class GameState:
                 self.explosion_group.add(self.explosion)
                 self.explosion_group.draw(self.screen)
                 self.explosion_group.remove(self.explosion)
+                # Explosions Sound, für das athmossphärische Erlebniss
                 pygame.mixer.Sound("sounds/explosion_sound.wav").play()
                 
                 pygame.display.update()
@@ -105,9 +104,10 @@ class GameState:
             
     # Um den aktuellen Spiel-Score von Spieler und Gegner darzustellen:
     def draw_score(self):
+        # Die Werte / der Punktstand wird im jewelig instanzierten Player-Paddel gespeichert
         player_1_score = self.standart_font.render(str(self.paddle_player_1.player.score),True,self.accent_color)
         opponent_score = self.standart_font.render(str(self.paddle_player_2.player.score),True,self.accent_color)
-
+        # Die Werte / der Punktstand wird im jewelig instanzierten Player-Paddel gespeichert
         player_score_rect = player_1_score.get_rect(midleft = (self.screen_width / 2 + 40,self.screen_height/2))
         opponent_score_rect = opponent_score.get_rect(midright = (self.screen_width / 2 - 40,self.screen_height/2))
 
@@ -118,9 +118,8 @@ class GameState:
 # --------------------------------------------------------------------------------------- #
 # Spiel-Modi Funktioen
 # --------------------------------------------------------------------------------------- #
-    
-    # !!! Achtung: für Multi-Ball muss hier jeweils auf mehrere Bälle erweitert werden !!!
-    
+
+    # Alle Methoden ittereien durch alle aktuellen Bälle    
     # Spiel-Modus: je länger gespielt wird, umso schneller wird der Ball
     def feature_increasing_Speed(self):
         if self.game_modus_feature_increasingSpeed:
@@ -168,15 +167,17 @@ class GameState:
 
 
 # --------------------------------------------------------------------------------------- #
-# Spiel - Initialisierungs / Generierungs Methoden
+#                      Spiel - Initialisierungs / Generierungs Methoden                   #
 # --------------------------------------------------------------------------------------- # 
 
 
 # New Game Methode, die den Speilstand des bisherigen Spiels löscht und mit den neuen Paddels beginnt
+    # Erstellen eines Spiels von Spieler gegen AI (es wird also kein zweiter Spieler benötigt, das zweite Spieler Paddel wird von der AI gesteuert)
     def Start_PvAi_Game(self, player_1 : Player.Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
         self.player_ai.score = 0
+        # Zufälliges Wöhlen eines Paddle-Skins für den AI-Spieler
         self.player_ai.skin = self.player_ai.paddle_img[random.randint(0,4)]
         # entspricht hier einem AI Paddle
         self.paddle_player_2 = Paddel.Paddel(self.player_ai, 20 ,self.screen_width/2, 5, self.screen_height)
@@ -186,6 +187,7 @@ class GameState:
         
         return "PvAi"
 
+    # Erstellen eines PvP Games. Für jeden Spieler wird ein neues Paddle erstellt
     def Start_PvP_Game(self, player_1 : Player.Player, player_2 : Player.Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
@@ -195,7 +197,9 @@ class GameState:
         
         return "PvP"
 
+    # Für jeden Spielzustand gleicher Erzeugungs-Prozess:
     def general_setUp(self):
+        # Für jdes Spiel werden, abhängig der gewählten Einstellungen neue Bälle erzeugt
         self.paddle_group.empty()
         self.paddle_group.add(self.paddle_player_1)
         self.paddle_group.add(self.paddle_player_2)
@@ -207,7 +211,9 @@ class GameState:
             self.ball_group.add(ball)
             print(ball.active)
         
+        # Wenn gewünscht, wird die Anzahl an Hindernissen initialisiert
         if self.game_modus_feature_obstacle_difficulty != 0:
             self.feature_obstacles_initialise()
         
+        # Der Gametimer muss zurückgesetzt werden mit jeder neuen Spiel-Runde
         self.game_timer = 0

@@ -1,16 +1,15 @@
 #WDSKI_WISE23-Pong
-### PONG GAME ###
-Pong - Pygame Projekt
+# PONG GAME #
 
-# Projektbeschreibung #
+## Projektbeschreibung ##
 Dieses Projekt wurde im Rahmen des Programmierkurses an der Dualen Hochschule Mannheimim ersten Semseter des Studiengangs Data-Sience und künstliche Intiligenz entwickelt. Die Aufgabe bestand darin, eine Version des klassischen Spiels Pong zu implementieren. Dies sollte mithilfe der Pygame-Bibliothek in Python geschehen. Ziel war es, grundlegende Konzepte der Pygame-Bibliothek zu verstehen und gleichzeitig das klassische Pong-Spiel um eigene kreative Elemente zu erweitern.
 
-# Teammitglieder #
+## Teammitglieder ##
 Tom Weber			Matrikel: 
 Gina Grünen			Matrikel: 
 Felix Regler			Matrikel: 
 
-# Installationsanleitung #
+## Installationsanleitung ##
 Bevor Sie das Pong-Spiel starten können, stellen Sie sicher, dass Python und Pygame auf Ihrem System installiert sind. Falls Sie Pygame noch nicht installiert haben, können Sie es mit dem folgenden Befehl in Ihrer virtuellen Umgebung installieren.
 
 pip install pygame
@@ -20,7 +19,7 @@ Nach der Installation können Sie das Spiel mit dem folgenden Befehl starten:
 python _Pong_Game.py
 
 
-# Spielanleitung #
+## Spielanleitung ##
 
   Spieler 1 (rechts): 
     Steuerung mit den Pfeiltasten nach oben und unten.
@@ -29,7 +28,7 @@ python _Pong_Game.py
 
 Das Ziel ist es, den Ball am Gegenspieler vorbeizuspielen und Punkte zu erzielen.
 
-# Funktionen und Spielmodi #
+## Funktionen und Spielmodi ##
 Unsere erweiterte Pong-Version enthält die folgenden Funktionen und Spielmodi:
   Spielmodi:
 
@@ -51,7 +50,7 @@ Unsere erweiterte Pong-Version enthält die folgenden Funktionen und Spielmodi:
 
   - Geschwindigkeitserhöhung: Die Geschwindigkeit des Balls nimmt im Laufe der Zeit zu, um das Spiel intensiver zu gestalten.
     
-# Design:
+## Design:
 Wir haben uns dafür entschieden, ein pixel haftes Design und Neonfarben für unser Pong-Spiel auszuwählen, um eine bestimmte ästhetische Atmosphäre zu schaffen und die Spielerfahrung zu verbessern. Hier sind einige Gründe, warum wir diese Designelemente gewählt haben:
 
 - Einfachheit und Klarheit: Unser Fokus liegt auf einfacher und klarer Gestaltung. Das reduzierte Design ermöglicht es den Spielern, sich auf das Wesentliche zu konzentrieren, ohne von komplexen Details abgelenkt zu werden.
@@ -61,7 +60,7 @@ Wir haben uns dafür entschieden, ein pixel haftes Design und Neonfarben für un
 Um dem Pixeldesign gerecht zu werden und eine zusätzliche kreative Note einzuführen, haben wir uns zudem dafür entschieden, Minecraft-Blöcke als Obstacles zu verwenden. 
 Unsere Designentscheidungen basieren auf unseren persönlichen Präferenzen, dem gewünschten Spielerlebnis und dem Stil, den wir für unser Spiel schaffen möchten.
 
-# Soundeffekte: 
+## Soundeffekte: 
 Wir haben bewusst einfache Pixelklänge für die Soundeffekte unseres Pong-Spiels gewählt, um eine gezielte akustische Atmosphäre zu schaffen und die Spielerfahrung zu optimieren. 
 
 - Passendes Design: Die Auswahl einfacher Pixelklänge wurde strategisch getroffen, um sicherzustellen, dass die Klangästhetik harmonisch mit dem Gesamtdesign des Spiels interagiert. Diese Entscheidung trägt dazu bei, eine ansprechende Spielerfahrung zu schaffen.
@@ -69,7 +68,7 @@ Wir haben bewusst einfache Pixelklänge für die Soundeffekte unseres Pong-Spiel
 - Countdown-Soundüberlegungen: Obwohl wir den Wunsch hatten, einen Sound zum Countdown hinzuzufügen, haben wir uns letztendlich dagegen entschieden, insbesondere im Kontext der Multiballspielvariante. Diese Entscheidung wurde getroffen, um unnötige Soundüberlagerungen zu vermeiden und das Gesamterlebnis für die Spieler nicht zu beeinträchtigen.
 
 
-# Quellen:
+## Quellen:
 - Allgemeines:
 - - https://www.pixilart.com/
 - - https://www.python-lernen.de/

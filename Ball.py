@@ -4,7 +4,9 @@ import pygame, random, Explosion
 Ball ist eine Klasse die, die Atribute und Methoden enthält, die ein Ball für Pong benötigt:
 
     1.) Die Update-Methode, die jedes relevante Atribut einer Ball Entität pro Spiel-Tick aktualisier. (Darunter Position, Kollison mit Wand und Hinderniss)
-    2.) ...
+    2.) Methoden, die prüfen ob der Ball mit einem Paddle oder Hinderniss kollidiert ist
+    3.) Methoden, die im gewünschten Spiel-Modus die Geschwindigkeit anpassen
+    4.) Methoden, die das Zurücksetzten des Balls in den Ursprung und einen kleinen Countdown steuert
 
 """
 
@@ -77,7 +79,9 @@ class Ball(pygame.sprite.Sprite):
         self.score_time = pygame.time.get_ticks()
         self.rect.center = (self.screen_width/2,self.screen_height/2)
         self.active = False
-        
+    
+    # Methode, die nach dem Zurücksetzten des Balls in den Ursprung, eine kurze  "Verschnauf-Sekunde" ermöglicht. 
+    # erste wenn der Count-Down abgelaufen ist, wird der Ball sich weider in zufälliger Richtung bewegen.    
     def restart_counter(self):
         current_time = pygame.time.get_ticks()
         countdown_number = 3
@@ -93,7 +97,7 @@ class Ball(pygame.sprite.Sprite):
             self.active = True
             self.reflections_since_new_round = 0
             
-            
+        # Darstellen des Countdowns mit Hilfe von Schrift    
         time_counter = pygame.font.Font('freesansbold.ttf', 32).render(str(countdown_number),True,(27,35,43))
         time_counter_rect = time_counter.get_rect(center = (self.screen_width/2,self.screen_height/2 + 50))
         pygame.draw.rect(self.screen,('#2F373F'),time_counter_rect)
@@ -116,7 +120,7 @@ class Ball(pygame.sprite.Sprite):
                 self.reflections_since_new_round += 1
                 # Sound, für das Reflektieren
                 pygame.mixer.Sound("sounds/hit_sound.mp3").play()
-                # Richtungsänderung des Balls, abhängig auf welcher Seitde er auf ein Hinderniss getroffen ist
+                # Richtungsänderung des Balls, abhängig auf welcher Seitde er auf ein Hinderniss getroffen ist (Wiederverwendet vom Paddle)
                 collision_paddle = pygame.sprite.spritecollide(self,self.obstacles,False)[0].rect
                 if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                     self.speed_x *= -1
