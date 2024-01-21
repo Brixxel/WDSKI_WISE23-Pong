@@ -1,8 +1,8 @@
 import pygame, random
-import Player, Paddel, AiPlayer, Ball, Obstacel, Explosion
+import Player, Paddel, AiPlayer, Ball, Obstacle, Explosion
 
 
-class GameState_Manager:
+class GameState:
     
     def __init__(self, screen, ai_player):
     
@@ -34,13 +34,13 @@ class GameState_Manager:
         self.game_modus_feature_increasingSpeed  = False         # Spielmodus, bei dem nach Spiel-Zeit, die Reflexion verstärkt wird
         self.game_modus_feature_increasingSpeed_intensity = 1
         self.game_modus_feature_increasingReflektion = False       # Spielmodus, der nach gewisser Anzahl an Reflektionen die Geschwindikeit erhöt
-        self.game_modus_feature_Obstacel_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
-        self.game_modus_feature_Obstacel_difficulty = 0
+        self.game_modus_feature_obstacle_count = 5                  # Spielmodus, bei dem zusätzliche Hindernisse das Spiel erschwerden oder vereinfachen
+        self.game_modus_feature_obstacle_difficulty = 0
 
         self.game_modus_balls_count = 12                             # Spielmodus, der die Anzahl der Bälle veränderlich macht
         
         # Spiel Mosu Atribute
-        self.game_modus_obstacel_group = pygame.sprite.Group()
+        self.game_modus_obstacle_group = pygame.sprite.Group()
         
     def run_game(self):
         
@@ -54,10 +54,10 @@ class GameState_Manager:
             self.feature_increasing_Speed()
         if self.game_modus_feature_increasingReflektion:
             self.feature_increasing_Reflection()
-        if self.game_modus_feature_Obstacel_difficulty != 0:
-            self.game_modus_obstacel_group.draw(self.screen)
-            self.feature_Obstacels()
-            self.game_modus_obstacel_group.update(self.game_modus_obstacel_group)
+        if self.game_modus_feature_obstacle_difficulty != 0:
+            self.game_modus_obstacle_group.draw(self.screen)
+            self.feature_obstacles()
+            self.game_modus_obstacle_group.update(self.game_modus_obstacle_group)
             pass
 
         # Updating the game objects
@@ -137,34 +137,34 @@ class GameState_Manager:
     
 
 
-# ......................... Obstacels ................................................... #
+# ......................... obstacles ................................................... #
 
-    def feature_Obstacels(self):
+    def feature_obstacles(self):
         # Die Blöcke ändern nach gewisser Zeit ihre Position -> Variable die dem Obstical sagt, dass es sich ändern soll
         count = 0
-        for obstacel in self.game_modus_obstacel_group.sprites():
+        for obstacle in self.game_modus_obstacle_group.sprites():
             # Bei einer Schwierigkeit des Hinderniusses von 1, bewegen sie sich nicht
             # Bei einer Schwierigkeit des Hinderniusses zwischen 2 und 4 teleportieren sie sich (mit zunehmnder Schwierigkeit häufiger)
-            if obstacel.difficulty < 5 and obstacel.difficulty != 1:
-                obstacel.check_for_time(self.game_timer, count)
+            if obstacle.difficulty < 5 and obstacle.difficulty != 1:
+                obstacle.check_for_time(self.game_timer, count)
                 count += 1
             # Bei einer Schwierigkeit des Hinderniusses von größer, gleich 5, können diese sich bewegen wie ein Ball
-            elif obstacel.difficulty >= 5:
-                obstacel.move_position()
+            elif obstacle.difficulty >= 5:
+                obstacle.move_position()
         
     
     # Initialisiert die Hindernisse standartisiert
-    def feature_Obstacels_initialise(self):
-        self.game_modus_obstacel_group.empty()
+    def feature_obstacles_initialise(self):
+        self.game_modus_obstacle_group.empty()
         # !!!! evtl unterschiedliche Arten von Hindernissen
-        for x in range(self.game_modus_feature_Obstacel_count):
+        for x in range(self.game_modus_feature_obstacle_count):
            
             rand_scale = random.uniform(1,3.5)*0.05
 
-            obstacel_1 = Obstacel.Obstacel(self.screen, rand_scale, self.game_modus_feature_Obstacel_difficulty)
-            self.game_modus_obstacel_group.add(obstacel_1)
+            obstacle_1 = Obstacle.Obstacle(self.screen, rand_scale, self.game_modus_feature_obstacle_difficulty)
+            self.game_modus_obstacle_group.add(obstacle_1)
         for ball in self.ball_group.sprites():
-            ball.obstacels = self.game_modus_obstacel_group
+            ball.obstacles = self.game_modus_obstacle_group
 
 
 # --------------------------------------------------------------------------------------- #
@@ -207,7 +207,7 @@ class GameState_Manager:
             self.ball_group.add(ball)
             print(ball.active)
         
-        if self.game_modus_feature_Obstacel_difficulty != 0:
-            self.feature_Obstacels_initialise()
+        if self.game_modus_feature_obstacle_difficulty != 0:
+            self.feature_obstacles_initialise()
         
         self.game_timer = 0

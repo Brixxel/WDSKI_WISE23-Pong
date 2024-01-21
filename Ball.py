@@ -23,7 +23,7 @@ class Ball(pygame.sprite.Sprite):
         self.paddles = paddles
         self.active = False
         self.score_time = 0
-        self.obstacels = pygame.sprite.Group()
+        self.obstacles = pygame.sprite.Group()
         
         # Variablen, die der Ball über den Screen / das Spielfeld braucht
         self.screen_height = screen_height
@@ -41,7 +41,7 @@ class Ball(pygame.sprite.Sprite):
             self.rect.y += self.speed_y
             # Und überprüft auf Kollisionen und damit einhergehende Reflektionen
             self.collisions()
-            self.collision_obstacel()
+            self.collision_obstacle()
         else:
              self.restart_counter()
             
@@ -108,15 +108,15 @@ class Ball(pygame.sprite.Sprite):
             self.speed_y = self.speed_y * 1.5
            
     # Reflektion an Hindernissen        
-    def collision_obstacel(self):
-        if self.obstacels:
-            if pygame.sprite.spritecollide(self,self.obstacels,False):
+    def collision_obstacle(self):
+        if self.obstacles:
+            if pygame.sprite.spritecollide(self,self.obstacles,False):
                 # Reflexions Counter erhöhen, da Ball von Paddle getroffen wurde
                 self.reflections_since_new_round += 1
                 # Sound, für das Reflektieren
                 pygame.mixer.Sound("sounds/hit_sound.mp3").play()
                 # Richtungsänderung des Balls, abhängig auf welcher Seitde er auf ein Hinderniss getroffen ist
-                collision_paddle = pygame.sprite.spritecollide(self,self.obstacels,False)[0].rect
+                collision_paddle = pygame.sprite.spritecollide(self,self.obstacles,False)[0].rect
                 if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                     self.speed_x *= -1
                 if abs(self.rect.left - collision_paddle.right) < 10 and self.speed_x < 0:

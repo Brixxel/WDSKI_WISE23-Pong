@@ -3,11 +3,11 @@ import random
 import os
 
 """
-Obstacels versdchiedener Typen sollen unterscheideliche Reflektions Eigenschaften haben
+obstacles versdchiedener Typen sollen unterscheideliche Reflektions Eigenschaften haben
     
 """
 
-class Obstacel(pygame.sprite.Sprite):
+class Obstacle(pygame.sprite.Sprite):
     
     def __init__(self, screen, scale, difficulty):
         pygame.sprite.Sprite.__init__(self)
@@ -27,15 +27,15 @@ class Obstacel(pygame.sprite.Sprite):
         
         self.rect = self.image.get_rect(center = self.position)
         
-        self.obstacel_group = pygame.sprite.Group()
+        self.obstacle_group = pygame.sprite.Group()
     
-    def update(self, game_modus_obstacel_group):
+    def update(self, game_modus_obstacle_group):
         
         
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Performance. evtl verlegen
         
         
-        self.obstacel_group = game_modus_obstacel_group
+        self.obstacle_group = game_modus_obstacle_group
         #Entscheidet je nach Schweirigkeit, wie sich dasHinderniss verändern soll
         if self.difficulty <= 1:
             #Die Hindernisse existieren entweder nicht oder sie verändern ihre Position nicht
@@ -122,16 +122,16 @@ class Obstacel(pygame.sprite.Sprite):
         if self.rect.left <= 0 or self.rect.right >= self.screen.get_width():
             self.speed_x *= -1
             
-        if pygame.sprite.spritecollide(self,self.obstacel_group,False):
-            collision_obstacel = pygame.sprite.spritecollide(self,self.obstacel_group,False)[0].rect
+        if pygame.sprite.spritecollide(self,self.obstacle_group,False):
+            collision_obstacle = pygame.sprite.spritecollide(self,self.obstacle_group,False)[0].rect
             
-            if abs(self.rect.right - collision_obstacel.left) < 10 and self.speed_x > 0:
+            if abs(self.rect.right - collision_obstacle.left) < 10 and self.speed_x > 0:
                 self.speed_x *= -1
-            if abs(self.rect.left - collision_obstacel.right) < 10 and self.speed_x < 0:
+            if abs(self.rect.left - collision_obstacle.right) < 10 and self.speed_x < 0:
                 self.speed_x *= -1
-            if abs(self.rect.top - collision_obstacel.bottom) < 10 and self.speed_y < 0:
-                self.rect.top = collision_obstacel.bottom
+            if abs(self.rect.top - collision_obstacle.bottom) < 10 and self.speed_y < 0:
+                self.rect.top = collision_obstacle.bottom
                 self.speed_y *= -1
-            if abs(self.rect.bottom - collision_obstacel.top) < 10 and self.speed_y > 0:
-                self.rect.bottom = collision_obstacel.top
+            if abs(self.rect.bottom - collision_obstacle.top) < 10 and self.speed_y > 0:
+                self.rect.bottom = collision_obstacle.top
                 self.speed_y *= -1

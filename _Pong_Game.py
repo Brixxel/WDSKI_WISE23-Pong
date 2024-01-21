@@ -58,10 +58,10 @@ creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alph
 # Für Buttons, die mehrere Zustände haben, wird ein Tupel aus allen möglichen Bildern eines Zustands angelegt:
 getting_faster_imges = (pygame.image.load(r"grafics/button_getting_faster_01.png").convert_alpha() , pygame.image.load(r"grafics/button_getting_faster_02.png").convert_alpha())
 increasingReflektion_imges = (pygame.image.load(r"grafics/button_harder_reflektion_01.png").convert_alpha() , pygame.image.load(r"grafics/button_harder_reflektion_02.png").convert_alpha())
-moving_obstacel_imges = (pygame.image.load(r"grafics/button_obstacel_01.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_02.png").convert_alpha() , 
-                        pygame.image.load(r"grafics/button_obstacel_03.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_04.png").convert_alpha() ,
-                        pygame.image.load(r"grafics/button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_06.png").convert_alpha() ,
-                        pygame.image.load(r"grafics/button_obstacel_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_08.png").convert_alpha())
+moving_obstacle_imges = (pygame.image.load(r"grafics/button_obstacle_01.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacle_02.png").convert_alpha() , 
+                        pygame.image.load(r"grafics/button_obstacle_03.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacle_04.png").convert_alpha() ,
+                        pygame.image.load(r"grafics/button_obstacle_05.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacle_06.png").convert_alpha() ,
+                        pygame.image.load(r"grafics/button_obstacle_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacle_08.png").convert_alpha())
 
 paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
               pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
@@ -94,8 +94,8 @@ ai_button = Button.Button(screen_width / 20 * 16 - ai_imgs[1].get_width() / 2, 9
 # Buttons im create Game Menü:
 getting_faster_button = Button.Button(screen_width / 2 - (resume_img.get_width()/2)*3, screen_height -  5 * screen_height / 12, getting_faster_imges[0] , 4)
 increasing_Reflektion_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  4 * screen_height / 12, increasingReflektion_imges[0] , 4)
-moving_obstacel_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  3 * screen_height / 12, moving_obstacel_imges[0] , 4)
-obstacel_counter = ''
+moving_obstacle_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  3 * screen_height / 12, moving_obstacle_imges[0] , 4)
+obstacle_counter = ''
 multiball_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  2 * screen_height / 12, multiball_img[0] , 4)
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height -  9 * screen_height / 12, start_img ,1)
 
@@ -105,6 +105,7 @@ start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_
 player_1 = Player.Player()
 player_2 = Player.Player()
 player_Ai = AiPlayer.AIPlayer()
+Game = GameState.GameState(screen, player_Ai)
 
 # ------------------------------------------------------------------------------------------------------- #
 
@@ -129,9 +130,9 @@ while run:
             # Im Menü um Anzahl an Hindernissen anzugeben:
             
             if event.key == pygame.K_BACKSPACE:
-                obstacel_counter = obstacel_counter[:-1]
+                obstacle_counter = obstacle_counter[:-1]
             else:
-                obstacel_counter += event.unicode
+                obstacle_counter += event.unicode
             
         # -------------------------------------------------------------------------------------- #
         # Inputs - Abhängig von der Situation in der Ausführung (im Menü, oder währed des Spiels)
@@ -214,7 +215,7 @@ while run:
         if creategame_button.draw(screen):
             # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
             current_time = pygame.time.get_ticks()
-            Game = GameState.GameState_Manager(screen, player_Ai)
+            Game = GameState.GameState(screen, player_Ai)
             # !!!!!!!!! kurzes Abwarten vor neuladen der Seite
             game_in_menue_create = True
         
@@ -292,19 +293,19 @@ while run:
             increasing_Reflektion_button.change_picture(increasingReflektion_imges[increasing_Reflektion_button.counter % len(increasingReflektion_imges)])
 
         # Abfrage nach geünschter Anzahl von Hindernissen:
-        text_count_obstacel = Text.Text(f"Geben Sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width - 5.15*screen_width/8, screen_height -  6 * screen_height / 12)
-        if moving_obstacel_button.counter % len(moving_obstacel_imges) != 0: 
-            text_count_obstacel.blitnew(screen)
+        text_count_obstacle = Text.Text(f"Geben Sie die Anzahl an Hindernissen ein: {obstacle_counter}", screen_width - 5.15*screen_width/8, screen_height -  6 * screen_height / 12)
+        if moving_obstacle_button.counter % len(moving_obstacle_imges) != 0: 
+            text_count_obstacle.blitnew(screen)
         
         # Abfrage über Spiel-Modus: Hindernisse!!!
-        if moving_obstacel_button.draw(screen) == True:
+        if moving_obstacle_button.draw(screen) == True:
             # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
-            moving_obstacel_button.counter += 1
+            moving_obstacle_button.counter += 1
             # Abhängig von der Anzahl an Drückungen kann bestimmt werden, in welchen Modus der Spieler getoggelt ist, so wird das Bild und daraus später der übergebene Wert bestimmt:
-            moving_obstacel_button.change_picture(moving_obstacel_imges[moving_obstacel_button.counter % len(moving_obstacel_imges)])
+            moving_obstacle_button.change_picture(moving_obstacle_imges[moving_obstacle_button.counter % len(moving_obstacle_imges)])
             
-            if moving_obstacel_button.counter % len(moving_obstacel_imges) > 0:
-                text_count_obstacel.remove()
+            if moving_obstacle_button.counter % len(moving_obstacle_imges) > 0:
+                text_count_obstacle.remove()
             
         if multiball_button.draw(screen):
             # Der Knopf wurde gedrückt, daher die Erhöhung des Counters
@@ -329,19 +330,19 @@ while run:
             elif getting_faster_button.counter % len(getting_faster_imges) == 1:
                 Game.game_modus_feature_increasingSpeed = True
             
-            Game.game_modus_feature_Obstacel_difficulty = moving_obstacel_button.counter % len(moving_obstacel_imges)
+            Game.game_modus_feature_obstacle_difficulty = moving_obstacle_button.counter % len(moving_obstacle_imges)
             Game.game_modus_balls_count =  2 ** (multiball_button.counter % len(multiball_img))
             
             try:
-                Game.game_modus_feature_Obstacel_count = int(obstacel_counter)
+                Game.game_modus_feature_obstacle_count = int(obstacle_counter)
 
-                obstacel_counter = ''
+                obstacle_counter = ''
             except:
                 print("Sie haben keine Valide Anzahl eingegeben")
-                Game.game_modus_feature_Obstacel_count = 0
-                obstacel_counter = ''
+                Game.game_modus_feature_obstacle_count = 0
+                obstacle_counter = ''
             
-            print(f"gewählte Spiel Modi: getting faster: {Game.game_modus_feature_increasingSpeed}; harder Reflektion:  {Game.game_modus_feature_increasingReflektion}; Hindernisse: {Game.game_modus_feature_Obstacel_difficulty}")
+            print(f"gewählte Spiel Modi: getting faster: {Game.game_modus_feature_increasingSpeed}; harder Reflektion:  {Game.game_modus_feature_increasingReflektion}; Hindernisse: {Game.game_modus_feature_obstacle_difficulty}")
             
             #Game im jeweiligen Modus starten und Highscore updaten
             if game_modus == "PvAi":
