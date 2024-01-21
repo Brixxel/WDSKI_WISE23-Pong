@@ -3,8 +3,11 @@ import random
 import os
 
 """
-obstacles versdchiedener Typen sollen unterscheideliche Reflektions Eigenschaften haben
-    
+    Hindernisse haben einen zufälligen Skin und zufällige Größe.
+    Hindernisse reflektieren den Ball wie eine Wand und ermöglichen so eine neue Spiel-Situation.
+    Hindernisse können sich bewegen, teleportieren oder statisch ihre Postition beibehalten.
+        Wenn sie sich bewegen, verhalten sie sich wie ein Ball, und prallen an Wänden und einander ab.
+        Beim genereien der Hindernisse wird darauf geachtet, dass sie nicht im Spwanberreich des Balls generiert werden.
 """
 
 class Obstacle(pygame.sprite.Sprite):

@@ -74,7 +74,7 @@ player_img = (pygame.image.load("grafics/player_two.png").convert_alpha(),  pyga
 blöckeanzahl_img = pygame.image.load("grafics/anzahl_blöcke.png").convert_alpha()
 ai_imgs = (pygame.image.load(r"grafics/button_easy.png").convert_alpha(), pygame.image.load(r"grafics/button_medium.png").convert_alpha(),pygame.image.load(r"grafics/button_hard.png").convert_alpha())
 
-# ----------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
 # Allgemeine Instanzen:
 # Buttons im Pausenmenü: 
@@ -99,7 +99,7 @@ obstacle_counter = ''
 multiball_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  2 * screen_height / 12, multiball_img[0] , 4)
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height -  9 * screen_height / 12, start_img ,1)
 
-# ------------------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
 # Spieler-Objekte
 player_1 = Player.Player()
@@ -107,7 +107,7 @@ player_2 = Player.Player()
 player_Ai = AiPlayer.AIPlayer()
 Game = GameState.GameState(screen, player_Ai)
 
-# ------------------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
 # ######################################### #
 # Spiel - Loop                              #
@@ -191,13 +191,13 @@ while run:
     #                                                    MENÜS                                                        #
     # --------------------------------------------------------------------------------------------------------------- #
     
-    # #####  ---------------   Main - Menü      -------------       ##### #
-    # ------------------- Spieler-Auswahl-Menü -------------------------- #
-    """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
+    # ---------------------------------------------   Main - Menü   ------------------------------------------------- #
+    # -------------------                         Spieler-Auswahl-Menü                     -------------------------- #
+    """ 
+    In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
             1.) PvP oder PvAi
             2.) Ai Schweirigkeit
-            3.) Skin von Spieler 1 und 2 (wenn keine Ai) 
-            
+            3.) Skin von Spieler 1 und 2 (wenn keine Ai)       
     """ 
     # Überprüfen auf Spiel- / Menü-zustand:
     if game_paused == True and game_in_menue == True and game_in_menue_create == False:
@@ -266,8 +266,7 @@ while run:
 
 
 
-
-    # -------------- Create Game Menü ------------------------ #
+    # -------------------                        Create Game Menü                     -------------------------- #
     """ In diesem Menü müssen folgende Eigenschaften vom Spieler eingestellt werden:
             1.) Block-Spielmodus            (Keine Blöcke, statische Blöcke, sich zunehmend teleportierende Blöcke, sich bewegende Blöcke)
                 Anzahl an Hindernissen      (User-Typer-Input)
