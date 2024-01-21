@@ -292,7 +292,7 @@ while run:
             increasing_Reflektion_button.change_picture(increasingReflektion_imges[increasing_Reflektion_button.counter % len(increasingReflektion_imges)])
 
         # Abfrage nach geünschter Anzahl von Hindernissen:
-        text_count_obstacel = Text.Text(f"Geben Sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width - 5*screen_width/8, screen_height -  6 * screen_height / 12)
+        text_count_obstacel = Text.Text(f"Geben Sie die Anzahl an Hindernissen ein: {obstacel_counter}", screen_width - 5.15*screen_width/8, screen_height -  6 * screen_height / 12)
         if moving_obstacel_button.counter % len(moving_obstacel_imges) != 0: 
             text_count_obstacel.blitnew(screen)
         
