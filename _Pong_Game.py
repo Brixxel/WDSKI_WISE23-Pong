@@ -10,7 +10,7 @@ import os
 import Text
 
 # ######################################### #
-# Version 1.1 Beta                          #
+# Version 1.1                               #
 # @Felix Regler, @Tom Weber, @Gina Grünen   #
 # 21.01.2024                                #
 # ######################################### #
