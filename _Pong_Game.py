@@ -324,11 +324,13 @@ while run:
                 Game.game_modus_feature_increasingReflektion = False
             elif increasing_Reflektion_button.counter % len(increasingReflektion_imges) == 1:
                 Game.game_modus_feature_increasingReflektion = True
+
             
             if getting_faster_button.counter % len(getting_faster_imges) == 0:
                 Game.game_modus_feature_increasingSpeed = False
             elif getting_faster_button.counter % len(getting_faster_imges) == 1:
                 Game.game_modus_feature_increasingSpeed = True
+
             
             Game.game_modus_feature_obstacle_difficulty = moving_obstacle_button.counter % len(moving_obstacle_imges)
             Game.game_modus_balls_count =  2 ** (multiball_button.counter % len(multiball_img))
