@@ -12,8 +12,6 @@ class GameState_Manager:
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
         self.paddle_player_1 = 0
         self.paddle_player_2 = 0
-        #self.ball = 0
-        #self.ball02 = 0
         
         self.ball_group = pygame.sprite.Group()
         self.paddle_group = pygame.sprite.Group()

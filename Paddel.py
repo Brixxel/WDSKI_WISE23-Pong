@@ -24,8 +24,7 @@ class Paddel(pygame.sprite.Sprite):
         # Bildet das Rechteck (Pixel des Bildes gleich Maße des Rechtecks)
         self.rect = self.image.get_rect(center = (x_pos,y_pos))
         
-        # weitere Spiel-relevante Variablen wie die Geschwindigkeit, mit der sich das Paddle bewegt
-        
+        # weitere Spiel-relevante Variablen wie die Geschwindigkeit, mit der sich das Paddle bewegt 
         # (Nur Vollgas oder kein Gas - keine Beschleunigung - Speed gibt die Max V vom Paddle an)
         self.speed = player.player_speed
         

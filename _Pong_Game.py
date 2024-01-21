@@ -99,20 +99,14 @@ obstacel_counter = ''
 multiball_button = Button.Button(screen_width / 2 - (resume_img.get_width() / 2)*3, screen_height -  2 * screen_height / 12, multiball_img[0] , 4)
 start_button = Button.Button(screen_width / 2 - start_img.get_width()/2, screen_height -  9 * screen_height / 12, start_img ,1)
 
-# -------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------- #
 
-# Spiel-Objekte
+# Spieler-Objekte
 player_1 = Player.Player()
 player_2 = Player.Player()
 player_Ai = AiPlayer.AIPlayer()
 
-# --------------------------------------------------------------------------
-
-# Spiel - Startzustand initialisieren: 
-# Game = GameState.GameState_Manager(screen, player_Ai)
-#(Wird später im Menü ausgeführt):
-# game_modus = Game.Start_PvAi_Game(player_1) # !!!!!
-# game_modus = Game.Start_PvP_Game(player_1, player_2)
+# ------------------------------------------------------------------------------------------------------- #
 
 # ######################################### #
 # Spiel - Loop                              #
