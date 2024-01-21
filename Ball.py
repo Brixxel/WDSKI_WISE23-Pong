@@ -1,4 +1,12 @@
-import pygame, random
+import pygame, random, Explosion
+
+"""
+Ball ist eine Klasse die, die Atribute und Methoden enthält, die ein Ball für Pong benötigt:
+
+    1.) Die Update-Methode, die jedes relevante Atribut einer Ball Entität pro Spiel-Tick aktualisier. (Darunter Position, Kollison mit Wand und Hinderniss)
+    2.) ...
+
+"""
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self,path,x_pos,y_pos,paddles,screen_height, screen_width, screen):
@@ -34,6 +42,7 @@ class Ball(pygame.sprite.Sprite):
             # Und überprüft auf Kollisionen und damit einhergehende Reflektionen
             self.collisions()
             self.collision_obstacel()
+            
         else:
              self.restart_counter()
             
@@ -62,7 +71,7 @@ class Ball(pygame.sprite.Sprite):
                 self.speed_y *= -1
 
     def reset_ball(self):
-        self.active = False
+
         self.speed_x = self.generate_valid_speed()[0]
         self.speed_y = self.generate_valid_speed()[1]
         self.score_time = pygame.time.get_ticks()
@@ -79,12 +88,14 @@ class Ball(pygame.sprite.Sprite):
             countdown_number = 3
         if 700 < current_time - self.score_time <= 1400:
             countdown_number = 2
+            self.explosions_animation.active = False
         if 1400 < current_time - self.score_time <= 2100:
             countdown_number = 1
         if current_time - self.score_time >= 2100:
             pygame.mixer.Sound("sounds/start_sound.mp3").play()
             self.active = True
             self.reflections_since_new_round = 0
+            
             
         time_counter = pygame.font.Font('freesansbold.ttf', 32).render(str(countdown_number),True,(27,35,43))
         time_counter_rect = time_counter.get_rect(center = (self.screen_width/2,self.screen_height/2 + 50))

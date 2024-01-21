@@ -31,7 +31,6 @@ class AIPlayer():
             # Funktion die für die Bewegung des Paddels zurückgegeben wird:
             # Das Paddel wird mit dieser Funktion einfach von unten nach oben und umgekehrt fahren
             def action(ball_group, paddel: Paddel):
-                print(paddel.moving_up)
                 # prüft ob das Paddle sich in positive Y-Richtung bewegt:
                 if paddel.moving_up:
                     paddel.rect.y += random.uniform(0.5, 1) * paddel.speed

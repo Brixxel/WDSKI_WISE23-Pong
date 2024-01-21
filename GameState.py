@@ -78,22 +78,32 @@ class GameState_Manager:
         for ball in self.ball_group.sprites():
             
             if ball.rect.right >= self.screen_width:
+                # Punktzahl des erfolgreichen Spielers / AI erhöhen
                 self.paddle_player_2.player.score += 1
-                self.explosion = Explosion.Explosion(ball.rect.right - 20, ball.rect.y)
-                self.explosion_group.add(self.explosion)
+                
+                #Explosions Animation erstellen
+                explosion = Explosion.Explosion(ball.rect.right - 20, ball.rect.y)
+                self.explosion_group.add(explosion)
                 self.explosion_group.draw(self.screen)
-                self.explosion_group.remove(self.explosion)
+                self.explosion_group.remove(explosion)
+                # Explosions Sound, für das athmossphärische Erlebniss
                 pygame.mixer.Sound("sounds/explosion_sound.wav").play()
+                
                 pygame.display.update()
                 ball.reset_ball()
                 
             if ball.rect.left <= 0:
+                # Punktzahl des erfolgreichen Spielers / AI erhöhen
+                self.paddle_player_1.player.score += 1
+                
+                #Explosions Animation erstellen
                 self.explosion = Explosion.Explosion(ball.rect.left+20, ball.rect.y)
                 self.explosion_group.add(self.explosion)
                 self.explosion_group.draw(self.screen)
                 self.explosion_group.remove(self.explosion)
                 pygame.mixer.Sound("sounds/explosion_sound.wav").play()
-                self.paddle_player_1.player.score += 1
+                
+                pygame.display.update()
                 ball.reset_ball()
             
     # Um den aktuellen Spiel-Score von Spieler und Gegner darzustellen:
@@ -121,8 +131,6 @@ class GameState_Manager:
                 for ball in self.ball_group.sprites():
                     ball.speed_x = ball.speed_x * 1.1
                     ball.speed_y = ball.speed_y * 1.1
-                    # !!!!! Print Statement entfehrnen
-                    print(f"Erhöhe Geschwindigkeit auf: {ball.speed_x}")
     
     # Spiel-Modus: je öfter der Ball Reflektiert wird, um so schneller bewegt er sich
     def feature_increasing_Reflection(self):
@@ -173,7 +181,6 @@ class GameState_Manager:
         
         # entspricht hier einem AI Paddle
         self.paddle_player_2 = Paddel.Paddel(self.player_ai, 20 ,self.screen_width/2, 5, self.screen_height)
-        print(f"die Schwierigkeit der KI beträgt: {self.player_ai.difficulty}")
         #print(f"die Schwierigkeit der KI-Spieler beträgt: {self.paddle_player_2.difficulty}")
         
         self.general_setUp()
