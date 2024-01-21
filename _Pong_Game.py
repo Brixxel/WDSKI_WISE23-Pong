@@ -29,8 +29,8 @@ clock = pygame.time.Clock()
 os.environ["SDL_VIDEO_CENTERED"] = "1" 
 screen_width_monitor = pygame.display.Info().current_w
 screen_height_monitor = pygame.display.Info().current_h
-screen_height = (screen_height_monitor - 180)
-screen_width = (2)*(screen_height - 180)
+screen_height = (screen_height_monitor - 100)
+screen_width = (2)*(screen_height - 100)
 
 #monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
 #screen = pygame.display.set_mode((screen_width,screen_height))
