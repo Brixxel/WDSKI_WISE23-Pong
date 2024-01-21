@@ -16,7 +16,7 @@ class Obstacle(pygame.sprite.Sprite):
         
         self.difficulty = difficulty
         self.ready_for_change = False
-        self.image = pygame.image.load(self.change_img(directory="obstacle_skins"))
+        self.image = pygame.image.load(self.change_img(directory="obstacle_skins")) #Hindernisse bekommen zufälliges Image aus dem Ordner obtacle_skins
         width = self.image.get_width()
         height = self.image.get_height()
         self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
@@ -55,8 +55,10 @@ class Obstacle(pygame.sprite.Sprite):
         if (current_game_timer + (obstical_group_index)*40 ) % diff_modifier == 0:
             self.ready_for_change = True
     
+    #Hindernisse sollen aus einem Ordner ein zufälliges .jpg bekommen
     def change_img(self,directory="."):
         
+        #wählt nur die Images mit dem Ende jpg
         self.imgExtension = ["jpg"] 
         self.allImages = list()
 
