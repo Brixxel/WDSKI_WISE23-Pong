@@ -14,7 +14,7 @@ class Ball(pygame.sprite.Sprite):
         
         self.image = pygame.image.load(path)
         self.rect = self.image.get_rect(center = (x_pos,y_pos))
-             
+            
         # Richtungs Vektor, wird in Methode bestimmt, hier wird weiter Komponenten-weise betrachtet:
         self.speed_x = self.generate_valid_speed()[0]
         self.speed_y = self.generate_valid_speed()[1]
@@ -43,11 +43,12 @@ class Ball(pygame.sprite.Sprite):
             self.collisions()
             self.collision_obstacle()
         else:
-             self.restart_counter()
+            self.restart_counter()
             
     def collisions(self):
         # Der Ball trifft auf Decke oder Boden:
         if self.rect.top <= 0 or self.rect.bottom >= self.screen_height:
+            #Sound wird abgespielt, sobald die Decke oder den Boden berührt
             pygame.mixer.Sound("sounds/hit_sound.mp3").play()
             self.speed_y *= -1 # Richtung der vertikalen Geschwindigkeitskomponente umkehren
         # Der Ball trifft auf ein Paddle:
@@ -56,7 +57,7 @@ class Ball(pygame.sprite.Sprite):
             self.reflections_since_new_round += 1
             pygame.mixer.Sound("sounds/hit_sound.mp3").play()
             collision_paddle = pygame.sprite.spritecollide(self,self.paddles,False)[0].rect
-             # Abhängig davon, wo der Ball das Paddle getroffen hat, die Richtung der horizontalen Geschwindigkeitskomponente ändern
+            # Abhängig davon, wo der Ball das Paddle getroffen hat, die Richtung der horizontalen Geschwindigkeitskomponente ändern
             if abs(self.rect.right - collision_paddle.left) < 10 and self.speed_x > 0:
                 self.speed_x *= -1
             if abs(self.rect.left - collision_paddle.right) < 10 and self.speed_x < 0:
@@ -76,7 +77,6 @@ class Ball(pygame.sprite.Sprite):
         self.score_time = pygame.time.get_ticks()
         self.rect.center = (self.screen_width/2,self.screen_height/2)
         self.active = False
-        #pygame.mixer.Sound.play(score_sound)
         
     def restart_counter(self):
         current_time = pygame.time.get_ticks()
@@ -88,6 +88,7 @@ class Ball(pygame.sprite.Sprite):
         if 1400 < current_time - self.score_time <= 2100:
             countdown_number = 1
         if current_time - self.score_time >= 2100:
+            #Startsound wird abgespielt, sobald der Countdown abläuft
             pygame.mixer.Sound("sounds/start_sound.mp3").play()
             self.active = True
             self.reflections_since_new_round = 0
@@ -106,7 +107,7 @@ class Ball(pygame.sprite.Sprite):
         if self.reflections_since_new_round % 2 == 0 and pygame.sprite.spritecollide(self,self.paddles,False):
             self.speed_x = self.speed_x * 1.5
             self.speed_y = self.speed_y * 1.5
-           
+        
     # Reflektion an Hindernissen        
     def collision_obstacle(self):
         if self.obstacles:

@@ -64,8 +64,8 @@ moving_obstacle_imges = (pygame.image.load(r"grafics/button_obstacle_01.png").co
                         pygame.image.load(r"grafics/button_obstacle_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacle_08.png").convert_alpha())
 
 paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
-              pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
-              pygame.image.load("skins/Paddle.png").convert_alpha()]
+            pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
+            pygame.image.load("skins/Paddle.png").convert_alpha()]
 
 multiball_img = (pygame.image.load(r"grafics/button_multiball_01.png").convert_alpha(),pygame.image.load(r"grafics/button_multiball_02.png").convert_alpha(),
                 pygame.image.load(r"grafics/button_multiball_03.png").convert_alpha(),pygame.image.load(r"grafics/button_multiball_04.png").convert_alpha(),)

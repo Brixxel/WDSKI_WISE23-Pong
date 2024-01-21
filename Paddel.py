@@ -59,4 +59,3 @@ class Paddel(pygame.sprite.Sprite):
         elif isinstance(self.player, AiPlayer.AIPlayer):
             #action = self.player.operating()      
             self.action(ball_group , self)
-      

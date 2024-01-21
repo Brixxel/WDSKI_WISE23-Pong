@@ -85,7 +85,7 @@ class Obstacle(pygame.sprite.Sprite):
         # Prüfen ob zufällig generierte Y-Position innerhalb des Spawn bereich des Balls liegt  
         if rand_y_pos > self.screen.get_height() / 2 - (self.screen.get_height() / 10 + self.image.get_height() / 2) and rand_y_pos < self.screen.get_height() / 2 + (self.screen.get_height() / 10 + self.image.get_height() / 2):
             critical_y = True
-  
+
         # Nur wenn beide Koordinaten des Hindernisses innerhalb der Koordinaten des Spwans liegen, müssen rekursiv neue valide Koordinaten gefunden werden
         if critical_x and critical_y:
             rand_pos = self.generate_valid_position()
@@ -98,7 +98,7 @@ class Obstacle(pygame.sprite.Sprite):
         else:
             difficulty_modifier = (self.difficulty - 4) * 1.5
             return random.uniform(- 1 *difficulty_modifier, difficulty_modifier)
-      
+    
     # Teleportationsähnliche Änderung der Postion
     def change_position(self):
         # Blöcke sollten ihre Position erst nach einer geiwssen Zeit ändern

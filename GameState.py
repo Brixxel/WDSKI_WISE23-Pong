@@ -158,7 +158,7 @@ class GameState:
         self.game_modus_obstacle_group.empty()
         # !!!! evtl unterschiedliche Arten von Hindernissen
         for x in range(self.game_modus_feature_obstacle_count):
-           
+        
             rand_scale = random.uniform(1,3.5)*0.05
 
             obstacle_1 = Obstacle.Obstacle(self.screen, rand_scale, self.game_modus_feature_obstacle_difficulty)
