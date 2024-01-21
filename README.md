@@ -33,23 +33,23 @@ Das Ziel ist es, den Ball am Gegenspieler vorbeizuspielen und Punkte zu erzielen
 Unsere erweiterte Pong-Version enthält die folgenden Funktionen und Spielmodi:
   Spielmodi:
 
-    - Player vs. Player (PvP): Klassisches Pong-Spiel, bei dem zwei menschliche Spieler gegeneinander antreten.
+  - Player vs. Player (PvP): Klassisches Pong-Spiel, bei dem zwei menschliche Spieler gegeneinander antreten.
 
-    - Player vs. AI (PvAI): Einzelspielermodus gegen eine computergesteuerte KI. Die KI passt sich dem Schwierigkeitsgrad an.
+  - Player vs. AI (PvAI): Einzelspielermodus gegen eine computergesteuerte KI. Die KI passt sich dem Schwierigkeitsgrad an.
 
   Spieleranpassungen:
 
-    - Skin-Wahl des einen Spielers: Ein Spieler kann seinen Paddle-Skin aus verschiedenen verfügbaren Optionen auswählen.
+  - Skin-Wahl des einen Spielers: Ein Spieler kann seinen Paddle-Skin aus verschiedenen verfügbaren Optionen auswählen.
 
   Spielmodifikatoren:
 
-    - Multiball-Modus: Mehrere Bälle werden gleichzeitig im Spiel sein, was zu einem chaotischen, aber spaßigen Erlebnis führt.
+  - Multiball-Modus: Mehrere Bälle werden gleichzeitig im Spiel sein, was zu einem chaotischen, aber spaßigen Erlebnis führt.
 
-    - Hindernisse: Statische, teleportierende und sich bewegende Hindernisse wurden hinzugefügt. Beim Spawnen wird Rücksicht auf den Spawnbereich des Balls genommen.
+  - Hindernisse: Statische, teleportierende und sich bewegende Hindernisse wurden hinzugefügt. Beim Spawnen wird Rücksicht auf den Spawnbereich des Balls genommen.
 
-    - Härtere Ballreflexion: Die Reflexion des Balls wird im Laufe der Zeit anspruchsvoller.
+  - Härtere Ballreflexion: Die Reflexion des Balls wird im Laufe der Zeit anspruchsvoller.
 
-    - Geschwindigkeitserhöhung: Die Geschwindigkeit des Balls nimmt im Laufe der Zeit zu, um das Spiel intensiver zu gestalten.
+  - Geschwindigkeitserhöhung: Die Geschwindigkeit des Balls nimmt im Laufe der Zeit zu, um das Spiel intensiver zu gestalten.
     
 # Design:
 Wir haben uns dafür entschieden, ein pixel haftes Design und Neonfarben für unser Pong-Spiel auszuwählen, um eine bestimmte ästhetische Atmosphäre zu schaffen und die Spielerfahrung zu verbessern. Hier sind einige Gründe, warum wir diese Designelemente gewählt haben:
