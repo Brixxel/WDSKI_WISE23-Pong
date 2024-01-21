@@ -18,7 +18,7 @@ class Obstacel(pygame.sprite.Sprite):
         self.ready_for_change = False
         # folderpath = "skins/obstacle_skins"
         # randomimage = self.change_img(folderpath)
-        self.image = pygame.image.load(self.change_img())
+        self.image = pygame.image.load(self.change_img(directory="/skins/obstacle_skins"))
         width = self.image.get_width()
         height = self.image.get_height()
         self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
