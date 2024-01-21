@@ -16,9 +16,7 @@ class Obstacel(pygame.sprite.Sprite):
         
         self.difficulty = difficulty
         self.ready_for_change = False
-        # folderpath = "skins/obstacle_skins"
-        # randomimage = self.change_img(folderpath)
-        self.image = pygame.image.load(self.change_img())
+        self.image = pygame.image.load(self.change_img(directory="obstacle_skins"))
         width = self.image.get_width()
         height = self.image.get_height()
         self.image = pygame.transform.scale(self.image, (int(width * scale), int(height * scale)))
@@ -66,7 +64,7 @@ class Obstacel(pygame.sprite.Sprite):
         for img in os.listdir(directory): 
             ext = img.split(".")[len(img.split(".")) - 1]
             if (ext in self.imgExtension):
-                self.allImages.append(img)
+                self.allImages.append(os.path.join(directory, img))
         self.choice = random.randint(0, len(self.allImages) - 1)
         self.chosenImage = self.allImages[self.choice] 
         return self.chosenImage

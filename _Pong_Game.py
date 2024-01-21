@@ -29,8 +29,8 @@ clock = pygame.time.Clock()
 os.environ["SDL_VIDEO_CENTERED"] = "1" 
 screen_width_monitor = pygame.display.Info().current_w
 screen_height_monitor = pygame.display.Info().current_h
-screen_height = (screen_height_monitor - 180)
-screen_width = (2)*(screen_height - 180)
+screen_height = (screen_height_monitor - 100)
+screen_width = (2)*(screen_height - 100)
 
 #monitor_size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
 #screen = pygame.display.set_mode((screen_width,screen_height))
@@ -64,8 +64,9 @@ moving_obstacel_imges = (pygame.image.load(r"grafics/button_obstacel_01.png").co
                         pygame.image.load(r"grafics/button_obstacel_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_08.png").convert_alpha())
 
 paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
-            pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
-            pygame.image.load("skins/Paddle.png").convert_alpha()]
+              pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
+              pygame.image.load("skins/Paddle.png").convert_alpha()]
+
 multiball_img = (pygame.image.load(r"grafics/button_multiball_01.png").convert_alpha(),pygame.image.load(r"grafics/button_multiball_02.png").convert_alpha(),
                 pygame.image.load(r"grafics/button_multiball_03.png").convert_alpha(),pygame.image.load(r"grafics/button_multiball_04.png").convert_alpha(),)
 playerone_img = pygame.image.load("grafics/player_one.png").convert_alpha()
