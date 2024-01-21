@@ -51,3 +51,9 @@ Unsere erweiterte Pong-Version enthält die folgenden Funktionen und Spielmodi:
 
     - Geschwindigkeitserhöhung: Die Geschwindigkeit des Balls nimmt im Laufe der Zeit zu, um das Spiel intensiver zu gestalten.
     
+# Design:
+Wir haben uns dafür entschieden, ein pixel haftes Design und Neonfarben für unser Pong-Spiel auszuwählen, um eine bestimmte ästhetische Atmosphäre zu schaffen und die Spielerfahrung zu verbessern. Hier sind einige Gründe, warum wir diese Designelemente gewählt haben:
+
+- Einfachheit und Klarheit: Unser Fokus liegt auf einfacher und klarer Gestaltung. Das reduzierte Design ermöglicht es den Spielern, sich auf das Wesentliche zu konzentrieren, ohne von komplexen Details abgelenkt zu werden.
+- Futuristisches Gefühl mit Neonfarben: Neon Farben vermitteln ein futuristisches und lebendiges Gefühl. Die kräftigen Farben machen unser Spiel dynamischer und aufregender, was besonders gut zu einem Pong-Spiel passt.
+- Einzigartige Markenkennzeichnung: Die Kombination aus pixeligen Grafiken und Neonfarben verleiht unserem Spiel eine unverwechselbare Identität. Spieler können unser Spiel leicht erkennen und sich daran erinnern.
