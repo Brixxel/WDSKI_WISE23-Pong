@@ -171,7 +171,7 @@ class GameState_Manager:
 
 
 # New Game Methode, die den Speilstand des bisherigen Spiels löscht und mit den neuen Paddels beginnt
-    def Start_PvAi_Game(self, player_1 : Player):
+    def Start_PvAi_Game(self, player_1 : Player.Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
         self.player_ai.score = 0
@@ -184,7 +184,7 @@ class GameState_Manager:
         
         return "PvAi"
 
-    def Start_PvP_Game(self, player_1 : Player, player_2 : Player):
+    def Start_PvP_Game(self, player_1 : Player.Player, player_2 : Player.Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
         self.paddle_player_2 = Paddel.Paddel(player_2,20,self.screen_width/2, 5, self.screen_height)
