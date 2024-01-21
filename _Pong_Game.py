@@ -216,7 +216,7 @@ while run:
             # Ein neues Spiel wird erstellt und das alte somit "gelöscht"
             current_time = pygame.time.get_ticks()
             Game = GameState.GameState(screen, player_Ai)
-            # !!!!!!!!! kurzes Abwarten vor neuladen der Seite
+            # Jetzt wird im nächsten Menu die Zustände des Spiel eingestellt
             game_in_menue_create = True
         
 
