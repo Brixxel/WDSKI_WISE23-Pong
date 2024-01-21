@@ -1,22 +1,21 @@
 import pygame, random
-import Player, Paddel, AiPlayer, Ball, Obstacel
+import Player, Paddel, AiPlayer, Ball, Obstacel, Explosion
 
 
 class GameState_Manager:
     
-    def __init__(self, screen):
+    def __init__(self, screen, ai_player):
     
-        # !!! evtl ja nach KI anpassen
-        self.player_ai = AiPlayer.AIPlayer()
+        # die KI
+        self.player_ai = ai_player
         
         # nicht initialisierte Paddels -- werden bei jedem neuen Spiel dieser GamestateKlasse überschrieben
         self.paddle_player_1 = 0
         self.paddle_player_2 = 0
-        #self.ball = 0
-        #self.ball02 = 0
         
         self.ball_group = pygame.sprite.Group()
         self.paddle_group = pygame.sprite.Group()
+        self.explosion_group = pygame.sprite.Group()
         
         self.screen = screen
         self.screen_width = screen.get_width()
@@ -44,12 +43,11 @@ class GameState_Manager:
         self.game_modus_obstacel_group = pygame.sprite.Group()
         
     def run_game(self):
-		# Drawing the game objects
+		# Drawen der Game-Objekte der Paddels und des Balls
         self.paddle_group.draw(self.screen)
         self.ball_group.draw(self.screen)
         
-        
-        
+
         # Auführen besonderer Spiel-Modi
         if self.game_modus_feature_increasingSpeed:
             self.feature_increasing_Speed()
@@ -64,6 +62,7 @@ class GameState_Manager:
 		# Updating the game objects
         self.paddle_group.update(self.ball_group)
         self.ball_group.update()
+        self.explosion_group.update()
         self.reset_ball()
         self.draw_score()
         
@@ -75,10 +74,32 @@ class GameState_Manager:
         for ball in self.ball_group.sprites():
             
             if ball.rect.right >= self.screen_width:
+                # Punktzahl des erfolgreichen Spielers / AI erhöhen
                 self.paddle_player_2.player.score += 1
+                
+                #Explosions Animation erstellen
+                explosion = Explosion.Explosion(ball.rect.right - 20, ball.rect.y)
+                self.explosion_group.add(explosion)
+                self.explosion_group.draw(self.screen)
+                self.explosion_group.remove(explosion)
+                # Explosions Sound, für das athmossphärische Erlebniss
+                pygame.mixer.Sound("sounds/explosion_sound.wav").play()
+                
+                pygame.display.update()
                 ball.reset_ball()
+                
             if ball.rect.left <= 0:
+                # Punktzahl des erfolgreichen Spielers / AI erhöhen
                 self.paddle_player_1.player.score += 1
+                
+                #Explosions Animation erstellen
+                self.explosion = Explosion.Explosion(ball.rect.left+20, ball.rect.y)
+                self.explosion_group.add(self.explosion)
+                self.explosion_group.draw(self.screen)
+                self.explosion_group.remove(self.explosion)
+                pygame.mixer.Sound("sounds/explosion_sound.wav").play()
+                
+                pygame.display.update()
                 ball.reset_ball()
             
     # Um den aktuellen Spiel-Score von Spieler und Gegner darzustellen:
@@ -106,15 +127,13 @@ class GameState_Manager:
                 for ball in self.ball_group.sprites():
                     ball.speed_x = ball.speed_x * 1.1
                     ball.speed_y = ball.speed_y * 1.1
-                    # !!!!! Print Statement entfehrnen
-                    print(f"Erhöhe Geschwindigkeit auf: {ball.speed_x}")
     
     # Spiel-Modus: je öfter der Ball Reflektiert wird, um so schneller bewegt er sich
     def feature_increasing_Reflection(self):
         if self.game_modus_feature_increasingReflektion:
             for ball in self.ball_group.sprites():
                 ball.increasing_reflection()
-       
+    
 
 
 # ......................... Obstacels ................................................... #
@@ -140,35 +159,39 @@ class GameState_Manager:
         for x in range(self.game_modus_feature_Obstacel_count):
            
             rand_scale = random.uniform(1,3.5)*0.05
+
             obstacel_1 = Obstacel.Obstacel(self.screen, rand_scale, self.game_modus_feature_Obstacel_difficulty)
             self.game_modus_obstacel_group.add(obstacel_1)
         for ball in self.ball_group.sprites():
             ball.obstacels = self.game_modus_obstacel_group
 
- 
+
 # --------------------------------------------------------------------------------------- #
 # Spiel - Initialisierungs / Generierungs Methoden
 # --------------------------------------------------------------------------------------- # 
- 
- 
+
+
 # New Game Methode, die den Speilstand des bisherigen Spiels löscht und mit den neuen Paddels beginnt
-    def Start_PvAi_Game(self, player_1 : Player):
+    def Start_PvAi_Game(self, player_1 : Player.Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
+        self.player_ai.score = 0
+        self.player_ai.skin = self.player_ai.paddle_img[random.randint(0,4)]
         # entspricht hier einem AI Paddle
-        self.paddle_player_2 = Paddel.Paddel(self.player_ai,20,self.screen_width/2, 5, self.screen_height)
+        self.paddle_player_2 = Paddel.Paddel(self.player_ai, 20 ,self.screen_width/2, 5, self.screen_height)
+        #print(f"die Schwierigkeit der KI-Spieler beträgt: {self.paddle_player_2.difficulty}")
         
         self.general_setUp()
         
         return "PvAi"
 
-    def Start_PvP_Game(self, player_1 : Player, player_2 : Player):
+    def Start_PvP_Game(self, player_1 : Player.Player, player_2 : Player.Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
         self.paddle_player_2 = Paddel.Paddel(player_2,20,self.screen_width/2, 5, self.screen_height)
 
         self.general_setUp()
-              
+        
         return "PvP"
 
     def general_setUp(self):
@@ -178,7 +201,7 @@ class GameState_Manager:
         
         self.ball_group.empty()
         for x in range(self.game_modus_balls_count):
-            ball = Ball.Ball('Ball.png', self.screen_width/2, self.screen_height/2, 4, 4, self.paddle_group, self.screen_height, self.screen_width, self.screen)
+            ball = Ball.Ball('skins/Ball.png', self.screen_width/2, self.screen_height/2, self.paddle_group, self.screen_height, self.screen_width, self.screen)
             self.ball_group.add(ball)
         
         if self.game_modus_feature_Obstacel_difficulty != 0:
