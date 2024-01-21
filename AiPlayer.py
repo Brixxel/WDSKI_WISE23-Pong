@@ -13,12 +13,12 @@ class AIPlayer():
 
     def __init__(self):
 
-        paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
+        self.paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
             pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
             pygame.image.load("skins/Paddle.png").convert_alpha()]
         
         # Die relevanten Atribute für einen AI-Player
-        self.skin = paddle_img[random.randint(0,4)]  
+        self.skin = self.paddle_img[random.randint(0,4)]  
         self.score = 0
         self.player_speed = 7
         

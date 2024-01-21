@@ -45,13 +45,11 @@ class GameState_Manager:
         self.game_modus_obstacel_group = pygame.sprite.Group()
         
     def run_game(self):
-		# Drawing the game objects
-        print(f"die Schwierigkeit der KI beträgt: {self.player_ai.difficulty}")
+		# Drawen der Game-Objekte der Paddels und des Balls
         self.paddle_group.draw(self.screen)
         self.ball_group.draw(self.screen)
         
-        
-        
+
         # Auführen besonderer Spiel-Modi
         if self.game_modus_feature_increasingSpeed:
             self.feature_increasing_Speed()
@@ -178,7 +176,8 @@ class GameState_Manager:
     def Start_PvAi_Game(self, player_1 : Player):
         
         self.paddle_player_1 = Paddel.Paddel(player_1, self.screen_width - 20, self.screen_height/2, 5, self.screen_height)
-        
+        self.player_ai.score = 0
+        self.player_ai.skin = self.player_ai.paddle_img[random.randint(0,4)]
         # entspricht hier einem AI Paddle
         self.paddle_player_2 = Paddel.Paddel(self.player_ai, 20 ,self.screen_width/2, 5, self.screen_height)
         #print(f"die Schwierigkeit der KI-Spieler beträgt: {self.paddle_player_2.difficulty}")
