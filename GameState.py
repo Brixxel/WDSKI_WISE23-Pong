@@ -139,7 +139,7 @@ class GameState_Manager:
         # !!!! evtl unterschiedliche Arten von Hindernissen
         for x in range(self.game_modus_feature_Obstacel_count):
            
-            rand_scale = random.uniform(1,3.5)*0.07
+            rand_scale = random.uniform(1,3.5)*0.05
             obstacel_1 = Obstacel.Obstacel(self.screen, rand_scale, self.game_modus_feature_Obstacel_difficulty)
             self.game_modus_obstacel_group.add(obstacel_1)
         for ball in self.ball_group.sprites():
