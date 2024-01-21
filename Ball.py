@@ -42,7 +42,6 @@ class Ball(pygame.sprite.Sprite):
             # Und überprüft auf Kollisionen und damit einhergehende Reflektionen
             self.collisions()
             self.collision_obstacel()
-            
         else:
              self.restart_counter()
             
@@ -76,19 +75,16 @@ class Ball(pygame.sprite.Sprite):
         self.speed_y = self.generate_valid_speed()[1]
         self.score_time = pygame.time.get_ticks()
         self.rect.center = (self.screen_width/2,self.screen_height/2)
+        self.active = False
         #pygame.mixer.Sound.play(score_sound)
-        print(self.speed_x)
-        print(f"Speed Y: {self.speed_y}")
         
     def restart_counter(self):
         current_time = pygame.time.get_ticks()
         countdown_number = 3
-        
         if current_time - self.score_time <= 700:
             countdown_number = 3
         if 700 < current_time - self.score_time <= 1400:
             countdown_number = 2
-            self.explosions_animation.active = False
         if 1400 < current_time - self.score_time <= 2100:
             countdown_number = 1
         if current_time - self.score_time >= 2100:
@@ -110,7 +106,6 @@ class Ball(pygame.sprite.Sprite):
         if self.reflections_since_new_round % 2 == 0 and pygame.sprite.spritecollide(self,self.paddles,False):
             self.speed_x = self.speed_x * 1.5
             self.speed_y = self.speed_y * 1.5
-            print(f"Paddle erhöhete Speed auf: {self.speed_x}")
            
     # Reflektion an Hindernissen        
     def collision_obstacel(self):

@@ -43,6 +43,7 @@ class GameState_Manager:
         self.game_modus_obstacel_group = pygame.sprite.Group()
         
     def run_game(self):
+        
 		# Drawen der Game-Objekte der Paddels und des Balls
         self.paddle_group.draw(self.screen)
         self.ball_group.draw(self.screen)
@@ -59,13 +60,13 @@ class GameState_Manager:
             self.game_modus_obstacel_group.update(self.game_modus_obstacel_group)
             pass
 
-		# Updating the game objects
+        # Updating the game objects
         self.paddle_group.update(self.ball_group)
         self.ball_group.update()
         self.explosion_group.update()
         self.reset_ball()
         self.draw_score()
-        
+
         # Timer / run-Durchlauf um eins erhöhen
         self.game_timer += 1
     
@@ -199,10 +200,12 @@ class GameState_Manager:
         self.paddle_group.add(self.paddle_player_1)
         self.paddle_group.add(self.paddle_player_2)
         
+        # Die Anzahl an gewünschten Bällen wird der Gruppe an Bällen hinzugefügt
         self.ball_group.empty()
         for x in range(self.game_modus_balls_count):
             ball = Ball.Ball('skins/Ball.png', self.screen_width/2, self.screen_height/2, self.paddle_group, self.screen_height, self.screen_width, self.screen)
             self.ball_group.add(ball)
+            print(ball.active)
         
         if self.game_modus_feature_Obstacel_difficulty != 0:
             self.feature_Obstacels_initialise()
