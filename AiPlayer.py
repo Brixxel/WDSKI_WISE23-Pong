@@ -59,7 +59,7 @@ class AIPlayer():
                     paddel.rect.y -= paddel.speed
                     paddel.screen_beschränkung(paddel.screen_height) 
             return action
-          
+        
         if self.difficulty == 2:
             # Funktion die für die Bewegung des Paddels zurückgegeben wird:
             # Das Paddel versucht stehts den Ball in seiner Mitte zu haben, der dem Paddel am nähsten ist

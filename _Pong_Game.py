@@ -59,13 +59,13 @@ creategame_img = pygame.image.load("grafics/button_creategame.png").convert_alph
 getting_faster_imges = (pygame.image.load(r"grafics/button_getting_faster_01.png").convert_alpha() , pygame.image.load(r"grafics/button_getting_faster_02.png").convert_alpha())
 increasingReflektion_imges = (pygame.image.load(r"grafics/button_harder_reflektion_01.png").convert_alpha() , pygame.image.load(r"grafics/button_harder_reflektion_02.png").convert_alpha())
 moving_obstacel_imges = (pygame.image.load(r"grafics/button_obstacel_01.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_02.png").convert_alpha() , 
-                         pygame.image.load(r"grafics/button_obstacel_03.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_04.png").convert_alpha() ,
-                         pygame.image.load(r"grafics/button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_06.png").convert_alpha() ,
-                         pygame.image.load(r"grafics/button_obstacel_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_08.png").convert_alpha())
+                        pygame.image.load(r"grafics/button_obstacel_03.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_04.png").convert_alpha() ,
+                        pygame.image.load(r"grafics/button_obstacel_05.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_06.png").convert_alpha() ,
+                        pygame.image.load(r"grafics/button_obstacel_07.png").convert_alpha() , pygame.image.load(r"grafics/button_obstacel_08.png").convert_alpha())
 
 paddle_img = [pygame.image.load("skins/Paddle_blue.png").convert_alpha(), pygame.image.load("skins/Paddle_green.png").convert_alpha(), 
-              pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
-              pygame.image.load("skins/Paddle.png").convert_alpha()]
+            pygame.image.load("skins/Paddle_white.png").convert_alpha(), pygame.image.load("skins/Paddle_yellow.png").convert_alpha(), 
+            pygame.image.load("skins/Paddle.png").convert_alpha()]
 multiball_img = (pygame.image.load(r"grafics/button_multiball_01.png").convert_alpha(),pygame.image.load(r"grafics/button_multiball_02.png").convert_alpha(),
                 pygame.image.load(r"grafics/button_multiball_03.png").convert_alpha(),pygame.image.load(r"grafics/button_multiball_04.png").convert_alpha(),)
 playerone_img = pygame.image.load("grafics/player_one.png").convert_alpha()
@@ -179,7 +179,7 @@ while run:
                     Game.paddle_player_2.movement += Game.paddle_player_2.speed
                 if event.key == pygame.K_s:
                     Game.paddle_player_2.movement -= Game.paddle_player_2.speed                                  
-         
+        
             # ------------------------------------------------------------------------------------------------------- #
             #           User Input in Menu         
             
@@ -217,7 +217,7 @@ while run:
             Game = GameState.GameState_Manager(screen, player_Ai)
             # !!!!!!!!! kurzes Abwarten vor neuladen der Seite
             game_in_menue_create = True
-           
+        
 
         # change Button zum AI oder PLayer auswählen
         if change_button.draw(screen) == True:
@@ -371,7 +371,7 @@ while run:
             game_in_menue = True
         if quit_button.draw(screen):
             run = False
-           
+        
                     
     # ##### Wenn gespielt wird, für alle Spiel Modi und Spiel Typen: ##### #
     if game_paused == False and game_in_menue == False:

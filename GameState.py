@@ -133,7 +133,7 @@ class GameState_Manager:
         if self.game_modus_feature_increasingReflektion:
             for ball in self.ball_group.sprites():
                 ball.increasing_reflection()
-       
+    
 
 
 # ......................... Obstacels ................................................... #
@@ -157,19 +157,19 @@ class GameState_Manager:
         self.game_modus_obstacel_group.empty()
         # !!!! evtl unterschiedliche Arten von Hindernissen
         for x in range(self.game_modus_feature_Obstacel_count):
-           
+        
             rand_scale = random.uniform(1,3.5)*0.07
             obstacel_1 = Obstacel.Obstacel(self.screen, rand_scale, self.game_modus_feature_Obstacel_difficulty)
             self.game_modus_obstacel_group.add(obstacel_1)
         for ball in self.ball_group.sprites():
             ball.obstacels = self.game_modus_obstacel_group
 
- 
+
 # --------------------------------------------------------------------------------------- #
 # Spiel - Initialisierungs / Generierungs Methoden
 # --------------------------------------------------------------------------------------- # 
- 
- 
+
+
 # New Game Methode, die den Speilstand des bisherigen Spiels löscht und mit den neuen Paddels beginnt
     def Start_PvAi_Game(self, player_1 : Player):
         
@@ -190,7 +190,7 @@ class GameState_Manager:
         self.paddle_player_2 = Paddel.Paddel(player_2,20,self.screen_width/2, 5, self.screen_height)
 
         self.general_setUp()
-              
+        
         return "PvP"
 
     def general_setUp(self):
