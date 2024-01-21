@@ -78,10 +78,9 @@ ai_imgs = (pygame.image.load(r"grafics/button_easy.png").convert_alpha(), pygame
 
 # Allgemeine Instanzen:
 # Buttons im Pausenmenü: 
-resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, 7 * screen_height / 20, resume_img, 1)    #########optimierte Positionene############
-options_button = Button.Button(screen_width / 2 - options_img.get_width() / 2, 9 * screen_height / 20, options_img, 1)  ###ungefäre Höhe abgeschätzt####
-home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, 11 * screen_height / 20, home_img, 1)
-quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, 13 * screen_height / 20, quit_img, 1)
+resume_button = Button.Button(screen_width / 2 - resume_img.get_width() / 2, 8 * screen_height / 20, resume_img, 1)
+home_button = Button.Button(screen_width / 2 - home_img.get_width() / 2, 10 * screen_height / 20, home_img, 1)
+quit_button = Button.Button(screen_width / 2 - quit_img.get_width() / 2, 12 * screen_height / 20, quit_img, 1)
 #Buttons im main Menü:
 change_button = Button.Button(screen_width / 20 * 17 - change_img.get_width() / 2, 1 * screen_height / 20, change_img, 1)
 skin_button = Button.Button(screen_width / 20 * 3 - skin_img.get_width() / 2, 4 * screen_height /20, skin_img, 1)
@@ -366,8 +365,6 @@ while run:
         # Spiel Pausen-Menü
         if resume_button.draw(screen):
             game_paused = False
-        if options_button.draw(screen):
-            pass # !!!!!!! Lautstärke Einstellungen z.B. !!!!!!
         if home_button.draw(screen):
             game_in_menue = True
         if quit_button.draw(screen):
